@@ -1,0 +1,233 @@
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Zählerstandsermittlung.exe.config
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Zählerstandsermittlung.exe
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Zählerstandsermittlung.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\ControlzEx.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.SqlServer.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\FastPing.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Fluent.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Independentsoft.Msg.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\MySql.Data.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\SnmpSharpNet.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.EF6.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.Linq.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\System.Windows.Interactivity.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\ControlzEx.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.SqlServer.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\FastPing.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Fluent.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Fluent.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Independentsoft.Msg.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.dll.config
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\RibbonWindow.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\erstStart.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\RibbonWindow.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\abraegeStarten.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenMain.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\einstellungenOID.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\Informationen.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\TechnikLogin.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteBearbeiten.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteSuchen.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\start.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\App.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung_MarkupCompile.cache
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung_MarkupCompile.lref
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\App.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\erstStart.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\abraegeStarten.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenMain.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\einstellungenOID.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\Informationen.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\TechnikLogin.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteBearbeiten.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteSuchen.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\start.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung.g.resources
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\btg.Zaehlerstand.Properties.Resources.resources
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csproj.GenerateResource.Cache
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung.exe
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\WinFormAnimation.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\WinFormAnimation.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csprojResolveAssemblyReference.cache
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteInfo.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteInfo.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\ProgressRing.Forms.Plugin.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Core.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Platform.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Core.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Core.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Platform.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.pdb
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Tools\CircularProgressBar.baml
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\Tools\CircularProgressBar.g.cs
+C:\Users\andreas.schreiner\Documents\Visual Studio 2017\Projects\snmpzaehlerstand\snmpzaehlerstand\snmp\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csprojResolveAssemblyReference.cache
+D:\Projects\snmp\snmp\obj\x86\Debug\RibbonWindow.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\Tools\CircularProgressBar.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\erstStart2GEN.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\RibbonWindow.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\Tools\CircularProgressBar.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\abraegeStarten.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenMain.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\einstellungenOID.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\Informationen.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\TechnikLogin.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\geraeteBearbeiten.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\geraeteInfo.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\geraeteSuchen.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\start.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\App.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\Zählerstandsermittlung_MarkupCompile.cache
+D:\Projects\snmp\snmp\obj\x86\Debug\Zählerstandsermittlung_MarkupCompile.lref
+D:\Projects\snmp\snmp\obj\x86\Debug\Zählerstandsermittlung.exe
+D:\Projects\snmp\snmp\obj\x86\Debug\Zählerstandsermittlung.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\Zählerstandsermittlung.exe.config
+D:\Projects\snmp\snmp\bin\x86\Debug\Zählerstandsermittlung.exe
+D:\Projects\snmp\snmp\bin\x86\Debug\Zählerstandsermittlung.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\ControlzEx.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\EntityFramework.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\EntityFramework.SqlServer.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\FastPing.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\Fluent.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\Independentsoft.Msg.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\MySql.Data.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\ProgressRing.Forms.Plugin.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\SnmpSharpNet.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.SQLite.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.SQLite.EF6.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.SQLite.Linq.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Windows.Interactivity.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\WinFormAnimation.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Core.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Platform.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\ControlzEx.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\EntityFramework.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\EntityFramework.SqlServer.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\FastPing.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\Fluent.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\Fluent.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\Independentsoft.Msg.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.SQLite.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.SQLite.dll.config
+D:\Projects\snmp\snmp\bin\x86\Debug\WinFormAnimation.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Core.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Core.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Platform.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.pdb
+D:\Projects\snmp\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.xml
+D:\Projects\snmp\snmp\obj\x86\Debug\App.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\erstStart2GEN.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\abraegeStarten.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenMain.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\einstellungenOID.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\Informationen.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\TechnikLogin.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\geraeteBearbeiten.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\geraeteInfo.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\geraeteSuchen.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\start.baml
+D:\Projects\snmp\snmp\obj\x86\Debug\Zählerstandsermittlung.g.resources
+D:\Projects\snmp\snmp\obj\x86\Debug\btg.Zaehlerstand.Properties.Resources.resources
+D:\Projects\snmp\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csproj.GenerateResource.Cache
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenTechniker.g.cs
+D:\Projects\snmp\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenTechniker.baml
+D:\Projects\snmp\snmp\bin\x86\Debug\manastone.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.Core.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.CRC.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.Interfaces.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.SpookyHash.dll
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.Core.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.CRC.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.Interfaces.xml
+D:\Projects\snmp\snmp\bin\x86\Debug\System.Data.HashFunction.SpookyHash.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Zählerstandsermittlung.exe.config
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Zählerstandsermittlung.exe
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Zählerstandsermittlung.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\ControlzEx.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.SqlServer.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\FastPing.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Fluent.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Independentsoft.Msg.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\MySql.Data.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\ProgressRing.Forms.Plugin.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\SnmpSharpNet.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.Core.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.CRC.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.Interfaces.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.SpookyHash.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.EF6.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.Linq.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Windows.Interactivity.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\WinFormAnimation.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Core.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Platform.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.dll
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\ControlzEx.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\EntityFramework.SqlServer.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\FastPing.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Fluent.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Fluent.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Independentsoft.Msg.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.Core.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.CRC.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.Interfaces.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.HashFunction.SpookyHash.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\System.Data.SQLite.dll.config
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\WinFormAnimation.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Core.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Core.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Platform.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Xamarin.Forms.Xaml.xml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csprojResolveAssemblyReference.cache
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\RibbonWindow.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Tools\CircularProgressBar.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\erstStart2GEN.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\RibbonWindow.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Tools\CircularProgressBar.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\abraegeStarten.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenMain.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\einstellungenOID.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenTechniker.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\Informationen.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\TechnikLogin.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteBearbeiten.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteInfo.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteSuchen.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\start.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\App.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung_MarkupCompile.cache
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung_MarkupCompile.lref
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\App.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\erstStart2GEN.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\abraegeStarten.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenMain.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\einstellungenOID.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\EinstellungenTechniker.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\Informationen.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\Einstellungen\TechnikLogin.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteBearbeiten.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteInfo.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\geraeteSuchen.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\UC\start.baml
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung.g.resources
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\btg.Zaehlerstand.Properties.Resources.resources
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csproj.GenerateResource.Cache
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zaehlerstandsermittlung.csproj.CoreCompileInputs.cache
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung.exe
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\obj\x86\Debug\Zählerstandsermittlung.pdb
+C:\Users\schreiner.andreas\Documents\Projects\snmpzaehlerstand\snmp\bin\x86\Debug\Google.Authenticator.dll

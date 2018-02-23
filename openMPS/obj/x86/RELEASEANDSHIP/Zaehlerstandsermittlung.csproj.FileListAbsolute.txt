@@ -1,0 +1,151 @@
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Zählerstandsermittlung.exe.config
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Zählerstandsermittlung.exe
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Zählerstandsermittlung.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\ControlzEx.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.SqlServer.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\FastPing.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Fluent.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Independentsoft.Msg.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\MySql.Data.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\ProgressRing.Forms.Plugin.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\SnmpSharpNet.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.EF6.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.Linq.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\System.Windows.Interactivity.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\WinFormAnimation.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Core.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Platform.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Xaml.dll
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\ControlzEx.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.SqlServer.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\FastPing.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Fluent.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Fluent.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Independentsoft.Msg.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.dll.config
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\WinFormAnimation.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Core.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Core.xml
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Platform.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Xaml.pdb
+D:\Projects\Visual Studio\MPS\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Xaml.xml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zaehlerstandsermittlung.csprojResolveAssemblyReference.cache
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\RibbonWindow.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Tools\CircularProgressBar.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\erstStart.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\RibbonWindow.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Tools\CircularProgressBar.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\abraegeStarten.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\EinstellungenMain.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\einstellungenOID.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\Informationen.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\TechnikLogin.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteBearbeiten.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteInfo.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteSuchen.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\start.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\App.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\GeneratedInternalTypeHelper.g.cs
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung_MarkupCompile.cache
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung_MarkupCompile.lref
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\App.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\erstStart.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\abraegeStarten.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\EinstellungenMain.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\einstellungenOID.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\Informationen.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\TechnikLogin.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteBearbeiten.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteInfo.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteSuchen.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\UC\start.baml
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung.g.resources
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\btg.Zaehlerstand.Properties.Resources.resources
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zaehlerstandsermittlung.csproj.GenerateResource.Cache
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung.exe
+D:\Projects\Visual Studio\MPS\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Zählerstandsermittlung.exe.config
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Zählerstandsermittlung.exe
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Zählerstandsermittlung.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\ControlzEx.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.SqlServer.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\FastPing.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Fluent.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Independentsoft.Msg.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\manastone.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\MySql.Data.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\ProgressRing.Forms.Plugin.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\SnmpSharpNet.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.EF6.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.Linq.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Windows.Interactivity.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\WinFormAnimation.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Core.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Platform.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Xaml.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\ControlzEx.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\EntityFramework.SqlServer.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\FastPing.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Fluent.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Fluent.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Independentsoft.Msg.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.SQLite.dll.config
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\WinFormAnimation.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Core.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Core.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Platform.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Xaml.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\Xamarin.Forms.Xaml.xml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zaehlerstandsermittlung.csprojResolveAssemblyReference.cache
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\RibbonWindow.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Tools\CircularProgressBar.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\erstStart2GEN.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\RibbonWindow.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Tools\CircularProgressBar.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\abraegeStarten.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\EinstellungenMain.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\einstellungenOID.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\EinstellungenTechniker.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\Informationen.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\TechnikLogin.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteBearbeiten.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteInfo.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteSuchen.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\start.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\App.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\GeneratedInternalTypeHelper.g.cs
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung_MarkupCompile.cache
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung_MarkupCompile.lref
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\App.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\erstStart2GEN.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\abraegeStarten.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\EinstellungenMain.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\einstellungenOID.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\EinstellungenTechniker.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\Informationen.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\Einstellungen\TechnikLogin.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteBearbeiten.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteInfo.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\geraeteSuchen.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\UC\start.baml
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung.g.resources
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\btg.Zaehlerstand.Properties.Resources.resources
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zaehlerstandsermittlung.csproj.GenerateResource.Cache
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung.exe
+D:\Projects\snmp\snmp\obj\x86\RELEASEANDSHIP\Zählerstandsermittlung.pdb
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.Core.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.CRC.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.Interfaces.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.SpookyHash.dll
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.Core.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.CRC.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.Interfaces.xml
+D:\Projects\snmp\snmp\bin\x86\RELEASEANDSHIP\System.Data.HashFunction.SpookyHash.xml

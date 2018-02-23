@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="de.as1259.openMPS.UC.Einstellungen.Informationen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:de.as1259.openMPS.UC.Einstellungen"
+             mc:Ignorable="d"
+             d:DesignHeight="500"
+             Background="White" Width="850">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="433,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                 Width="80" x:Name="tb_Progvers" IsReadOnly="true" BorderThickness="0" />
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="433,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
+                 Width="80" x:Name="tb_oidvers" IsReadOnly="true" BorderThickness="0" />
+        <Label Content="Kundennummer:" HorizontalAlignment="Left" Margin="11,48,0,0" VerticalAlignment="Top" />
+        <Label Content="Programmversion:" HorizontalAlignment="Left" Margin="301,48,0,0" VerticalAlignment="Top" />
+        <Label Content="OIDVersion:" HorizontalAlignment="Left" Margin="301,76,0,0" VerticalAlignment="Top" />
+        <Button Content="Bekannte Geräte Exportieren" HorizontalAlignment="Left"
+                Margin="658,77,0,0" VerticalAlignment="Top" Width="170" Height="23"
+                x:Name="bt_export_bg" Click="bt_export_bg_Click" />
+
+        <Button Content="Bekannte Geräte Importieren" HorizontalAlignment="Left"
+                Margin="658,49,0,0" VerticalAlignment="Top" Width="170" Height="23"
+                x:Name="bt_import_bg" Click="bt_import_bg_Click" />
+
+        <Button Content="OID Online Update " HorizontalAlignment="Left"
+                Margin="656,119,0,0" VerticalAlignment="Top" Width="170" Height="23"
+                x:Name="bt_updoid_online" Click="bt_updoid_online_Click" />
+        <Button Content="OID Datei Einlesen " HorizontalAlignment="Left"
+                Margin="659,151,0,0" VerticalAlignment="Top" Width="170" Height="23"
+                x:Name="bt_updoid_file" Click="bt_updoid_file_Click" />
+        <Label Content="[Kundennummer]" HorizontalAlignment="Left" Margin="123,48,0,0" VerticalAlignment="Top"
+               x:Name="lbl_val_kundennummer" FontWeight="DemiBold" />
+        <Label Content="[PV]" HorizontalAlignment="Left" Margin="433,48,0,0" VerticalAlignment="Top"
+               x:Name="lbl_val_PV" FontWeight="DemiBold" />
+        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="433,76,0,0" VerticalAlignment="Top"
+               x:Name="lbl_val_OIDV" FontWeight="DemiBold" />
+        <Button Content="Nutzerdaten Löschen" HorizontalAlignment="Left"
+                Margin="658,219,0,0" VerticalAlignment="Top" Width="170" Height="23"
+                x:Name="bt_delUserdata" Click="bt_delUserdata_Click" />
+
+    </Grid>
+</UserControl>

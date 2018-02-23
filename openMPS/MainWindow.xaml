@@ -1,0 +1,88 @@
+﻿<Fluent:RibbonWindow x:Class="de.as1259.openMPS.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:Fluent="urn:fluent-ribbon"
+                     Title="openMPS"
+                     Icon="openmps_Nco_12.ico"
+                     Width="1200"
+                     Height="600"
+                     IsCollapsed="False"
+                     ResizeMode="NoResize">
+    <Grid>
+        <Grid Panel.ZIndex="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Fluent:Ribbon Grid.Row="0" Name="Ribbon_control" IsMinimizedChanged="Ribbon_control_IsMinimizedChanged">
+
+
+                <!--Backstage-->
+                <Fluent:Ribbon.Menu>
+                    <Fluent:Backstage Background="Blue" x:Name="backstage">
+                        <Fluent:BackstageTabControl Background="white">
+
+
+                            <Fluent:BackstageTabItem Header="Hilfe" x:Name="bsi_help">
+                                <Grid x:Name="grid_help" />
+                            </Fluent:BackstageTabItem>
+                            <Fluent:BackstageTabItem Header="Einstellungen" x:Name="bsi_settings">
+                                <Grid x:Name="grid_settings" />
+                            </Fluent:BackstageTabItem>
+                            <Fluent:SeparatorTabItem />
+                            <Fluent:BackstageTabItem Header="Beenden" x:Name="bsi_close"
+                                                     MouseLeftButtonDown="bsi_close_MouseLeftButtonDown" />
+
+
+                        </Fluent:BackstageTabControl>
+
+                    </Fluent:Backstage>
+                </Fluent:Ribbon.Menu>
+
+                <!--Tabs-->
+
+                <Fluent:RibbonTabItem Header="Geräte">
+                    <Fluent:RibbonGroupBox Header=" " IsSeparatorVisible="False">
+                        <Fluent:Button Header="Geräte Suchen" x:Name="bt_search"
+                                       Click="bt_geraetSuchen"
+                                       Width="70" />
+                        <Fluent:Button Header="Geräte bearbeiten" x:Name="bt_geraetEdit"
+                                       Click="bt_geraetBearbeiten"
+                                       Width="70" />
+                        <Fluent:Button Header="Werte abfragen und senden" x:Name="bt_abfrage"
+                                       Click="bt_abfrageStarten"
+                                       Width="100" />
+
+                        <TextBlock Margin="230,0,0,0" x:Name="tbl_info" Height="84" Width="530" TextWrapping="Wrap" />
+                        <Image x:Name="logo" Margin="20,0,0,0" />
+
+                    </Fluent:RibbonGroupBox>
+
+                    <!--<Fluent:RibbonGroupBox Header="">
+                        
+                        <Fluent:Button Header="Einstellungen"  x:Name="bt_einstellungen"
+                                   Click="bt_einstellungen_Click"
+                            Width="100"  />
+                    </Fluent:RibbonGroupBox>-->
+
+                </Fluent:RibbonTabItem>
+                <!--<Fluent:RibbonTabItem Header="Informationen"  x:Name="frrt_info"  >
+                    <Fluent:RibbonGroupBox>
+                        <Fluent:Button Header="Hilfe" x:Name="bt_info"
+                                   Click="bt_start"
+                           Width="70"/>
+                        --><!--<Fluent:Button Header="Verbrauchsmaterialien" Click="bt_verbrauchsmaterialinfo"/>--><!--
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>-->
+
+            </Fluent:Ribbon>
+
+            <Grid Name="MainGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </Grid>
+        <Grid x:Name="grid_additionalThings">
+            <!--<Image x:Name="logo" Margin="1036,44,48,475" />-->
+            <!--<TextBlock HorizontalAlignment="Left" Margin="475,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="530" x:Name="tbl_info" />-->
+        </Grid>
+
+    </Grid>
+</Fluent:RibbonWindow>

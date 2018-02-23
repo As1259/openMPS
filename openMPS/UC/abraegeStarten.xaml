@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="de.as1259.openMPS.UC.abraegeStarten"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:de.as1259.openMPS.UC"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="1200"
+             Background="White">
+    <Grid>
+        <DataGrid HorizontalAlignment="Left" x:Name="geraeteGrid" Height="335" Margin="25,100,0,0"
+                  VerticalAlignment="Top" Width="1127" CanUserAddRows="False" CanUserDeleteRows="False"
+                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" />
+        <Button x:Name="bt_start" Click="bt_start_Click" Content="Werte abfragen" HorizontalAlignment="Left"
+                Margin="25,25,0,0" VerticalAlignment="Top" Width="135" Height="25" />
+        <Button x:Name="bt_senden" Content="E-Mail direkt senden" HorizontalAlignment="Left" Margin="265,27,0,0"
+                VerticalAlignment="Top" Width="135" Click="bt_senden_Click" Height="26"
+                RenderTransformOrigin="-0.532,0.208" />
+        <Button x:Name="bt_client" Content="E-Mail Client Starten" HorizontalAlignment="Left" Margin="409,28,0,0"
+                VerticalAlignment="Top" Width="135" Click="bt_client_Click" Height="25" />
+
+        <Grid HorizontalAlignment="Left" Height="25" Margin="25,25,0,0" VerticalAlignment="Top" Width="135"
+              Panel.ZIndex="0">
+            <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="135"
+                         Visibility="Hidden" ValueChanged="progress_ValueChanged"
+                         IsVisibleChanged="progress_IsVisibleChanged" Foreground="Yellow" Panel.ZIndex="2" />
+            <Label x:Name="progressPercent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                   Visibility="Hidden" BorderThickness="1" BorderBrush="DarkGray" Panel.ZIndex="3" />
+
+        </Grid>
+
+    </Grid>
+</UserControl>
