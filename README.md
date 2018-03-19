@@ -1,1 +1,1 @@
-openMPS
+Veröffentlichung des openMPS.
