@@ -15,7 +15,7 @@ using System.Windows.Threading;
 using de.as1259.openMPS.SNMP;
 using de.as1259.openMPS.SQLiteConnectionTools;
 using de.as1259.openMPS.Tools;
-
+using de.fearvel.net;
 namespace de.as1259.openMPS.UC
 {
     /// <summary>
@@ -28,10 +28,8 @@ namespace de.as1259.openMPS.UC
         /// </summary>
         private DataTable dt;
 
-        /// <summary>
-        ///     The ip
-        /// </summary>
-        private IPAddress[] ip;
+        public IPAddress startIpAddress { get; private set; }
+        public IPAddress endIpAddress { get; private set; }
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="geraeteSuchen" /> class.
@@ -84,14 +82,13 @@ namespace de.as1259.openMPS.UC
         {
             bt_suchen.Visibility = Visibility.Hidden;
             progress.Value = 0;
-            ip = new IPAddress[2]
-            {
-                new IPAddress(ScanIP.convertStringToAddress(tb_ip_rangeStart1.Text + "." + tb_ip_rangeStart2.Text +
-                                                            "." + tb_ip_rangeStart3.Text + "." +
-                                                            tb_ip_rangeStart4.Text)),
-                new IPAddress(ScanIP.convertStringToAddress(tb_ip_rangeStop1.Text + "." + tb_ip_rangeStop2.Text + "." +
-                                                            tb_ip_rangeStop3.Text + "." + tb_ip_rangeStop4.Text))
-            };
+
+            startIpAddress = new IPAddress(ScanIP.convertStringToAddress(tb_ip_rangeStart1.Text + "." + tb_ip_rangeStart2.Text +
+                                                        "." + tb_ip_rangeStart3.Text + "." +
+                                                        tb_ip_rangeStart4.Text));
+            endIpAddress = new IPAddress(ScanIP.convertStringToAddress(tb_ip_rangeStop1.Text + "." + tb_ip_rangeStop2.Text + "." +
+                                                            tb_ip_rangeStop3.Text + "." + tb_ip_rangeStop4.Text));
+
             ThreadPool.QueueUserWorkItem(searchForPrinter);
             ThreadPool.QueueUserWorkItem(adaptProgressLoad);
         }
@@ -136,56 +133,58 @@ namespace de.as1259.openMPS.UC
         /// <param name="state">The state.</param>
         private void searchForPrinter(object state)
         {
-            var dt = ScanIP.getAliveNetworkHosts(ip);
+            var fp = new FPing(startIpAddress, endIpAddress);
 
-            if (dt.Rows.Count > 0)
-                for (var i = 0; i < dt.Rows.Count; i++)
-                {
-                    var ipAddress = dt.Rows[i].Field<string>("IP");
-                    var ident = DeviceTools.identDevice(ipAddress);
-                    var modell = "";
-                    var serial = "";
-                    var asset = "";
-                    if (ident.Length > 0)
-                        if (CounterConfig.shellDT(
-                                "Select * from Devices where IP='" + dt.Rows[i].Field<string>("IP") + "';").Rows.Count >
-                            0)
-                        {
-                            var dts = CounterConfig.shellDT(
-                                "select * from OID where OIDPrivateID='" + ident + "'");
-                            modell = SNMPget.getOIDValue(ipAddress, dts.Rows[0].Field<string>("Model"));
-                            serial = SNMPget.getOIDValue(ipAddress, dts.Rows[0].Field<string>("SerialNumber"));
-                            asset = SNMPget.getOIDValue(ipAddress, dts.Rows[0].Field<string>("AssetNumber"));
-                            DeviceTools.updateDevices(
-                                "1",
-                                ScanIP.convertStringToAddress(ipAddress),
-                                modell,
-                                serial,
-                                asset,
-                                ScanIP.convertStringToAddress(ipAddress)
-                            );
-                        }
-                        else
-                        {
-                            var dts = CounterConfig.shellDT(
-                                "select * from OID where OIDPrivateID='" + ident + "'");
-                            modell = SNMPget.getOIDValue(ipAddress, dts.Rows[0].Field<string>("Model"));
-                            serial = SNMPget.getOIDValue(ipAddress, dts.Rows[0].Field<string>("SerialNumber"));
-                            asset = SNMPget.getOIDValue(ipAddress, dts.Rows[0].Field<string>("AssetNumber"));
-                            CounterConfig.shellDT("Delete from Devices where IP = '" +
-                                                  dt.Rows[i].Field<string>("IP") + "'; ");
-                            DeviceTools.insertInDevices(
-                                "1",
-                                ScanIP.convertStringToAddress(ipAddress),
-                                modell,
-                                serial,
-                                asset
-                            );
-                        }
-                }
+            var pingResultsIps = fp.RangePing();
 
-            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(loadGridData));
-            bt_suchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(showStartButton));
+
+            foreach (var ipAddress in pingResultsIps.SuccessIpAddresses)
+            {
+                var ident = DeviceTools.identDevice(ipAddress.ToString());
+                var modell = "";
+                var serial = "";
+                var asset = "";
+                if (ident.Length > 0)
+                    if (CounterConfig.shellDT(
+                            "Select * from Devices where IP='" + ipAddress.ToString() + "';").Rows.Count >
+                        0)
+                    {
+                        var dts = CounterConfig.shellDT(
+                            "select * from OID where OIDPrivateID='" + ident + "'");
+                        modell = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                        serial = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                        asset = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                        DeviceTools.updateDevices(
+                            "1",
+                            ScanIP.convertStringToAddress(ipAddress.ToString()),
+                            modell,
+                            serial,
+                            asset,
+                            ScanIP.convertStringToAddress(ipAddress.ToString())
+                        );
+                    }
+                    else
+                    {
+                        var dts = CounterConfig.shellDT(
+                            "select * from OID where OIDPrivateID='" + ident + "'");
+                        modell = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                        serial = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                        asset = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                        CounterConfig.shellDT("Delete from Devices where IP = '" +
+                                              ipAddress.ToString() + "'; ");
+                        DeviceTools.insertInDevices(
+                            "1",
+                            ScanIP.convertStringToAddress(ipAddress.ToString()),
+                            modell,
+                            serial,
+                            asset
+                        );
+
+                    }
+                geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(loadGridData));
+                bt_suchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(showStartButton));
+
+            }
         }
 
         /// <summary>
@@ -225,7 +224,7 @@ namespace de.as1259.openMPS.UC
                 tb_ip_rangeStart1.Text = tb_ip_rangeStart1.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -244,7 +243,7 @@ namespace de.as1259.openMPS.UC
                 tb_ip_rangeStart2.Text = tb_ip_rangeStart2.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -263,7 +262,7 @@ namespace de.as1259.openMPS.UC
                 tb_ip_rangeStart3.Text = tb_ip_rangeStart3.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -282,7 +281,7 @@ namespace de.as1259.openMPS.UC
                 tb_ip_rangeStop1.Text = tb_ip_rangeStop1.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -301,7 +300,7 @@ namespace de.as1259.openMPS.UC
                 tb_ip_rangeStop2.Text = tb_ip_rangeStop2.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -320,7 +319,7 @@ namespace de.as1259.openMPS.UC
                 tb_ip_rangeStop3.Text = tb_ip_rangeStop3.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next);
                 request.Wrapped = true;
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 

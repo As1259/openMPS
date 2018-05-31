@@ -124,6 +124,9 @@
     <Reference Include="ControlzEx, Version=2.2.0.4, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.2.2.0.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="de.fearvel.net">
+      <HintPath>..\..\Network-tools\de.fearvel.net\bin\Release\de.fearvel.net.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -238,7 +241,6 @@
     </Compile>
     <Compile Include="Tools\DeviceTools.cs" />
     <Compile Include="Tools\mapi.cs" />
-    <Compile Include="Tools\RetrieveAlive.cs" />
     <Compile Include="Tools\ScanIP.cs" />
     <Compile Include="UC\abraegeStarten.xaml.cs">
       <DependentUpon>abraegeStarten.xaml</DependentUpon>

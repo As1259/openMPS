@@ -115,34 +115,7 @@ namespace de.as1259.openMPS.Tools
             }
 
             return new[] {Adressen[0], SubnetMasken[0]};
-        }
-
-        /// <summary>
-        ///     Gets the alive network hosts.
-        /// </summary>
-        /// <param name="ipTable">The ip table.</param>
-        /// <returns></returns>
-        public static DataTable getAliveNetworkHosts(IPAddress[] ipTable)
-        {
-            var dt = new DataTable();
-            dt.Columns.Add("IP");
-            var start = ipTable[0].GetAddressBytes();
-            var stop = ipTable[1].GetAddressBytes();
-            var list = new List<string>();
-            for (int i = start[0]; i <= stop[0]; i++)
-            for (int k = start[1]; k <= stop[1]; k++)
-            for (int j = start[2]; j <= stop[2]; j++)
-            for (int l = start[3]; l <= stop[3]; l++)
-                list.Add(i + "." + k + "." + j + "." + l);
-
-            var dtRaw = new DataTable();
-            dtRaw = RetrieveAlive.ping(list);
-
-            for (var i = 0; i < dtRaw.Rows.Count; i++)
-                if (SNMPget.findAlivePrinter(dtRaw.Rows[i].Field<string>("IP")))
-                    dt.Rows.Add(dtRaw.Rows[i].Field<string>("IP"));
-            return dt;
-        }
+        }      
 
         /// <summary>
         ///     Pings the ip.
