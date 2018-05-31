@@ -13,17 +13,17 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using de.as1259.manastone.serialManagement;
-using de.as1259.openMPS.SNMP;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.Tools;
+using de.fearvel.manastone.serialManagement;
+using de.fearvel.openMPS.SNMP;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Tools;
 
-namespace de.as1259.openMPS.UC
+namespace de.fearvel.openMPS.UC
 {
     /// <summary>
     ///     Interaktionslogik für abraegeStarten.xaml
     /// </summary>
-    public partial class abraegeStarten : UserControl
+    public partial class AbraegeStarten : UserControl
     {
         /// <summary>
         ///     The DataTable
@@ -31,12 +31,12 @@ namespace de.as1259.openMPS.UC
         private DataTable dt;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="abraegeStarten" /> class.
+        ///     Initializes a new instance of the <see cref="AbraegeStarten" /> class.
         /// </summary>
-        public abraegeStarten()
+        public AbraegeStarten()
         {
             InitializeComponent();
-            Loaded += abfrageStarten_Load;
+            Loaded += AbfrageStarten_Load;
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace de.as1259.openMPS.UC
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        public void abfrageStarten_Load(object sender, RoutedEventArgs e)
+        public void AbfrageStarten_Load(object sender, RoutedEventArgs e)
         {
             bt_senden.IsEnabled = false;
             bt_client.IsEnabled = false;
@@ -55,7 +55,7 @@ namespace de.as1259.openMPS.UC
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_start_Click(object sender, RoutedEventArgs e)
+        private void Bt_start_Click(object sender, RoutedEventArgs e)
         {
             progress.Value = 0;
             progress.Visibility = Visibility.Visible;
@@ -185,7 +185,7 @@ namespace de.as1259.openMPS.UC
 
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")).Length > 0)
-                    if (ScanIP.pingIP(new IPAddress(ScanIP.convertStringToAddress(dt.Rows[i].Field<string>("ip")))))
+                    if (ScanIP.PingIp(new IPAddress(ScanIP.ConvertStringToAddress(dt.Rows[i].Field<string>("ip")))))
                         SNMPget.readDeviceOIDs(dt.Rows[i].Field<string>("ip"),
                             DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")));
             return dt;
@@ -269,8 +269,10 @@ namespace de.as1259.openMPS.UC
                 bt_client.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_clientDisable));
                 bt_senden.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_sendenDisable));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(getNormalView));
-                var fInfo = new FileInfo(filename);
-                fInfo.IsReadOnly = false;
+                var fInfo = new FileInfo(filename)
+                {
+                    IsReadOnly = false
+                };
             }
             catch (Exception)
             {
@@ -290,8 +292,10 @@ namespace de.as1259.openMPS.UC
                 "DateiZumSenden-" + SerialManager.GetSerialContainer(MainWindow.PROGRAMID).CustomerIdentificationNumber
                                   + "_" + DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + ".oMPS";
             File.Copy("CollectionData.oData", filename);
-            var fInfo = new FileInfo(filename);
-            fInfo.IsReadOnly = true;
+            var fInfo = new FileInfo(filename)
+            {
+                IsReadOnly = true
+            };
             return filename;
         }
 
@@ -326,8 +330,10 @@ namespace de.as1259.openMPS.UC
                     "Error", MessageBoxButton.OK, MessageBoxImage.Asterisk);
             }
 
-            var fInfo = new FileInfo(filename);
-            fInfo.IsReadOnly = false;
+            var fInfo = new FileInfo(filename)
+            {
+                IsReadOnly = false
+            };
             bt_senden.IsEnabled = false;
             bt_client.IsEnabled = false;
         }

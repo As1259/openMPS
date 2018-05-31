@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{06DC374A-5C72-4639-BBC8-1AC471464B1F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>de.as1259.openMPS</RootNamespace>
+    <RootNamespace>de.fearvel.openMPS</RootNamespace>
     <AssemblyName>openMPS</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

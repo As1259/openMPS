@@ -11,9 +11,9 @@ using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Management;
-using de.as1259.sql.connectors;
+using de.fearvel.sql.connectors;
 
-namespace de.as1259.manastone.serialManagement
+namespace de.fearvel.manastone.serialManagement
 {
     public static class SerialStorage
     {

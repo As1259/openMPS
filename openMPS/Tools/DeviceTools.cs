@@ -7,10 +7,10 @@
 using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using de.as1259.openMPS.SNMP;
-using de.as1259.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SNMP;
+using de.fearvel.openMPS.SQLiteConnectionTools;
 
-namespace de.as1259.openMPS.Tools
+namespace de.fearvel.openMPS.Tools
 {
     /// <summary>
     ///     Tool Namespace

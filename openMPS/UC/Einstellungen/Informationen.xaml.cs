@@ -8,13 +8,13 @@ using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using de.as1259.manastone.serialManagement;
-using de.as1259.openMPS.MYSQLConnectionTools;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.SQLiteConnectionTools.Connector;
+using de.fearvel.manastone.serialManagement;
+using de.fearvel.openMPS.MYSQLConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
 using Microsoft.Win32;
 
-namespace de.as1259.openMPS.UC.Einstellungen
+namespace de.fearvel.openMPS.UC.Einstellungen
 {
     /// <summary>
     ///     Interaktionslogik für Informationen.xaml
@@ -61,8 +61,10 @@ namespace de.as1259.openMPS.UC.Einstellungen
 
         private void bt_import_bg_Click(object sender, RoutedEventArgs e)
         {
-            var dia = new OpenFileDialog();
-            dia.Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD";
+            var dia = new OpenFileDialog
+            {
+                Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD"
+            };
             if ((bool) dia.ShowDialog())
                 if (dia.FileName.Contains("oMPSDD"))
                     try
@@ -131,8 +133,10 @@ namespace de.as1259.openMPS.UC.Einstellungen
 
         private void bt_export_bg_Click(object sender, RoutedEventArgs e)
         {
-            var dia = new SaveFileDialog();
-            dia.Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD";
+            var dia = new SaveFileDialog
+            {
+                Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD"
+            };
             if ((bool) dia.ShowDialog())
                 try
                 {
@@ -201,8 +205,10 @@ namespace de.as1259.openMPS.UC.Einstellungen
 
         private void bt_updoid_file_Click(object sender, RoutedEventArgs e)
         {
-            var dia = new OpenFileDialog();
-            dia.Filter = "oOID (*.oOID)|*.oOID";
+            var dia = new OpenFileDialog
+            {
+                Filter = "oOID (*.oOID)|*.oOID"
+            };
             if ((bool) dia.ShowDialog())
             {
                 try

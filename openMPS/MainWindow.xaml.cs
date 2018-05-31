@@ -9,11 +9,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.UC;
-using de.as1259.openMPS.UC.Einstellungen;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.UC;
+using de.fearvel.openMPS.UC.Einstellungen;
 
-namespace de.as1259.openMPS
+namespace de.fearvel.openMPS
 {
     /// <summary>
     ///     Interaktionslogik für MainWindow.xaml
@@ -58,7 +58,7 @@ namespace de.as1259.openMPS
             {
                 ucontrol[0] = new geraeteSuchen();
                 ucontrol[1] = new geraeteBearbeiten();
-                ucontrol[2] = new abraegeStarten();
+                ucontrol[2] = new AbraegeStarten();
                 openSuchen();
                 grid_help.Children.Add(new start());
 
@@ -83,7 +83,7 @@ namespace de.as1259.openMPS
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_backstageExit(object sender, RoutedEventArgs e)
+        private void Bt_backstageExit(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -141,7 +141,7 @@ namespace de.as1259.openMPS
                 return;
             }
 
-            MainGrid.Children.Add(new abraegeStarten());
+            MainGrid.Children.Add(new AbraegeStarten());
         }
 
 

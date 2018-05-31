@@ -1,7 +1,7 @@
-﻿<Application x:Class="de.as1259.openMPS.App"
+﻿<Application x:Class="de.fearvel.openMPS.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:de.as1259.openMPS"
+             xmlns:local="clr-namespace:de.fearvel.openMPS"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 

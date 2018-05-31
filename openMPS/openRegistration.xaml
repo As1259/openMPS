@@ -1,9 +1,9 @@
-﻿<Window x:Class="de.as1259.openMPS.openRegistration"
+﻿<Window x:Class="de.fearvel.openMPS.openRegistration"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:de.as1259.openMPS"
+        xmlns:local="clr-namespace:de.fearvel.openMPS"
         mc:Ignorable="d"
         Icon="openmps_Nco_12.ico"
         Title="openRegistration" Height="139.099" Width="291.696">

@@ -9,9 +9,9 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using de.as1259.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools;
 
-namespace de.as1259.openMPS.UC.Einstellungen
+namespace de.fearvel.openMPS.UC.Einstellungen
 {
     /// <summary>
     ///     Settings Namespace
@@ -67,10 +67,12 @@ namespace de.as1259.openMPS.UC.Einstellungen
                 trv_einstellungen.Items.Add(buildMenueItem(dt.Rows[i].Field<string>("Value"),
                     dt.Rows[i].Field<long>("id")));
             var logout = new TreeViewItem();
-            var login = new TreeViewItem();
-            login.IsExpanded = true;
-            login.Header = "Techniker Login";
-            login.ItemsSource = new string[] { };
+            var login = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = "Techniker Login",
+                ItemsSource = new string[] { }
+            };
             trv_einstellungen.Items.Add(login);
         }
 
@@ -84,10 +86,12 @@ namespace de.as1259.openMPS.UC.Einstellungen
             for (var i = 0; i < dt.Rows.Count; i++)
                 trv_einstellungen.Items.Add(buildMenueItemTechnik(dt.Rows[i].Field<string>("Value"),
                     dt.Rows[i].Field<long>("id")));
-            var logout = new TreeViewItem();
-            logout.IsExpanded = true;
-            logout.Header = "Logout";
-            logout.ItemsSource = new string[] { };
+            var logout = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = "Logout",
+                ItemsSource = new string[] { }
+            };
             trv_einstellungen.Items.Add(logout);
         }
 
@@ -99,9 +103,11 @@ namespace de.as1259.openMPS.UC.Einstellungen
         /// <returns></returns>
         private TreeViewItem buildMenueItem(string header, long id)
         {
-            var item = new TreeViewItem();
-            item.IsExpanded = true;
-            item.Header = header;
+            var item = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = header
+            };
             var dts = CounterConfig.shellDT(
                 "Select * from TRVSETTINGS where Name='settings_trv_item' and isEnabled='1'" +
                 "and hasSubitem='0' and isSubitem='1' and isSubitemOf=" + id + ";");
@@ -128,9 +134,11 @@ namespace de.as1259.openMPS.UC.Einstellungen
         /// <returns></returns>
         private TreeViewItem buildMenueItemTechnik(string header, long id)
         {
-            var item = new TreeViewItem();
-            item.IsExpanded = true;
-            item.Header = header;
+            var item = new TreeViewItem
+            {
+                IsExpanded = true,
+                Header = header
+            };
             var dts = CounterConfig.shellDT(
                 "Select * from TRVSETTINGS where Name like 'settings_trv_item%'  and isEnabled='1'" +
                 "and hasSubitem='0' and isSubitem='1' and isSubitemOf=" + id + ";");

@@ -12,11 +12,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using de.as1259.openMPS.SNMP;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.Tools;
+using de.fearvel.openMPS.SNMP;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Tools;
 using de.fearvel.net;
-namespace de.as1259.openMPS.UC
+namespace de.fearvel.openMPS.UC
 {
     /// <summary>
     ///     Interaktionslogik für geraeteSuchen.xaml
@@ -58,8 +58,8 @@ namespace de.as1259.openMPS.UC
         public void geraeteSuchen_Load(object sender, RoutedEventArgs e)
         {
             loadGridData();
-            var ip = ScanIP.getIPMask();
-            var ipaddr = ScanIP.findIPRange(ScanIP.getIPMask());
+            var ip = ScanIP.GetIpMask();
+            var ipaddr = ScanIP.FindIpRange(ScanIP.GetIpMask());
             var start = ipaddr[0].GetAddressBytes();
             var stop = ipaddr[1].GetAddressBytes();
 
@@ -83,10 +83,10 @@ namespace de.as1259.openMPS.UC
             bt_suchen.Visibility = Visibility.Hidden;
             progress.Value = 0;
 
-            startIpAddress = new IPAddress(ScanIP.convertStringToAddress(tb_ip_rangeStart1.Text + "." + tb_ip_rangeStart2.Text +
+            startIpAddress = new IPAddress(ScanIP.ConvertStringToAddress(tb_ip_rangeStart1.Text + "." + tb_ip_rangeStart2.Text +
                                                         "." + tb_ip_rangeStart3.Text + "." +
                                                         tb_ip_rangeStart4.Text));
-            endIpAddress = new IPAddress(ScanIP.convertStringToAddress(tb_ip_rangeStop1.Text + "." + tb_ip_rangeStop2.Text + "." +
+            endIpAddress = new IPAddress(ScanIP.ConvertStringToAddress(tb_ip_rangeStop1.Text + "." + tb_ip_rangeStop2.Text + "." +
                                                             tb_ip_rangeStop3.Text + "." + tb_ip_rangeStop4.Text));
 
             ThreadPool.QueueUserWorkItem(searchForPrinter);
@@ -156,11 +156,11 @@ namespace de.as1259.openMPS.UC
                         asset = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
                         DeviceTools.updateDevices(
                             "1",
-                            ScanIP.convertStringToAddress(ipAddress.ToString()),
+                            ScanIP.ConvertStringToAddress(ipAddress.ToString()),
                             modell,
                             serial,
                             asset,
-                            ScanIP.convertStringToAddress(ipAddress.ToString())
+                            ScanIP.ConvertStringToAddress(ipAddress.ToString())
                         );
                     }
                     else
@@ -174,7 +174,7 @@ namespace de.as1259.openMPS.UC
                                               ipAddress.ToString() + "'; ");
                         DeviceTools.insertInDevices(
                             "1",
-                            ScanIP.convertStringToAddress(ipAddress.ToString()),
+                            ScanIP.ConvertStringToAddress(ipAddress.ToString()),
                             modell,
                             serial,
                             asset
@@ -222,8 +222,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_rangeStart1.Text = tb_ip_rangeStart1.Text.Replace(".", "");
                 tb_ip_rangeStart1.Text = tb_ip_rangeStart1.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox)sender).MoveFocus(request);
             }
         }
@@ -241,8 +243,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_rangeStart2.Text = tb_ip_rangeStart2.Text.Replace(".", "");
                 tb_ip_rangeStart2.Text = tb_ip_rangeStart2.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox)sender).MoveFocus(request);
             }
         }
@@ -260,8 +264,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_rangeStart3.Text = tb_ip_rangeStart3.Text.Replace(".", "");
                 tb_ip_rangeStart3.Text = tb_ip_rangeStart3.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox)sender).MoveFocus(request);
             }
         }
@@ -279,8 +285,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_rangeStop1.Text = tb_ip_rangeStop1.Text.Replace(".", "");
                 tb_ip_rangeStop1.Text = tb_ip_rangeStop1.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox)sender).MoveFocus(request);
             }
         }
@@ -298,8 +306,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_rangeStop2.Text = tb_ip_rangeStop2.Text.Replace(".", "");
                 tb_ip_rangeStop2.Text = tb_ip_rangeStop2.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox)sender).MoveFocus(request);
             }
         }
@@ -317,8 +327,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_rangeStop3.Text = tb_ip_rangeStop3.Text.Replace(".", "");
                 tb_ip_rangeStop3.Text = tb_ip_rangeStop3.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox)sender).MoveFocus(request);
             }
         }
@@ -332,8 +344,10 @@ namespace de.as1259.openMPS.UC
         {
             tb_ip_rangeStop3.Text = tb_ip_rangeStop3.Text.Replace(".", "");
             tb_ip_rangeStop3.Text = tb_ip_rangeStop3.Text.Replace(" ", "");
-            var request = new TraversalRequest(0);
-            request.Wrapped = true;
+            var request = new TraversalRequest(0)
+            {
+                Wrapped = true
+            };
         }
     }
 }

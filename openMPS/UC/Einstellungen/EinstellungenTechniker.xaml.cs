@@ -11,12 +11,12 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using de.as1259.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools;
 using Image = System.Windows.Controls.Image;
 
 //using Google.Authenticator;
 
-namespace de.as1259.openMPS.UC.Einstellungen
+namespace de.fearvel.openMPS.UC.Einstellungen
 {
     /// <summary>
     ///     Interaktionslogik für EinstellungenTechniker.xaml
@@ -60,8 +60,10 @@ namespace de.as1259.openMPS.UC.Einstellungen
                     bImg.StreamSource = new MemoryStream(ms.ToArray());
                     bImg.EndInit();
 
-                    var img = new Image();
-                    img.Source = bImg;
+                    var img = new Image
+                    {
+                        Source = bImg
+                    };
 
                     return img;
                 }

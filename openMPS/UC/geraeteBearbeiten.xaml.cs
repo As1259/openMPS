@@ -11,11 +11,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using de.as1259.openMPS.SNMP;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.Tools;
+using de.fearvel.openMPS.SNMP;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Tools;
 
-namespace de.as1259.openMPS.UC
+namespace de.fearvel.openMPS.UC
 {
     /// <summary>
     ///     Interaktionslogik für geraeteBearbeiten.xaml
@@ -88,7 +88,7 @@ namespace de.as1259.openMPS.UC
             try
             {
                 drv = (DataRowView) geraeteGrid.SelectedItem;
-                var ipAddress = ScanIP.convertStringToAddress(drv["IP"].ToString());
+                var ipAddress = ScanIP.ConvertStringToAddress(drv["IP"].ToString());
                 unlockElements();
                 bt_del.IsEnabled = true;
                 tb_ip_block1.Text = ipAddress[0].ToString();
@@ -151,7 +151,7 @@ namespace de.as1259.openMPS.UC
             var aktiv = "1";
             try
             {
-                ScanIP.convertStringToAddress(ipAddress);
+                ScanIP.ConvertStringToAddress(ipAddress);
                 if (!(bool) cb_aktiv.IsChecked) aktiv = "0";
                 if (selected)
                 {
@@ -207,7 +207,7 @@ namespace de.as1259.openMPS.UC
             var serial = "";
             var asset = "";
 
-            var ip = ScanIP.convertStringToAddress(ipAddress);
+            var ip = ScanIP.ConvertStringToAddress(ipAddress);
             progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
             if (ident.Length > 0)
@@ -229,7 +229,7 @@ namespace de.as1259.openMPS.UC
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
 
-            var ipAlt = ScanIP.convertStringToAddress(altIP);
+            var ipAlt = ScanIP.ConvertStringToAddress(altIP);
             DeviceTools.updateDevices(
                 aktiv,
                 ip,
@@ -255,7 +255,7 @@ namespace de.as1259.openMPS.UC
             var modell = "";
             var serial = "";
             var asset = "";
-            var ip = ScanIP.convertStringToAddress(ipAddress);
+            var ip = ScanIP.ConvertStringToAddress(ipAddress);
             progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
             if (ident.Length > 0)
@@ -336,8 +336,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_block1.Text = tb_ip_block1.Text.Replace(".", "");
                 tb_ip_block1.Text = tb_ip_block1.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox) sender).MoveFocus(request);
             }
         }
@@ -354,8 +356,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_block2.Text = tb_ip_block2.Text.Replace(".", "");
                 tb_ip_block2.Text = tb_ip_block2.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox) sender).MoveFocus(request);
             }
         }
@@ -372,8 +376,10 @@ namespace de.as1259.openMPS.UC
             {
                 tb_ip_block3.Text = tb_ip_block3.Text.Replace(".", "");
                 tb_ip_block3.Text = tb_ip_block3.Text.Replace(" ", "");
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox) sender).MoveFocus(request);
             }
         }

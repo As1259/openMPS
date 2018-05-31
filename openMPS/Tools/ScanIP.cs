@@ -12,9 +12,9 @@ using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
-using de.as1259.openMPS.SNMP;
+using de.fearvel.openMPS.SNMP;
 
-namespace de.as1259.openMPS.Tools
+namespace de.fearvel.openMPS.Tools
 {
     /// <summary>
     ///     IP Scan Tools
@@ -25,9 +25,9 @@ namespace de.as1259.openMPS.Tools
         ///     Finds the ip range of local machine.
         /// </summary>
         /// <returns></returns>
-        public static IPAddress[] findIPRangeOfLocalMachine()
+        public static IPAddress[] FindIpRangeOfLocalMachine()
         {
-            return findIPRange(getIPMask());
+            return FindIpRange(GetIpMask());
         }
 
         /// <summary>
@@ -35,10 +35,10 @@ namespace de.as1259.openMPS.Tools
         /// </summary>
         /// <param name="ipMask">The ip mask.</param>
         /// <returns></returns>
-        public static IPAddress[] findIPRange(string[] ipMask)
+        public static IPAddress[] FindIpRange(string[] ipMask)
         {
-            var ip = new IPAddress(convertStringToAddress(ipMask[0]));
-            var bits = netmaskToBit(ipMask[1]);
+            var ip = new IPAddress(ConvertStringToAddress(ipMask[0]));
+            var bits = NetmaskToBit(ipMask[1]);
             var mask = ~(uint.MaxValue >> bits);
             // Convert the IP address to bytes.
             var ipBytes = ip.GetAddressBytes();
@@ -62,7 +62,7 @@ namespace de.as1259.openMPS.Tools
         /// </summary>
         /// <param name="mask">The mask.</param>
         /// <returns></returns>
-        public static int netmaskToBit(string mask)
+        public static int NetmaskToBit(string mask)
         {
             var totalBits = 0;
             foreach (var octet in mask.Split('.'))
@@ -83,7 +83,7 @@ namespace de.as1259.openMPS.Tools
         /// </summary>
         /// <param name="s">The s.</param>
         /// <returns></returns>
-        public static byte[] convertStringToAddress(string s)
+        public static byte[] ConvertStringToAddress(string s)
         {
             var ba = new byte[4];
             ba[0] = Convert.ToByte(s.Substring(0, s.IndexOf(".")));
@@ -100,7 +100,7 @@ namespace de.as1259.openMPS.Tools
         ///     Gets the ip mask.
         /// </summary>
         /// <returns></returns>
-        public static string[] getIPMask()
+        public static string[] GetIpMask()
         {
             string[] Adressen = null;
             string[] SubnetMasken = null;
@@ -122,14 +122,16 @@ namespace de.as1259.openMPS.Tools
         /// </summary>
         /// <param name="ip">The ip.</param>
         /// <returns></returns>
-        public static bool pingIP(IPAddress ip)
+        public static bool PingIp(IPAddress ip)
         {
             var pingSender = new Ping();
-            var options = new PingOptions();
+            var options = new PingOptions
+            {
 
-            // Use the default Ttl value which is 128,
-            // but change the fragmentation behavior.
-            options.DontFragment = true;
+                // Use the default Ttl value which is 128,
+                // but change the fragmentation behavior.
+                DontFragment = true
+            };
             var data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             var buffer = Encoding.ASCII.GetBytes(data);
             var timeout = 4;

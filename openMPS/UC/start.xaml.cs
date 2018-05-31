@@ -6,7 +6,7 @@
 
 using System.Windows.Controls;
 
-namespace de.as1259.openMPS.UC
+namespace de.fearvel.openMPS.UC
 {
     /// <summary>
     ///     Interaktionslogik für start.xaml

@@ -8,12 +8,12 @@ using System;
 using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using de.as1259.manastone.serialManagement;
-using de.as1259.openMPS.MYSQLConnectionTools.Connector;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.SQLiteConnectionTools.Connector;
+using de.fearvel.manastone.serialManagement;
+using de.fearvel.openMPS.MYSQLConnectionTools.Connector;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
 
-namespace de.as1259.openMPS.MYSQLConnectionTools
+namespace de.fearvel.openMPS.MYSQLConnectionTools
 {
     /// <summary>
     ///     MYSQL Namespace

@@ -11,11 +11,11 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using de.as1259.openMPS.SNMP;
-using de.as1259.openMPS.SQLiteConnectionTools;
-using de.as1259.openMPS.Tools;
+using de.fearvel.openMPS.SNMP;
+using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Tools;
 
-namespace de.as1259.openMPS.UC
+namespace de.fearvel.openMPS.UC
 {
     /// <summary>
     ///     Interaktionslogik für geraeteInfo.xaml
@@ -43,7 +43,7 @@ namespace de.as1259.openMPS.UC
                 var ip = (string) o[0];
                 var percentage = new double[4];
 
-                if (ScanIP.pingIP(new IPAddress(ScanIP.convertStringToAddress(ip))))
+                if (ScanIP.PingIp(new IPAddress(ScanIP.ConvertStringToAddress(ip))))
                 {
                     var cmd = "Select * from OID where OIDPrivateID ='" + DeviceTools.identDevice(ip) + "';";
                     var OIDVAL = CounterConfig.shellDT(cmd);

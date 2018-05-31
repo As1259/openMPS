@@ -9,7 +9,7 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using MySql.Data.MySqlClient;
 
-namespace de.as1259.openMPS.MYSQLConnectionTools.Connector
+namespace de.fearvel.openMPS.MYSQLConnectionTools.Connector
 {
     /// <summary>
     ///     Main MYSQL Connector Namespace

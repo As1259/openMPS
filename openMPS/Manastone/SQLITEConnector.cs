@@ -9,7 +9,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 
-namespace de.as1259.sql.connectors
+namespace de.fearvel.sql.connectors
 {
     public class SQLITEConnector : SQLConnector
     {

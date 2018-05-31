@@ -3,10 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:de.as1259.openMPS.UC"
+    xmlns:local="clr-namespace:de.fearvel.openMPS.UC"
     xmlns:DesignInControl="clr-namespace:DesignInControl"
 
-    xmlns:fluent="urn:fluent-ribbon" x:Class="de.as1259.openMPS.UC.geraeteInfo"
+    xmlns:fluent="urn:fluent-ribbon" x:Class="de.fearvel.openMPS.UC.geraeteInfo"
     mc:Ignorable="d"
     d:DesignHeight="483" d:DesignWidth="1200"
     Background="White">

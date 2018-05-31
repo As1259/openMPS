@@ -7,7 +7,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace de.as1259.openMPS.UC.Einstellungen
+namespace de.fearvel.openMPS.UC.Einstellungen
 {
     /// <summary>
     ///     Interaktionslogik für TechnikLogin.xaml

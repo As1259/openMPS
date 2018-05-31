@@ -8,9 +8,9 @@ using System.Security.Principal;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using de.as1259.manastone.serialManagement;
+using de.fearvel.manastone.serialManagement;
 
-namespace de.as1259.openMPS
+namespace de.fearvel.openMPS
 {
     /// <summary>
     ///     Interaktionslogik für erstStart.xaml
@@ -134,8 +134,10 @@ namespace de.as1259.openMPS
             if (tb_productkey1.Text.Contains("-")) tb_productkey1.Text = tb_productkey1.Text.Replace("-", "");
             if (tb_productkey1.Text.Length == 7)
             {
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox) sender).MoveFocus(request);
             }
 
@@ -152,8 +154,10 @@ namespace de.as1259.openMPS
             if (tb_productkey2.Text.Contains("-")) tb_productkey2.Text = tb_productkey2.Text.Replace("-", "");
             if (tb_productkey2.Text.Length == 7)
             {
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox) sender).MoveFocus(request);
             }
 
@@ -170,8 +174,10 @@ namespace de.as1259.openMPS
             if (tb_productkey3.Text.Contains("-")) tb_productkey3.Text = tb_productkey3.Text.Replace("-", "");
             if (tb_productkey2.Text.Length == 7)
             {
-                var request = new TraversalRequest(FocusNavigationDirection.Next);
-                request.Wrapped = true;
+                var request = new TraversalRequest(FocusNavigationDirection.Next)
+                {
+                    Wrapped = true
+                };
                 ((TextBox) sender).MoveFocus(request);
             }
 

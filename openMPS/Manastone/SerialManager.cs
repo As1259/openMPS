@@ -5,9 +5,9 @@
 #endregion
 
 using System;
-using de.as1259.manastone.serialManagement.InstallBased;
+using de.fearvel.manastone.serialManagement.InstallBased;
 
-namespace de.as1259.manastone.serialManagement
+namespace de.fearvel.manastone.serialManagement
 {
     public static class SerialManager
     {

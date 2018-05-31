@@ -8,7 +8,7 @@ using System;
 using System.Data;
 using System.Data.Common;
 
-namespace de.as1259.sql.connectors
+namespace de.fearvel.sql.connectors
 {
     public abstract class SQLConnector
     {

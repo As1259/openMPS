@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace de.as1259.openMPS.Tools
+namespace de.fearvel.openMPS.Tools
 {
     internal class MAPI
     {
@@ -135,9 +135,11 @@ namespace de.as1259.openMPS.Tools
         /// <returns></returns>
         private int SendMail(string strSubject, string strBody, int how)
         {
-            var msg = new MapiMessage();
-            msg.subject = strSubject;
-            msg.noteText = strBody;
+            var msg = new MapiMessage
+            {
+                subject = strSubject,
+                noteText = strBody
+            };
 
             msg.recips = GetRecipients(out msg.recipCount);
             msg.files = GetAttachments(out msg.fileCount);
@@ -159,9 +161,11 @@ namespace de.as1259.openMPS.Tools
         /// <returns></returns>
         private bool AddRecipient(string email, HowTo howTo)
         {
-            var recipient = new MapiRecipDesc();
-            recipient.recipClass = (int) howTo;
-            recipient.name = email;
+            var recipient = new MapiRecipDesc
+            {
+                recipClass = (int)howTo,
+                name = email
+            };
             m_recipients.Add(recipient);
             return true;
         }
@@ -206,8 +210,10 @@ namespace de.as1259.openMPS.Tools
                 return IntPtr.Zero;
             var size = Marshal.SizeOf(typeof(MapiFileDesc));
             var intPtr = Marshal.AllocHGlobal(m_attachments.Count * size);
-            var mapiFileDesc = new MapiFileDesc();
-            mapiFileDesc.position = -1;
+            var mapiFileDesc = new MapiFileDesc
+            {
+                position = -1
+            };
             var ptr = (int) intPtr;
             foreach (var strAttachment in m_attachments)
             {

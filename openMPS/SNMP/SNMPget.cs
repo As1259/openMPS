@@ -8,10 +8,10 @@ using System;
 using System.Data;
 using System.Net;
 using System.Runtime.CompilerServices;
-using de.as1259.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools;
 using SnmpSharpNet;
 
-namespace de.as1259.openMPS.SNMP
+namespace de.fearvel.openMPS.SNMP
 {
     /// <summary>
     ///     SNMP Namespace
@@ -213,8 +213,10 @@ namespace de.as1259.openMPS.SNMP
                 if (OID.Length > 0)
                 {
                     var community = new OctetString("public");
-                    var param = new AgentParameters(community);
-                    param.Version = SnmpVersion.Ver1;
+                    var param = new AgentParameters(community)
+                    {
+                        Version = SnmpVersion.Ver1
+                    };
                     var agent = new IpAddress(ip);
                     var target = new UdpTarget((IPAddress) agent, 161, 2000, 1);
                     var pdu = new Pdu(PduType.Get);

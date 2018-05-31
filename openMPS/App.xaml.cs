@@ -6,7 +6,7 @@
 
 using System.Windows;
 
-namespace de.as1259.openMPS
+namespace de.fearvel.openMPS
 {
     /// <summary>
     ///     Interaktionslogik für "App.xaml"

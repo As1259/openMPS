@@ -6,7 +6,7 @@
 
 using System;
 
-namespace de.as1259.manastone.serialManagement
+namespace de.fearvel.manastone.serialManagement
 {
     public abstract class Serial
     {

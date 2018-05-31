@@ -8,9 +8,9 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using de.as1259.openMPS.SQLiteConnectionTools.Connector;
+using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
 
-namespace de.as1259.openMPS.SQLiteConnectionTools
+namespace de.fearvel.openMPS.SQLiteConnectionTools
 {
     /// <summary>
     ///     contains the static sqlite connections.

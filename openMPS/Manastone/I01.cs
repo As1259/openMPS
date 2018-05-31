@@ -9,7 +9,7 @@ using System.Data.HashFunction;
 using System.Globalization;
 using System.Linq;
 
-namespace de.as1259.manastone.serialManagement.InstallBased
+namespace de.fearvel.manastone.serialManagement.InstallBased
 {
     public class I01 : Serial
     {

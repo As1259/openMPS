@@ -10,9 +10,9 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using de.as1259.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.SQLiteConnectionTools;
 
-namespace de.as1259.openMPS.UC.Einstellungen
+namespace de.fearvel.openMPS.UC.Einstellungen
 {
     /// <summary>
     ///     Interaktionslogik für EinstellungenOID.xaml

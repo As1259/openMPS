@@ -10,7 +10,7 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace de.as1259.openMPS.SQLiteConnectionTools.Connector
+namespace de.fearvel.openMPS.SQLiteConnectionTools.Connector
 {
     /// <summary>
     ///     Sqlite main connection

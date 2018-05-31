@@ -76,7 +76,6 @@ C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\geraet
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\geraeteSuchen.baml
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\start.baml
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.g.resources
-C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\de.as1259.openMPS.Properties.Resources.resources
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.csproj.GenerateResource.cache
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.csproj.CoreCompileInputs.cache
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.TrustInfo.xml
@@ -87,3 +86,4 @@ C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.e
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.pdb
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\de.fearvel.net.dll
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\de.fearvel.net.pdb
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\de.fearvel.openMPS.Properties.Resources.resources
