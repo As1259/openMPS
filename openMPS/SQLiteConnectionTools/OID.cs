@@ -32,16 +32,16 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         {
             GenerateInformationTable();
             GenerateOidTable();
-            }
+        }
 
         public void GenerateInformationTable()
         {
-            NonQuery("CREATE TABLE IF NOT EXISTS Version" +
-                     " (Identifier varchar(200),val varchar(30)," +
+            NonQuery("CREATE TABLE IF NOT EXISTS Directory" +
+                     " (Identifier varchar(200),val Text," +
                      " CONSTRAINT uq_Version_Identifier UNIQUE (Identifier));");
-            if (Query("SELECT * FROM Version").Rows.Count == 0)
+            if (Query("SELECT * FROM Directory").Rows.Count == 0)
             {
-                NonQuery("INSERT INTO Version (Identifier,val) VALUES ('OID','0.0.0.0');");
+                NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('OID-Version','0.0.0.0');");
             }
         }
 

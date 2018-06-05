@@ -66,8 +66,7 @@ namespace de.fearvel.openMPS
                 grid_settings.Children.Add(new EinstellungenMainV2());
 
                 LoadDatabases();
-                Collector.openENC(ERFASSUNGNAME);
-                Collector.disableENC();
+
                 var a = new openRegistration();
                 a.ShowDialog();
             }

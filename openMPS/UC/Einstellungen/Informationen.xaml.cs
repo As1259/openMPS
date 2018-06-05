@@ -45,8 +45,8 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         public void loadFields()
         {
            // lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
-            lbl_val_PV.Content = $"{Config.GetInstance().Version["MPS"]}";
-            lbl_val_OIDV.Content = $"{OID.GetInstance().Version["OID"]}";
+            lbl_val_PV.Content = $"{Config.GetInstance().Directory["MPS-Version"]}";
+            lbl_val_OIDV.Content = $"{OID.GetInstance().Directory["OID-Version"]}";
         }
 
         private string FillNumberStrings(string s, int l)

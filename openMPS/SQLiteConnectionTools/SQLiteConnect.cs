@@ -12,33 +12,33 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         ///     Contains the connection to the config SQLITE
         /// </summary>
 
-        private Dictionary<string, string> _version;
+        private Dictionary<string, string> _directory;
 
         protected abstract string FileName { get; }
         protected string FilePath = Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.ApplicationData), "oMPS");
-        public Dictionary<string, string> Version
+        public Dictionary<string, string> Directory
         {
             get
             {
-                if (_version.Count == 0)
+                if (_directory.Count == 0)
                 {
-                    GetVersion();
+                    ReadFromDirectory();
                 }
 
-                return _version;
+                return _directory;
 
             }
-            private set => _version = value;
+            private set => _directory = value;
         }
 
-        private void GetVersion()
+        private void ReadFromDirectory()
         {
             try
             {
-                foreach (DataRow ds in _connection.Query("select * from Version;").Rows)
+                foreach (DataRow ds in _connection.Query("select * from Directory;").Rows)
                 {
-                    _version.Add(ds.Field<string>("Identifier"), ds.Field<string>("val"));
+                    _directory.Add(ds.Field<string>("Identifier"), ds.Field<string>("val"));
                 }
             }
             catch (Exception)
@@ -50,7 +50,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
 
         protected SqLiteConnect()
         {
-            Version = new Dictionary<string, string>();
+            Directory = new Dictionary<string, string>();
         }
 
 
@@ -73,7 +73,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             try
             {
                 _connection = new SqliteConnector(name);
-                GetVersion();
+                ReadFromDirectory();
                 _opened = true;
             }
             catch (Exception)
@@ -87,7 +87,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             try
             {
                 _connection = new SqliteConnector(name, GetCPUUID());
-                GetVersion();
+                ReadFromDirectory();
                 _opened = true;
             }
             catch (Exception)
@@ -101,7 +101,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             try
             {
                 _connection = new SqliteConnector(name, key);
-                GetVersion();
+                ReadFromDirectory();
                 _opened = true;
             }
             catch (Exception)
@@ -165,8 +165,8 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
 
         private void CheckPath()
         {
-            if (Directory.Exists(FilePath)) return;
-            Directory.CreateDirectory(FilePath);
+            if (System.IO.Directory.Exists(FilePath)) return;
+            System.IO.Directory.CreateDirectory(FilePath);
         }
         /// <summary>
         ///     Closes this connection.
