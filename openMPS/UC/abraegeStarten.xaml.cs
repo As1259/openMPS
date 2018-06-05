@@ -181,7 +181,7 @@ namespace de.fearvel.openMPS.UC
         {
             DataTable dt;
             Collector.shell("Delete from Collector;");
-            dt = CounterConfig.shellDT("select *  from Devices where aktiv='1' or aktiv='True'");
+            dt =Config.GetInstance().Query("select *  from Devices where aktiv='1' or aktiv='True'");
 
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")).Length > 0)
@@ -197,7 +197,7 @@ namespace de.fearvel.openMPS.UC
         /// <param name="state">The state.</param>
         private void UpdateDataGrid(object state)
         {
-            if (SerialManager.CheckLicence(MainWindow.PROGRAMID))
+            if (SerialManager.CheckLicence(MainWindow.Programid))
             {
                 var dt = gainData();
                 dt = Collector.shellDT("Select * from Collector");
@@ -205,7 +205,7 @@ namespace de.fearvel.openMPS.UC
                 geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(updateGrid));
                 Collector.shellDT("update INFO set Erfassungsdatum='" + DateTime.Now.ToString("yyyy-MM-dd") + "';");
                 Collector.shellDT("update INFO set Kundennummer='" +
-                                  SerialManager.GetSerialContainer(MainWindow.PROGRAMID).CustomerIdentificationNumber +
+                                  SerialManager.GetSerialContainer(MainWindow.Programid).CustomerIdentificationNumber +
                                   "';");
 
                 bt_client.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_clientEnable));
@@ -242,25 +242,25 @@ namespace de.fearvel.openMPS.UC
                 Collector.shellDT("update INFO set Uebertragungsweg='smtpSend';");
                 var filename = prepareOpenMPSFile();
                 var mail = new MailMessage();
-                var SmtpServer = new SmtpClient(CounterConfig
-                    .shellDT("select * from CREDENTIALS where Name = 'conn_smtp_server'").Rows[0]
+                var SmtpServer = new SmtpClient(Config
+                    .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_server'").Rows[0]
                     .Field<string>("Value"));
 
-                mail.From = new MailAddress(CounterConfig
-                    .shellDT("select * from CREDENTIALS where Name = 'conn_smtp_sendaddress'").Rows[0]
+                mail.From = new MailAddress(Config
+                    .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_sendaddress'").Rows[0]
                     .Field<string>("Value"));
-                mail.To.Add(CounterConfig
-                    .shellDT("select * from CREDENTIALS where Name = 'conn_smtp_receiveaddress'").Rows[0]
+                mail.To.Add(Config
+                    .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_receiveaddress'").Rows[0]
                     .Field<string>("Value"));
                 mail.Subject = "MPS2018 Gerätedaten";
                 mail.Body = "MPS2018 Gerätedaten";
                 mail.Attachments.Add(new Attachment(filename));
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new NetworkCredential(CounterConfig
-                        .shellDT("select * from CREDENTIALS where Name = 'conn_smtp_user'").Rows[0]
+                SmtpServer.Credentials = new NetworkCredential(Config
+                        .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_user'").Rows[0]
                         .Field<string>("Value"),
-                    CounterConfig.shellDT("select * from CREDENTIALS " +
+                   Config.GetInstance().Query("select * from CREDENTIALS " +
                                           "where Name = 'conn_smtp_password'").Rows[0].Field<string>("Value"));
                 SmtpServer.EnableSsl = true;
 
@@ -283,13 +283,13 @@ namespace de.fearvel.openMPS.UC
 
         private string prepareOpenMPSFile()
         {
-            Collector.shellDT("update INFO set version=" + CounterConfig.shellDT(
+            Collector.shellDT("update INFO set version=" +Config.GetInstance().Query(
                                   "Select version from INFO").Rows[0].Field<long>("version") + ";");
-            Collector.shellDT("update INFO set OIDversion=" + CounterConfig.shellDT(
+            Collector.shellDT("update INFO set OIDversion=" +Config.GetInstance().Query(
                                   "Select OIDversion from INFO").Rows[0].Field<long>("OIDversion") + ";");
 
             var filename =
-                "DateiZumSenden-" + SerialManager.GetSerialContainer(MainWindow.PROGRAMID).CustomerIdentificationNumber
+                "DateiZumSenden-" + SerialManager.GetSerialContainer(MainWindow.Programid).CustomerIdentificationNumber
                                   + "_" + DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + ".oMPS";
             File.Copy("CollectionData.oData", filename);
             var fInfo = new FileInfo(filename)
@@ -317,8 +317,8 @@ namespace de.fearvel.openMPS.UC
                 + Directory.GetCurrentDirectory() + "\\" + filename;
             var mail = new MAPI();
             mail.AddAttachment(filename);
-            mail.AddRecipientTo(CounterConfig
-                .shellDT("select * from CREDENTIALS where Name = 'conn_smtp_sendaddress'")
+            mail.AddRecipientTo(Config
+                .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_sendaddress'")
                 .Rows[0].Field<string>("Value"));
             try
             {

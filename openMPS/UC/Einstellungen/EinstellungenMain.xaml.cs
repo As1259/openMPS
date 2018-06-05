@@ -61,7 +61,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         /// </summary>
         private void loadTreeview()
         {
-            var dt = CounterConfig.shellDT(
+            var dt =Config.GetInstance().Query(
                 "Select * from TRVSETTINGS where Name='settings_trv_item' and isEnabled='1' and isSubitem='0' and hasSubitem='1'");
             for (var i = 0; i < dt.Rows.Count; i++)
                 trv_einstellungen.Items.Add(buildMenueItem(dt.Rows[i].Field<string>("Value"),
@@ -81,7 +81,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         /// </summary>
         private void loadTreeviewTechnik()
         {
-            var dt = CounterConfig.shellDT(
+            var dt =Config.GetInstance().Query(
                 "Select * from TRVSETTINGS where Name like 'settings_trv_item%' and isEnabled='1' and isSubitem='0' and hasSubitem='1'");
             for (var i = 0; i < dt.Rows.Count; i++)
                 trv_einstellungen.Items.Add(buildMenueItemTechnik(dt.Rows[i].Field<string>("Value"),
@@ -108,7 +108,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 IsExpanded = true,
                 Header = header
             };
-            var dts = CounterConfig.shellDT(
+            var dts =Config.GetInstance().Query(
                 "Select * from TRVSETTINGS where Name='settings_trv_item' and isEnabled='1'" +
                 "and hasSubitem='0' and isSubitem='1' and isSubitemOf=" + id + ";");
             if (dts.Rows.Count > 0)
@@ -118,7 +118,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 item.ItemsSource = data;
             }
 
-            dts = CounterConfig.shellDT(
+            dts =Config.GetInstance().Query(
                 "Select * from TRVSETTINGS where Name='settings_trv_item' and isEnabled='1'" +
                 "and hasSubitem='1' and isSubitem='1' and isSubitemOf=" + id + ";");
             for (var k = 0; k < dts.Rows.Count; k++)
@@ -139,7 +139,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 IsExpanded = true,
                 Header = header
             };
-            var dts = CounterConfig.shellDT(
+            var dts =Config.GetInstance().Query(
                 "Select * from TRVSETTINGS where Name like 'settings_trv_item%'  and isEnabled='1'" +
                 "and hasSubitem='0' and isSubitem='1' and isSubitemOf=" + id + ";");
             if (dts.Rows.Count > 0)
@@ -149,7 +149,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 item.ItemsSource = data;
             }
 
-            dts = CounterConfig.shellDT(
+            dts =Config.GetInstance().Query(
                 "Select * from TRVSETTINGS where Name='settings_trv_item' and isEnabled='1'" +
                 "and hasSubitem='1' and isSubitem='1' and isSubitemOf=" + id + ";");
             for (var k = 0; k < dts.Rows.Count; k++)
@@ -171,7 +171,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             {
                 var cmd = "Select * from TRVSETTINGS where not UC=-1 and Value='" + trv_einstellungen.SelectedValue +
                           "';";
-                var dt = CounterConfig.shellDT(cmd);
+                var dt =Config.GetInstance().Query(cmd);
                 if (dt.Rows.Count == 1)
                 {
                     grid_setting.Children.Clear();

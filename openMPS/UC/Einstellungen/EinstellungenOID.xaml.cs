@@ -53,7 +53,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         /// </summary>
         private void loadDataGridData()
         {
-            dg_data.ItemsSource = CounterConfig.shellDT("select * from OID").DefaultView;
+            dg_data.ItemsSource =Config.GetInstance().Query("select * from OID").DefaultView;
         }
 
         /// <summary>
@@ -61,8 +61,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         /// </summary>
         private void loadOIDV()
         {
-            OIDV.Content = CounterConfig.shellDT("select * from INFO").Rows[0].Field<long>("OIDVersion")
-                .ToString();
+            OIDV.Content = $"{OID.GetInstance().Version["OID"]:N2}";
         }
     }
 }

@@ -8,8 +8,7 @@ using System;
 using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
-
+using de.fearvel.net.SQL.Connector;
 namespace de.fearvel.openMPS.SQLiteConnectionTools
 {
     /// <summary>
@@ -25,12 +24,12 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
     /// </summary>
     public static class Collector
     {
-        private const string ENCKEY = "aWHXzuLJxUWZ9UMSCpx4Y49Ubzh2h3QhQq7eHJP5vCVupybQMzJCtJnv9vmgp3r4";
+        private const string Enckey = "aWHXzuLJxUWZ9UMSCpx4Y49Ubzh2h3QhQq7eHJP5vCVupybQMzJCtJnv9vmgp3r4";
 
         /// <summary>
         ///     The connection
         /// </summary>
-        private static SQLiteConnector connection;
+        private static SqliteConnector _connection;
 
         /// <summary>
         ///     boolean that contains the information of the status of the Sqlite connection
@@ -45,7 +44,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         {
             try
             {
-                connection = new SQLiteConnector(name);
+                _connection = new SqliteConnector(name);
                 checkFile();
                 opened = true;
             }
@@ -63,7 +62,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         {
             try
             {
-                connection = new SQLiteConnector(name, ENCKEY);
+                _connection = new SqliteConnector(name, Enckey);
                 checkFile();
                 opened = true;
             }
@@ -76,12 +75,12 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
 
         public static void enableENC()
         {
-            connection.setPassword(ENCKEY);
+            _connection.SetPassword(Enckey);
         }
 
         public static void disableENC()
         {
-            connection.setPassword("");
+            _connection.SetPassword("");
         }
 
         /// <summary>
@@ -90,7 +89,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         public static void close()
         {
             if (opened)
-                connection.close();
+                _connection.Close();
             else
                 throw new SQLiteErfassungException();
         }
@@ -102,7 +101,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         public static void shell(string cmd)
         {
             if (opened)
-                connection.sqlShell(cmd);
+                _connection.NonQuery(cmd);
             else
                 throw new SQLiteErfassungException();
         }
@@ -116,7 +115,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         public static DataTable shellDT(string cmd)
         {
             if (opened)
-                return connection.sqlShellDT(cmd);
+                return _connection.Query(cmd);
             throw new SQLiteErfassungException();
         }
 
@@ -127,7 +126,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         {
             try
             {
-                connection.sqlShellDT("select * from INFO;");
+                _connection.Query("select * from INFO;");
             }
             catch (Exception e)
             {

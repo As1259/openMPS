@@ -32,7 +32,7 @@ namespace de.fearvel.openMPS.Tools
         /// <returns></returns>
         public static string identDevice(string ip)
         {
-            var dt = CounterConfig.shellDT("Select * from OID");
+            var dt =Config.GetInstance().Query("Select * from OID");
             var profile = SNMPget.getOIDValue(ip, "1.3.6.1.2.1.1.2.0");
             for (var i = 0; i < dt.Rows.Count; i++)
             {
@@ -66,7 +66,7 @@ namespace de.fearvel.openMPS.Tools
                 + " Seriennummer='" + serial + "',"
                 + " AssetNumber='" + assetNumber + "'"
                 + " where ip='" + altIP[0] + "." + altIP[1] + "." + altIP[2] + "." + altIP[3] + "';";
-            CounterConfig.shell(cmd);
+            Config.GetInstance().NonQuery(cmd);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace de.fearvel.openMPS.Tools
                 + " '" + serial + "',"
                 + " '" + assetNumber + "'"
                 + ");";
-            CounterConfig.shell(cmd);
+            Config.GetInstance().NonQuery(cmd);
         }
     }
 }

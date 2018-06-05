@@ -30,7 +30,7 @@ namespace de.fearvel.openMPS.UC
 
         public void geraeteInfo_Load(object sender, RoutedEventArgs e)
         {
-            var dt = CounterConfig.shellDT("Select * from Devices");
+            var dt =Config.GetInstance().Query("Select * from Devices");
 
             for (var i = 0; i < dt.Rows.Count; i++) lv_geraete.Items.Add(dt.Rows[i].Field<string>("IP"));
         }
@@ -46,7 +46,7 @@ namespace de.fearvel.openMPS.UC
                 if (ScanIP.PingIp(new IPAddress(ScanIP.ConvertStringToAddress(ip))))
                 {
                     var cmd = "Select * from OID where OIDPrivateID ='" + DeviceTools.identDevice(ip) + "';";
-                    var OIDVAL = CounterConfig.shellDT(cmd);
+                    var OIDVAL =Config.GetInstance().Query(cmd);
                     percentage[0] =
                         Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("BlackLevel"))) /
                         Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("BlackLevelMax"))) * 100;

@@ -164,7 +164,7 @@ namespace de.fearvel.openMPS.SNMP
         {
             string[] OIDValues = null;
             DataTable dt;
-            dt = CounterConfig.shellDT("Select * from OID where OIDPrivateID='" + ident + "'");
+            dt =Config.GetInstance().Query("Select * from OID where OIDPrivateID='" + ident + "'");
             var s = new string[abgefragteOIDS.Length];
 
             for (var i = 0; i < abgefragteOIDS.Length; i++) s[i] = dt.Rows[0].Field<string>(abgefragteOIDS[i]);

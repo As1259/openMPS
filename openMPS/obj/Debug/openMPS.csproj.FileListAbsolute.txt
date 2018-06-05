@@ -87,3 +87,9 @@ C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.p
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\de.fearvel.net.dll
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\de.fearvel.net.pdb
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\de.fearvel.openMPS.Properties.Resources.resources
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\Einstellungen\EinstellungenMainV2.g.cs
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\Einstellungen\EinstellungenMainV2.baml
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\Google.Protobuf.dll
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\de.fearvel.net.dll.config
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\Google.Protobuf.xml
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\bin\Debug\MySql.Data.xml

@@ -1,8 +1,4 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018, Andreas Schreiner
 
 using System.Security.Principal;
 using System.Windows;

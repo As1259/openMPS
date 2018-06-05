@@ -61,7 +61,7 @@ namespace de.fearvel.openMPS.UC
         /// </summary>
         public void loadGridData()
         {
-            dt = CounterConfig.shellDT("Select * from devices");
+            dt =Config.GetInstance().Query("Select * from devices");
             geraeteGrid.ItemsSource = dt.DefaultView;
             //   geraeteGrid.IsReadOnly = true;
             geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
@@ -157,7 +157,7 @@ namespace de.fearvel.openMPS.UC
                 {
                     if (drv["IP"].ToString().CompareTo(ipAddress) == 0)
                     {
-                        CounterConfig.shell("update Devices set Aktiv='" + aktiv + "' where IP='" + ipAddress +
+                        Config.GetInstance().NonQuery("update Devices set Aktiv='" + aktiv + "' where IP='" + ipAddress +
                                             "';");
                         loadGridData();
                         lockElements();
@@ -171,7 +171,7 @@ namespace de.fearvel.openMPS.UC
                 }
                 else
                 {
-                    if (CounterConfig.shellDT(
+                    if (Config.GetInstance().Query(
                             "Select * from Devices where ip='" + ipAddress + "'").Rows.Count > 0)
                     {
                         MessageBox.Show(
@@ -212,7 +212,7 @@ namespace de.fearvel.openMPS.UC
 
             if (ident.Length > 0)
             {
-                var dt = CounterConfig.shellDT("select * from OID where OIDPrivateID='" + ident + "'");
+                var dt =Config.GetInstance().Query("select * from OID where OIDPrivateID='" + ident + "'");
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 modell = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
@@ -260,7 +260,7 @@ namespace de.fearvel.openMPS.UC
 
             if (ident.Length > 0)
             {
-                var dt = CounterConfig.shellDT("select * from OID where OIDPrivateID='" + ident + "'");
+                var dt =Config.GetInstance().Query("select * from OID where OIDPrivateID='" + ident + "'");
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 modell = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
@@ -401,7 +401,7 @@ namespace de.fearvel.openMPS.UC
             if (selected)
                 try
                 {
-                    CounterConfig.shell("delete from Devices where IP='" + ipAddress + "';");
+                    Config.GetInstance().NonQuery("delete from Devices where IP='" + ipAddress + "';");
                     loadGridData();
                 }
                 catch (Exception)

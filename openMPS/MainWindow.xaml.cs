@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using de.fearvel.openMPS.SQLiteConnectionTools;
 using de.fearvel.openMPS.UC;
 using de.fearvel.openMPS.UC.Einstellungen;
+using Fluent;
 
 namespace de.fearvel.openMPS
 {
@@ -30,7 +31,7 @@ namespace de.fearvel.openMPS
         /// </summary>
         public const string ERFASSUNGNAME = @"core\oMPS.oData";
 
-        public static int PROGRAMID = 10001;
+        public static int Programid = 10001;
 
         /// <summary>
         ///     The ucontrol
@@ -56,26 +57,34 @@ namespace de.fearvel.openMPS
             //zurueck.IsEnabled = false;
             try
             {
-                ucontrol[0] = new geraeteSuchen();
+                ucontrol[0] = new GeraeteSuchen();
                 ucontrol[1] = new geraeteBearbeiten();
                 ucontrol[2] = new AbraegeStarten();
                 openSuchen();
                 grid_help.Children.Add(new start());
 
-                grid_settings.Children.Add(new EinstellungenMain());
+                grid_settings.Children.Add(new EinstellungenMainV2());
 
-                CounterConfig.openENC(CONFIGNAME);
+                LoadDatabases();
                 Collector.openENC(ERFASSUNGNAME);
+                Collector.disableENC();
                 var a = new openRegistration();
                 a.ShowDialog();
             }
-            catch (SQLiteZaehlerConfigException)
+            catch (MPSSQLiteException)
             {
                 MessageBox.Show("Fehler!!\nKonfigurationsdatei nicht gefunden!!\nFehlercode. 55534552\n",
                     "!!!Kritischer Fehler!!!\n"
                     , MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
             }
+        }
+
+        private void LoadDatabases()
+        {
+            Config.GetInstance().Open();
+            OID.GetInstance().Open();
+
         }
 
         /// <summary>

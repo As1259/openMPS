@@ -40,7 +40,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         private void bt_SQLite_dec_Click(object sender, RoutedEventArgs e)
         {
             Collector.disableENC();
-            CounterConfig.disableENC();
+            Config.GetInstance().DisableEncryption();
         }
 
         public static Image ConvertImageToWpfImage(System.Drawing.Image image)
@@ -73,7 +73,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         private void bt_SQLite_enc_Click(object sender, RoutedEventArgs e)
         {
             Collector.enableENC();
-            CounterConfig.enableENC();
+            Config.GetInstance().EnableEncryption();
         }
     }
 }

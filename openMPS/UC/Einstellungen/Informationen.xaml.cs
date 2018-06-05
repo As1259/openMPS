@@ -44,13 +44,9 @@ namespace de.fearvel.openMPS.UC.Einstellungen
 
         public void loadFields()
         {
-            var dtInfo = CounterConfig.shellDT("Select * from Info");
-            var sc = SerialManager.GetSerialContainer(MainWindow.PROGRAMID);
-            var serial = sc.SerialNumber;
-
-            lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
-            lbl_val_PV.Content = dtInfo.Rows[0].Field<long>("version").ToString();
-            lbl_val_OIDV.Content = dtInfo.Rows[0].Field<long>("OIDVersion").ToString();
+           // lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
+            lbl_val_PV.Content = $"{Config.GetInstance().Version["MPS"]}";
+            lbl_val_OIDV.Content = $"{OID.GetInstance().Version["OID"]}";
         }
 
         private string FillNumberStrings(string s, int l)
@@ -71,7 +67,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                     {
                         var sqlCon = new SQLiteConnector(dia.FileName, ENCKEY);
                         var dt = sqlCon.sqlShellDT("Select * from DEVICES");
-                        CounterConfig.shell("Delete from Devices");
+                        Config.GetInstance().NonQuery("Delete from Devices");
 
 
                         for (var i = 0; i < dt.Rows.Count; i++)
@@ -85,7 +81,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                                          + "'" + dt.Rows[i].Field<string>("Seriennummer") + "',"
                                          + "'" + dt.Rows[i].Field<string>("AssetNumber") + "');";
 
-                            CounterConfig.shell(sqlCMD);
+                            Config.GetInstance().NonQuery(sqlCMD);
                         }
                     }
                     catch (Exception)
@@ -96,7 +92,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                     {
                         var sqlCon = new SQLiteConnector(dia.FileName);
                         var dt = sqlCon.sqlShellDT("Select * from bekanntegeraete");
-                        CounterConfig.shell("Delete from Devices");
+                        Config.GetInstance().NonQuery("Delete from Devices");
 
 
                         for (var i = 0; i < dt.Rows.Count; i++)
@@ -110,7 +106,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                                          + "'" + dt.Rows[i].Field<string>("Seriennummer") + "',"
                                          + "'" + dt.Rows[i].Field<string>("AssetNumber") + "');";
 
-                            CounterConfig.shell(sqlCMD);
+                            Config.GetInstance().NonQuery(sqlCMD);
                         }
                     }
                     catch (Exception)
@@ -141,7 +137,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 try
                 {
                     var sqlCon = createPreparedFile(dia.FileName);
-                    var dt = CounterConfig.shellDT("Select * from DEVICES");
+                    var dt =Config.GetInstance().Query("Select * from DEVICES");
                     for (var i = 0; i < dt.Rows.Count; i++)
                     {
                         var aktiv = 0;
@@ -178,29 +174,29 @@ namespace de.fearvel.openMPS.UC.Einstellungen
 
         private void bt_updoid_online_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                CollectionToMysql.open(
-                    CounterConfig.shellDT("select * from CREDENTIALS where Name='conn_mysql_oid_server'").Rows[0]
-                        .Field<string>("Value"),
-                    CounterConfig.shellDT("select * from CREDENTIALS where Name='conn_mysql_oid_startdb'").Rows[0]
-                        .Field<string>("Value"),
-                    CounterConfig.shellDT("select * from CREDENTIALS where Name='conn_mysql_oid_user'").Rows[0]
-                        .Field<string>("Value"),
-                    CounterConfig.shellDT("select * from CREDENTIALS where Name='conn_mysql_oid_password'").Rows[0]
-                        .Field<string>("Value"),
-                    Convert.ToInt32(CounterConfig.shellDT("select * from CREDENTIALS where Name='conn_mysql_oid_port'")
-                        .Rows[0].Field<string>(
-                            "Value"))); //port            MYSQLConnectionTools.CollectionToMysql.writeToExternMYSQL();
-                CollectionToMysql.updateOID();
-                CollectionToMysql.close();
-                loadFields();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Es konte keine Verbindung zum Server hergestellt werden", "ERROR", MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-            }
+            //try
+            //{
+            //    CollectionToMysql.open(
+            //       oMPSConfig.GetInstance().Query("select * from CREDENTIALS where Name='conn_mysql_oid_server'").Rows[0]
+            //            .Field<string>("Value"),
+            //       oMPSConfig.GetInstance().Query("select * from CREDENTIALS where Name='conn_mysql_oid_startdb'").Rows[0]
+            //            .Field<string>("Value"),
+            //       oMPSConfig.GetInstance().Query("select * from CREDENTIALS where Name='conn_mysql_oid_user'").Rows[0]
+            //            .Field<string>("Value"),
+            //       oMPSConfig.GetInstance().Query("select * from CREDENTIALS where Name='conn_mysql_oid_password'").Rows[0]
+            //            .Field<string>("Value"),
+            //        Convert.ToInt32(oMPSConfig.GetInstance().Query("select * from CREDENTIALS where Name='conn_mysql_oid_port'")
+            //            .Rows[0].Field<string>(
+            //                "Value"))); //port            MYSQLConnectionTools.CollectionToMysql.writeToExternMYSQL();
+            //    CollectionToMysql.updateOID();
+            //    CollectionToMysql.close();
+            //    loadFields();
+            //}
+            //catch (Exception)
+            //{
+            //    MessageBox.Show("Es konte keine Verbindung zum Server hergestellt werden", "ERROR", MessageBoxButton.OK,
+            //        MessageBoxImage.Error);
+            //}
         }
 
         private void bt_updoid_file_Click(object sender, RoutedEventArgs e)
@@ -228,13 +224,13 @@ namespace de.fearvel.openMPS.UC.Einstellungen
 
         private void Bt_deactivate_OnClick(object sender, RoutedEventArgs e)
         {
-            SerialManager.DeleteSerialFromStorage(SerialManager.GetSerialContainer(MainWindow.PROGRAMID).SerialNumber);
+            SerialManager.DeleteSerialFromStorage(SerialManager.GetSerialContainer(MainWindow.Programid).SerialNumber);
             Environment.Exit(0);
         }
 
         private void bt_delUserdata_Click(object sender, RoutedEventArgs e)
         {
-            CounterConfig.shell("Delete from DEVICES");
+            Config.GetInstance().NonQuery("Delete from DEVICES");
             Collector.shell("Delete from Collector");
             Collector.shell("update INFO set ErfassungsDatum =  null, Kundennummer = '', Uebertragungsweg = ''");
         }
