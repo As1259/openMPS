@@ -9,10 +9,8 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using de.fearvel.manastone.serialManagement;
-using de.fearvel.openMPS.MYSQLConnectionTools.Connector;
+using de.fearvel.net.SQL.Connector;
 using de.fearvel.openMPS.SQLiteConnectionTools;
-using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
-
 namespace de.fearvel.openMPS.MYSQLConnectionTools
 {
     /// <summary>
@@ -32,7 +30,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         /// <summary>
         ///     The connection
         /// </summary>
-        private static MYSQLConnector connection;
+        private static MysqlConnector connection;
 
         /// <summary>
         ///     boolean that contains the information of the status of the MYSQL connection
@@ -50,7 +48,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         {
             try
             {
-                connection = new MYSQLConnector(server, database, username, password);
+                connection = new MysqlConnector(server, 3306, database, username, password, true);
                 opened = true;
             }
             catch (Exception)
@@ -71,7 +69,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         {
             try
             {
-                connection = new MYSQLConnector(server, database, username, password, port);
+                connection = new MysqlConnector(server, port, database, username, password, true);
                 opened = true;
             }
             catch (Exception)
@@ -80,30 +78,6 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
             }
         }
 
-        /// <summary>
-        ///     Opens a Connection to a specified server.
-        ///     EXPERIMENTAL
-        /// </summary>
-        /// <param name="server">The server.</param>
-        /// <param name="database">The database.</param>
-        /// <param name="username">The username.</param>
-        /// <param name="password">The password.</param>
-        /// <param name="certificateFile">The certificate file.</param>
-        /// <param name="certificatePassword">The certificate password.</param>
-        public static void open(string server, string database, string username, string password,
-            string certificateFile, string certificatePassword)
-        {
-            try
-            {
-                connection = new MYSQLConnector(server, database, username, password, certificateFile,
-                    certificatePassword);
-                opened = true;
-            }
-            catch (Exception)
-            {
-                throw new ArgumentException();
-            }
-        }
 
         /// <summary>
         ///     Closes this connection.
@@ -112,7 +86,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         {
             if (opened)
             {
-                connection.close();
+                connection.Close();
                 opened = false;
             }
             else
@@ -128,7 +102,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         public static void shell(string cmd)
         {
             if (opened)
-                connection.sqlShell(cmd);
+                connection.NonQuery(cmd);
             else
                 throw new ArgumentException();
         }
@@ -142,21 +116,21 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         public static DataTable shellDT(string cmd)
         {
             if (opened)
-                return connection.sqlShellDT(cmd);
+                return connection.Query(cmd);
             throw new ArgumentException();
         }
 
-       
-     
-        public static void updateOID(SQLiteConnector sqlCon)
+
+
+        public static void updateOID(SqliteConnector sqlCon)
         {
-            var fileOID = sqlCon.sqlShellDT("Select * from INFO").Rows[0].Field<long>("OIDVersion");
+            var fileOID = sqlCon.Query("Select * from INFO").Rows[0].Field<long>("OIDVersion");
             ;
-            var version =Config.GetInstance().Query("Select OIDVersion from INFO").Rows[0].Field<long>("OIDVersion");
+            var version = Config.GetInstance().Query("Select OIDVersion from INFO").Rows[0].Field<long>("OIDVersion");
             if (version < fileOID)
 
             {
-                var dt = sqlCon.sqlShellDT("Select * from OID");
+                var dt = sqlCon.Query("Select * from OID");
 
                 if (dt.Rows.Count > 0)
                 {
@@ -814,8 +788,8 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
                     + "'" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "',"
                     + "'" + SerialManager.GetSerialContainer(MainWindow.Programid).CustomerIdentificationNumber +
                     "'," //Kundennummer
-                    +Config.GetInstance().Query("Select version from INFO").Rows[0].Field<long>("version") + ","
-                    +Config.GetInstance().Query("Select OIDVersion from INFO").Rows[0].Field<long>("OIDVersion") + ""
+                    + Config.GetInstance().Query("Select version from INFO").Rows[0].Field<long>("version") + ","
+                    + Config.GetInstance().Query("Select OIDVersion from INFO").Rows[0].Field<long>("OIDVersion") + ""
 
                     //  + "'" + dt.Rows[i].Field<int>("BlackLevelMax") + "',"
                     //  + "'" + dt.Rows[i].Field<int>("CyanLevelMax") + "',"

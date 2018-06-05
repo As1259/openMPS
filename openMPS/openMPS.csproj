@@ -227,7 +227,6 @@
     <Compile Include="Manastone\SQLConnector.cs" />
     <Compile Include="Manastone\SQLITEConnector.cs" />
     <Compile Include="MYSQLConnectionTools\CollectionToMysql.cs" />
-    <Compile Include="MYSQLConnectionTools\Connector\MYSQLConnector.cs" />
     <Compile Include="openRegistration.xaml.cs">
       <DependentUpon>openRegistration.xaml</DependentUpon>
     </Compile>
@@ -242,7 +241,6 @@
     <Compile Include="SNMP\SNMPget.cs" />
     <Compile Include="SQLiteConnectionTools\CollectedInformationPackage.cs" />
     <Compile Include="SQLiteConnectionTools\OID.cs" />
-    <Compile Include="SQLiteConnectionTools\Connector\SQLiteConnector.cs" />
     <Compile Include="SQLiteConnectionTools\Collector.cs" />
     <Compile Include="SQLiteConnectionTools\MPSSQLiteException.cs" />
     <Compile Include="SQLiteConnectionTools\Config.cs" />
@@ -382,9 +380,7 @@
   <ItemGroup>
     <Resource Include="bg.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="openmps_Ez6_12.ico" />
   </ItemGroup>

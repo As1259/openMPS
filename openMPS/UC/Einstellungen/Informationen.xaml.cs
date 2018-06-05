@@ -9,9 +9,9 @@ using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using de.fearvel.manastone.serialManagement;
+using de.fearvel.net.SQL.Connector;
 using de.fearvel.openMPS.MYSQLConnectionTools;
 using de.fearvel.openMPS.SQLiteConnectionTools;
-using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
 using Microsoft.Win32;
 
 namespace de.fearvel.openMPS.UC.Einstellungen
@@ -65,8 +65,8 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 if (dia.FileName.Contains("oMPSDD"))
                     try
                     {
-                        var sqlCon = new SQLiteConnector(dia.FileName, ENCKEY);
-                        var dt = sqlCon.sqlShellDT("Select * from DEVICES");
+                        var sqlCon = new SqliteConnector(dia.FileName, ENCKEY);
+                        var dt = sqlCon.Query("Select * from DEVICES");
                         Config.GetInstance().NonQuery("Delete from Devices");
 
 
@@ -90,8 +90,8 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 else if (dia.FileName.Contains("conf"))
                     try
                     {
-                        var sqlCon = new SQLiteConnector(dia.FileName);
-                        var dt = sqlCon.sqlShellDT("Select * from bekanntegeraete");
+                        var sqlCon = new SqliteConnector(dia.FileName);
+                        var dt = sqlCon.Query("Select * from bekanntegeraete");
                         Config.GetInstance().NonQuery("Delete from Devices");
 
 
@@ -118,10 +118,10 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                         MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        private void importoMPSDD(string filename)
+        private void ImportoMpsdd(string filename)
         {
-            var sqlCON = new SQLiteConnector(filename);
-            var dt = sqlCON.sqlShellDT("Select * from bekanntegeraete");
+            var sqlCON = new SqliteConnector(filename);
+            var dt = sqlCON.Query("Select * from bekanntegeraete");
             for (var i = 0; i < dt.Rows.Count; i++)
             {
             }
@@ -133,36 +133,41 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             {
                 Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD"
             };
-            if ((bool) dia.ShowDialog())
-                try
-                {
-                    var sqlCon = createPreparedFile(dia.FileName);
-                    var dt =Config.GetInstance().Query("Select * from DEVICES");
-                    for (var i = 0; i < dt.Rows.Count; i++)
-                    {
-                        var aktiv = 0;
-                        if (dt.Rows[i].Field<bool>("Aktiv")) aktiv = 1;
-                        var sqlCMD = "Insert Into DEVICES (Aktiv,IP,Modell,Seriennummer,AssetNumber) values ("
-                                     + "'" + aktiv + "',"
-                                     + "'" + dt.Rows[i].Field<string>("IP") + "',"
-                                     + "'" + dt.Rows[i].Field<string>("Modell") + "',"
-                                     + "'" + dt.Rows[i].Field<string>("Seriennummer") + "',"
-                                     + "'" + dt.Rows[i].Field<string>("AssetNumber") + "');";
+            if (!(bool) dia.ShowDialog())
+            {
+                return;
+            }
 
-                        sqlCon.sqlShell(sqlCMD);
-                    }
-                }
-                catch (Exception)
+            try
+            {
+                var sqlCon = createPreparedFile(dia.FileName);
+                var dt =Config.GetInstance().Query("Select * from DEVICES");
+                for (var i = 0; i < dt.Rows.Count; i++)
                 {
+                    var aktiv = 0;
+                    if (dt.Rows[i].Field<bool>("Aktiv")) aktiv = 1;
+                    var sqlCMD = "Insert Into DEVICES (Aktiv,IP,Modell,Seriennummer,AssetNumber) values ("
+                                 + "'" + aktiv + "',"
+                                 + "'" + dt.Rows[i].Field<string>("IP") + "',"
+                                 + "'" + dt.Rows[i].Field<string>("Modell") + "',"
+                                 + "'" + dt.Rows[i].Field<string>("Seriennummer") + "',"
+                                 + "'" + dt.Rows[i].Field<string>("AssetNumber") + "');";
+
+                    sqlCon.Query(sqlCMD);
                 }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
         }
 
-        private SQLiteConnector createPreparedFile(string filename)
+        private SqliteConnector createPreparedFile(string filename)
         {
-            var sqlCon = new SQLiteConnector(filename);
-            sqlCon.setPassword(ENCKEY);
+            var sqlCon = new SqliteConnector(filename);
+            sqlCon.SetPassword(ENCKEY);
 
-            sqlCon.sqlShell(" CREATE TABLE `DEVICES` ("
+            sqlCon.Query(" CREATE TABLE `DEVICES` ("
                             + "`Aktiv`	BOOL NOT NULL DEFAULT 'true',                "
                             + "`IP`	VARCHAR(39) NOT NULL DEFAULT '',                 "
                             + "`Modell`	varchar(250),                                "
@@ -199,28 +204,28 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             //}
         }
 
-        private void bt_updoid_file_Click(object sender, RoutedEventArgs e)
-        {
-            var dia = new OpenFileDialog
-            {
-                Filter = "oOID (*.oOID)|*.oOID"
-            };
-            if ((bool) dia.ShowDialog())
-            {
-                try
-                {
-                    var sqlCon = new SQLiteConnector(dia.FileName, ENCKEY);
-                    CollectionToMysql.updateOID(sqlCon);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Datei konnte nicht eingelesen werden", "ERROR", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                }
-
-                loadFields();
-            }
-        }
+       //private void bt_updoid_file_Click(object sender, RoutedEventArgs e)
+       //{
+       //    var dia = new OpenFileDialog
+       //    {
+       //        Filter = "oOID (*.oOID)|*.oOID"
+       //    };
+       //    if ((bool) dia.ShowDialog())
+       //    {
+       //        try
+       //        {
+       //            var sqlCon = new SQLiteConnector(dia.FileName, ENCKEY);
+       //            CollectionToMysql.updateOID(sqlCon);
+       //        }
+       //        catch (Exception)
+       //        {
+       //            MessageBox.Show("Datei konnte nicht eingelesen werden", "ERROR", MessageBoxButton.OK,
+       //                MessageBoxImage.Error);
+       //        }
+       //
+       //        loadFields();
+       //    }
+       //}
 
         private void Bt_deactivate_OnClick(object sender, RoutedEventArgs e)
         {

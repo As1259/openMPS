@@ -186,7 +186,7 @@ namespace de.fearvel.openMPS.UC
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")).Length > 0)
                     if (ScanIP.PingIp(new IPAddress(ScanIP.ConvertStringToAddress(dt.Rows[i].Field<string>("ip")))))
-                        SNMPget.readDeviceOIDs(dt.Rows[i].Field<string>("ip"),
+                        SNMPget.ReadDeviceOiDs(dt.Rows[i].Field<string>("ip"),
                             DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")));
             return dt;
         }

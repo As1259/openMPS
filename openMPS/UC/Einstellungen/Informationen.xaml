@@ -25,10 +25,10 @@
 
         <Button Content="OID Online Update " HorizontalAlignment="Left"
                 Margin="656,119,0,0" VerticalAlignment="Top" Width="170" Height="23"
-                x:Name="bt_updoid_online" Click="bt_updoid_online_Click" />
+                x:Name="bt_updoid_online"  />
         <Button Content="OID Datei Einlesen " HorizontalAlignment="Left"
                 Margin="659,151,0,0" VerticalAlignment="Top" Width="170" Height="23"
-                x:Name="bt_updoid_file" Click="bt_updoid_file_Click" />
+                x:Name="bt_updoid_file" />
         <Label Content="[Kundennummer]" HorizontalAlignment="Left" Margin="123,48,0,0" VerticalAlignment="Top"
                x:Name="lbl_val_kundennummer" FontWeight="DemiBold" />
         <Label Content="[PV]" HorizontalAlignment="Left" Margin="433,48,0,0" VerticalAlignment="Top"

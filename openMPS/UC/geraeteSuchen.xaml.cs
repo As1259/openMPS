@@ -154,9 +154,9 @@ namespace de.fearvel.openMPS.UC
                     {
                         var dts =Config.GetInstance().Query(
                             "select * from OID where OIDPrivateID='" + ident + "'");
-                        modell = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                        serial = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                        asset = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                        modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                        serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                        asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
                         DeviceTools.updateDevices(
                             "1",
                             ScanIP.ConvertStringToAddress(ipAddress.ToString()),
@@ -170,9 +170,9 @@ namespace de.fearvel.openMPS.UC
                     {
                         var dts =Config.GetInstance().Query(
                             "select * from OID where OIDPrivateID='" + ident + "'");
-                        modell = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                        serial = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                        asset = SNMPget.getOIDValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                        modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                        serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                        asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
                        Config.GetInstance().Query("Delete from Devices where IP = '" +
                                               ipAddress.ToString() + "'; ");
                         DeviceTools.insertInDevices(
@@ -207,7 +207,7 @@ namespace de.fearvel.openMPS.UC
         {
             var dt =Config.GetInstance().Query("Select * from OID");
             for (var i = 0; i < dt.Rows.Count; i++)
-                if (SNMPget.getOIDValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
+                if (SNMPget.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
                     return dt.Rows[i].Field<string>("OIDPrivateID");
             return "Generic";
         }

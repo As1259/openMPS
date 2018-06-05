@@ -48,18 +48,18 @@ namespace de.fearvel.openMPS.UC
                     var cmd = "Select * from OID where OIDPrivateID ='" + DeviceTools.identDevice(ip) + "';";
                     var OIDVAL =Config.GetInstance().Query(cmd);
                     percentage[0] =
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("BlackLevel"))) /
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("BlackLevelMax"))) * 100;
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("BlackLevel"))) /
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("BlackLevelMax"))) * 100;
                     percentage[1] =
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("CyanLevel"))) /
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("CyanLevelMax"))) * 100;
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("CyanLevel"))) /
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("CyanLevelMax"))) * 100;
                     percentage[2] =
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("MagentaLevel"))) /
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("MagentaLevelMax"))) *
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("MagentaLevel"))) /
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("MagentaLevelMax"))) *
                         100;
                     percentage[3] =
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("YellowLevel"))) /
-                        Convert.ToDouble(SNMPget.getOIDValue(ip, OIDVAL.Rows[0].Field<string>("YellowLevelMax"))) * 100;
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("YellowLevel"))) /
+                        Convert.ToDouble(SNMPget.GetOidValue(ip, OIDVAL.Rows[0].Field<string>("YellowLevelMax"))) * 100;
                 }
 
                 lb_percentageBlack.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(resetPercentages));

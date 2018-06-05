@@ -214,11 +214,11 @@ namespace de.fearvel.openMPS.UC
             {
                 var dt =Config.GetInstance().Query("select * from OID where OIDPrivateID='" + ident + "'");
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                modell = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("Model"));
+                modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                serial = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
+                serial = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                asset = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
+                asset = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
             else
@@ -262,11 +262,11 @@ namespace de.fearvel.openMPS.UC
             {
                 var dt =Config.GetInstance().Query("select * from OID where OIDPrivateID='" + ident + "'");
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                modell = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("Model"));
+                modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                serial = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
+                serial = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                asset = SNMPget.getOIDValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
+                asset = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
             else

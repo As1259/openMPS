@@ -29,7 +29,7 @@ namespace de.fearvel.openMPS.SNMP
         /// <summary>
         ///     The abgefragte oids
         /// </summary>
-        private static readonly string[] abgefragteOIDS =
+        private static readonly string[] AbgefragteOids =
         {
             "Manufacturer",
             "Model",
@@ -160,23 +160,22 @@ namespace de.fearvel.openMPS.SNMP
         /// </summary>
         /// <param name="ip">The ip.</param>
         /// <param name="ident">The ident.</param>
-        public static void readDeviceOIDs(string ip, string ident)
+        public static void ReadDeviceOiDs(string ip, string ident)
         {
-            string[] OIDValues = null;
-            DataTable dt;
-            dt =Config.GetInstance().Query("Select * from OID where OIDPrivateID='" + ident + "'");
-            var s = new string[abgefragteOIDS.Length];
+            string[] oidValues = null;
+            var dt = Config.GetInstance().Query("Select * from OID where OIDPrivateID='" + ident + "'");
+            var s = new string[AbgefragteOids.Length];
 
-            for (var i = 0; i < abgefragteOIDS.Length; i++) s[i] = dt.Rows[0].Field<string>(abgefragteOIDS[i]);
+            for (var i = 0; i < AbgefragteOids.Length; i++) s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
             try
             {
-                OIDValues = getOIDValues(ip, s);
+                oidValues = GetOidValues(ip, s);
             }
             catch (SnmpException)
             {
             }
 
-            writeToTable(OIDValues, ip);
+            WriteToTable(oidValues, ip);
         }
 
         /// <summary>
@@ -184,14 +183,15 @@ namespace de.fearvel.openMPS.SNMP
         /// </summary>
         /// <param name="ip">The ip.</param>
         /// <returns></returns>
-        public static bool findAlivePrinter(string ip)
+        public static bool FindAlivePrinter(string ip)
         {
             try
             {
-                if (getOIDValue(ip, "1.3.6.1.2.1.43.5.1.1.2.1").Length > 0) return true;
+                if (GetOidValue(ip, "1.3.6.1.2.1.43.5.1.1.2.1").Length > 0) return true;
             }
             catch (SnmpException)
             {
+                // ignored
             }
 
             return false;
@@ -202,15 +202,15 @@ namespace de.fearvel.openMPS.SNMP
         ///     ///
         /// </summary>
         /// <param name="ip">The ip.</param>
-        /// <param name="OID">The oid.</param>
+        /// <param name="oid">The oid.</param>
         /// <returns></returns>
-        public static string getOIDValue(string ip, string OID)
+        public static string GetOidValue(string ip, string oid)
         {
-            var OIDValue = "";
+            var oidValue = "";
 
             try
             {
-                if (OID.Length > 0)
+                if (oid.Length > 0)
                 {
                     var community = new OctetString("public");
                     var param = new AgentParameters(community)
@@ -220,19 +220,19 @@ namespace de.fearvel.openMPS.SNMP
                     var agent = new IpAddress(ip);
                     var target = new UdpTarget((IPAddress) agent, 161, 2000, 1);
                     var pdu = new Pdu(PduType.Get);
-                    pdu.VbList.Add(OID);
+                    pdu.VbList.Add(oid);
                     var result = (SnmpV1Packet) target.Request(pdu, param);
-                    if (result != null)
-                        if (result.Pdu.ErrorStatus == 0)
-                            OIDValue = result.Pdu.VbList[0].Value.ToString();
+                    if (result?.Pdu.ErrorStatus == 0)
+                        oidValue = result.Pdu.VbList[0].Value.ToString();
                     target.Close();
                 }
             }
             catch (Exception)
             {
+                // ignored
             }
 
-            return OIDValue;
+            return oidValue;
         }
 
         /// <summary>
@@ -241,24 +241,25 @@ namespace de.fearvel.openMPS.SNMP
         ///     string[1,n] == Values
         /// </summary>
         /// <param name="ip">The ip string.</param>
-        /// <param name="OID">The oid string[].</param>
+        /// <param name="oid">The oid string[].</param>
         /// <returns>string[2,n]</returns>
-        public static string[] getOIDValues(string ip, string[] OID)
+        public static string[] GetOidValues(string ip, string[] oid)
         {
-            var OIDValues = new string[abgefragteOIDS.Length];
+            var oidValues = new string[AbgefragteOids.Length];
             try
             {
-                for (var i = 0; i < OIDValues.Length; i++)
+                for (var i = 0; i < oidValues.Length; i++)
                 {
-                    OIDValues[i] = "";
-                    OIDValues[i] = getOIDValue(ip, OID[i]);
+                    oidValues[i] = "";
+                    oidValues[i] = GetOidValue(ip, oid[i]);
                 }
             }
             catch (Exception)
             {
+                // ignored
             }
 
-            return OIDValues;
+            return oidValues;
         }
 
         /// <summary>
@@ -379,7 +380,8 @@ namespace de.fearvel.openMPS.SNMP
         ///     [112] MeterGroup2
         /// </summary>
         /// <param name="s">The String Array</param>
-        public static void writeToTable(string[] s, string ip)
+        /// <param name="ip"></param>
+        public static void WriteToTable(string[] s, string ip)
         {
             Collector.shell(
                 "insert into Collector "
@@ -527,114 +529,113 @@ namespace de.fearvel.openMPS.SNMP
                 + "'" + s[18] + "'," //PowerIdle 
                 + "'" + s[19] + "'," //PowerSleep1 
                 + "'" + s[20] + "'," //PowerSleep2 
-                + prepareNumber(s[21]) + "," //TotalPages 
-                + prepareNumber(s[22]) + "," //TotalPagesMono 
-                + prepareNumber(s[23]) + "," //TotalPagesColor 
-                + prepareNumber(s[24]) + "," //TotalPagesFullColor 
-                + prepareNumber(s[25]) + "," //TotalPagesTwoColor 
-                + prepareNumber(s[26]) + "," //TotalPagesSingleColor 
-                + prepareNumber(s[27]) + "," //TotalPagesDuplex 
-                + prepareNumber(s[28]) + "," //UsagePages 
-                + prepareNumber(s[29]) + "," //UsagePagesMono 
-                + prepareNumber(s[30]) + "," //UsagePagesColor 
-                + prepareNumber(s[31]) + "," //UsagePagesFullColor 
-                + prepareNumber(s[32]) + "," //UsagePagesTwoColor 
-                + prepareNumber(s[33]) + "," //UsagePagesSingleColor 
-                + prepareNumber(s[34]) + "," //PrinterPages 
-                + prepareNumber(s[35]) + "," //PrinterPagesMono 
-                + prepareNumber(s[36]) + "," //PrinterPagesColor 
-                + prepareNumber(s[37]) + "," //PrinterPagesFullColor 
-                + prepareNumber(s[38]) + "," //PrinterPagesTwoColor 
-                + prepareNumber(s[39]) + "," //PrinterPagesSingleColor 
-                + prepareNumber(s[40]) + "," //CopyPages 
-                + prepareNumber(s[41]) + "," //CopyPagesMono 
-                + prepareNumber(s[42]) + "," //CopyPagesColor 
-                + prepareNumber(s[43]) + "," //CopyPagesFullColor 
-                + prepareNumber(s[44]) + "," //CopyPagesTwoColor 
-                + prepareNumber(s[45]) + "," //CopyPagesSingleColor 
-                + prepareNumber(s[46]) + "," //FaxPages 
-                + prepareNumber(s[47]) + "," //FaxPagesMono 
-                + prepareNumber(s[48]) + "," //FaxPagesColor 
-                + prepareNumber(s[49]) + "," //OtherPagesOther 
-                + prepareNumber(s[50]) + "," //PagesMonoOther 
-                + prepareNumber(s[51]) + "," //PagesColorOther 
-                + prepareNumber(s[52]) + "," //PagesFullColor 
-                + prepareNumber(s[53]) + "," //OtherPagesTwoColor 
-                + prepareNumber(s[54]) + "," //OtherPagesSingleColor 
-                + prepareNumber(s[55]) + "," //FaxesSentFaxesReceived 
-                + prepareNumber(s[56]) + "," //ScansTotalScansTotalMono 
-                + prepareNumber(s[57]) + "," //ScansTotalColor 
-                + prepareNumber(s[58]) + "," //ScansUsageScansUsageMono 
-                + prepareNumber(s[59]) + "," //ScansUsageColor 
-                + prepareNumber(s[60]) + "," //ScansCopy 
-                + prepareNumber(s[61]) + "," //ScansCopyMono 
-                + prepareNumber(s[62]) + "," //ScansCopyColor 
-                + prepareNumber(s[63]) + "," //ScansFax 
-                + prepareNumber(s[64]) + "," //ScansFaxMono 
-                + prepareNumber(s[65]) + "," //ScansFaxColor 
-                + prepareNumber(s[66]) + "," //Scansemail 
-                + prepareNumber(s[67]) + "," //ScansemailMono 
-                + prepareNumber(s[68]) + "," //ScansemailColor 
-                + prepareNumber(s[69]) + "," //ScansNet 
-                + prepareNumber(s[70]) + "," //ScansNetMono 
-                + prepareNumber(s[71]) + "," //ScansNetColor 
-                + prepareNumber(s[72]) + "," //ListPages 
-                + prepareNumber(s[73]) + "," //LargePages 
-                + prepareNumber(s[74]) + "," //LargePagesMono 
-                + prepareNumber(s[75]) + "," //LargePagesColor 
-                + prepareNumber(s[76]) + "," //LargePagesFullColor 
-                + prepareNumber(s[77]) + "," //LargePagesTwoColor 
-                + prepareNumber(s[78]) + "," //LargePagesSingleColor 
-                + prepareNumber(s[79]) + "," //TotalLargeSheets 
-                + prepareNumber(s[80]) + "," //SquareFeetSquareMeters 
-                + prepareNumber(s[81]) + "," //LinearFeetStapledSets 
-                + prepareNumber(s[82]) + "," //Level1Pages 
-                + prepareNumber(s[83]) + "," //Level2Pages 
-                + prepareNumber(s[84]) + "," //Level3Pages 
-                + prepareNumber(s[85]) + "," //ColorUsageOffice 
-                + prepareNumber(s[86]) + "," //ColorUsageOfficeAccent 
-                + prepareNumber(s[87]) + "," //ColorUsageProfessional 
-                + prepareNumber(s[88]) + "," //ColorUsageProfessionalAccent
-                + prepareNumber(s[89]) + "," //DoubleClickTotal 
-                + prepareNumber(s[90]) + "," //DoubleClickMono 
-                + prepareNumber(s[91]) + "," //DoubleClickColor 
-                + prepareNumber(s[92]) + "," //DoubleClickFullColor 
-                + prepareNumber(s[93]) + "," //DoubleClickTwoColor 
-                + prepareNumber(s[94]) + "," //DoubleClickSingleColor 
-                + prepareNumber(s[95]) + "," //DoubleClickDuplex 
-                + prepareNumber(s[96]) + "," //DevelopmentTotal 
-                + prepareNumber(s[97]) + "," //DevelopmentMono 
-                + prepareNumber(s[98]) + "," //DevelopmentColor 
-                + prepareNumber(s[99]) + "," //CoverageAverageBlack 
-                + prepareNumber(s[100]) + "," //CoverageAverageCyan 
-                + prepareNumber(s[101]) + "," //CoverageAverageMagenta 
-                + prepareNumber(s[102]) + "," //CoverageAverageYellow 
-                + prepareNumber(s[103]) + "," //CoverageSumBlack 
-                + prepareNumber(s[104]) + "," //CoverageSumCyan 
-                + prepareNumber(s[105]) + "," //CoverageSumMagenta 
-                + prepareNumber(s[106]) + "," //CoverageSumYellow 
-                + prepareNumber(s[107]) + "," //CoverageSum2Black 
-                + prepareNumber(s[108]) + "," //CoverageSum2Cyan 
-                + prepareNumber(s[109]) + "," //CoverageSum2Magenta 
-                + prepareNumber(s[110]) + "," //CoverageSum2Yellow 
+                + PrepareNumber(s[21]) + "," //TotalPages 
+                + PrepareNumber(s[22]) + "," //TotalPagesMono 
+                + PrepareNumber(s[23]) + "," //TotalPagesColor 
+                + PrepareNumber(s[24]) + "," //TotalPagesFullColor 
+                + PrepareNumber(s[25]) + "," //TotalPagesTwoColor 
+                + PrepareNumber(s[26]) + "," //TotalPagesSingleColor 
+                + PrepareNumber(s[27]) + "," //TotalPagesDuplex 
+                + PrepareNumber(s[28]) + "," //UsagePages 
+                + PrepareNumber(s[29]) + "," //UsagePagesMono 
+                + PrepareNumber(s[30]) + "," //UsagePagesColor 
+                + PrepareNumber(s[31]) + "," //UsagePagesFullColor 
+                + PrepareNumber(s[32]) + "," //UsagePagesTwoColor 
+                + PrepareNumber(s[33]) + "," //UsagePagesSingleColor 
+                + PrepareNumber(s[34]) + "," //PrinterPages 
+                + PrepareNumber(s[35]) + "," //PrinterPagesMono 
+                + PrepareNumber(s[36]) + "," //PrinterPagesColor 
+                + PrepareNumber(s[37]) + "," //PrinterPagesFullColor 
+                + PrepareNumber(s[38]) + "," //PrinterPagesTwoColor 
+                + PrepareNumber(s[39]) + "," //PrinterPagesSingleColor 
+                + PrepareNumber(s[40]) + "," //CopyPages 
+                + PrepareNumber(s[41]) + "," //CopyPagesMono 
+                + PrepareNumber(s[42]) + "," //CopyPagesColor 
+                + PrepareNumber(s[43]) + "," //CopyPagesFullColor 
+                + PrepareNumber(s[44]) + "," //CopyPagesTwoColor 
+                + PrepareNumber(s[45]) + "," //CopyPagesSingleColor 
+                + PrepareNumber(s[46]) + "," //FaxPages 
+                + PrepareNumber(s[47]) + "," //FaxPagesMono 
+                + PrepareNumber(s[48]) + "," //FaxPagesColor 
+                + PrepareNumber(s[49]) + "," //OtherPagesOther 
+                + PrepareNumber(s[50]) + "," //PagesMonoOther 
+                + PrepareNumber(s[51]) + "," //PagesColorOther 
+                + PrepareNumber(s[52]) + "," //PagesFullColor 
+                + PrepareNumber(s[53]) + "," //OtherPagesTwoColor 
+                + PrepareNumber(s[54]) + "," //OtherPagesSingleColor 
+                + PrepareNumber(s[55]) + "," //FaxesSentFaxesReceived 
+                + PrepareNumber(s[56]) + "," //ScansTotalScansTotalMono 
+                + PrepareNumber(s[57]) + "," //ScansTotalColor 
+                + PrepareNumber(s[58]) + "," //ScansUsageScansUsageMono 
+                + PrepareNumber(s[59]) + "," //ScansUsageColor 
+                + PrepareNumber(s[60]) + "," //ScansCopy 
+                + PrepareNumber(s[61]) + "," //ScansCopyMono 
+                + PrepareNumber(s[62]) + "," //ScansCopyColor 
+                + PrepareNumber(s[63]) + "," //ScansFax 
+                + PrepareNumber(s[64]) + "," //ScansFaxMono 
+                + PrepareNumber(s[65]) + "," //ScansFaxColor 
+                + PrepareNumber(s[66]) + "," //Scansemail 
+                + PrepareNumber(s[67]) + "," //ScansemailMono 
+                + PrepareNumber(s[68]) + "," //ScansemailColor 
+                + PrepareNumber(s[69]) + "," //ScansNet 
+                + PrepareNumber(s[70]) + "," //ScansNetMono 
+                + PrepareNumber(s[71]) + "," //ScansNetColor 
+                + PrepareNumber(s[72]) + "," //ListPages 
+                + PrepareNumber(s[73]) + "," //LargePages 
+                + PrepareNumber(s[74]) + "," //LargePagesMono 
+                + PrepareNumber(s[75]) + "," //LargePagesColor 
+                + PrepareNumber(s[76]) + "," //LargePagesFullColor 
+                + PrepareNumber(s[77]) + "," //LargePagesTwoColor 
+                + PrepareNumber(s[78]) + "," //LargePagesSingleColor 
+                + PrepareNumber(s[79]) + "," //TotalLargeSheets 
+                + PrepareNumber(s[80]) + "," //SquareFeetSquareMeters 
+                + PrepareNumber(s[81]) + "," //LinearFeetStapledSets 
+                + PrepareNumber(s[82]) + "," //Level1Pages 
+                + PrepareNumber(s[83]) + "," //Level2Pages 
+                + PrepareNumber(s[84]) + "," //Level3Pages 
+                + PrepareNumber(s[85]) + "," //ColorUsageOffice 
+                + PrepareNumber(s[86]) + "," //ColorUsageOfficeAccent 
+                + PrepareNumber(s[87]) + "," //ColorUsageProfessional 
+                + PrepareNumber(s[88]) + "," //ColorUsageProfessionalAccent
+                + PrepareNumber(s[89]) + "," //DoubleClickTotal 
+                + PrepareNumber(s[90]) + "," //DoubleClickMono 
+                + PrepareNumber(s[91]) + "," //DoubleClickColor 
+                + PrepareNumber(s[92]) + "," //DoubleClickFullColor 
+                + PrepareNumber(s[93]) + "," //DoubleClickTwoColor 
+                + PrepareNumber(s[94]) + "," //DoubleClickSingleColor 
+                + PrepareNumber(s[95]) + "," //DoubleClickDuplex 
+                + PrepareNumber(s[96]) + "," //DevelopmentTotal 
+                + PrepareNumber(s[97]) + "," //DevelopmentMono 
+                + PrepareNumber(s[98]) + "," //DevelopmentColor 
+                + PrepareNumber(s[99]) + "," //CoverageAverageBlack 
+                + PrepareNumber(s[100]) + "," //CoverageAverageCyan 
+                + PrepareNumber(s[101]) + "," //CoverageAverageMagenta 
+                + PrepareNumber(s[102]) + "," //CoverageAverageYellow 
+                + PrepareNumber(s[103]) + "," //CoverageSumBlack 
+                + PrepareNumber(s[104]) + "," //CoverageSumCyan 
+                + PrepareNumber(s[105]) + "," //CoverageSumMagenta 
+                + PrepareNumber(s[106]) + "," //CoverageSumYellow 
+                + PrepareNumber(s[107]) + "," //CoverageSum2Black 
+                + PrepareNumber(s[108]) + "," //CoverageSum2Cyan 
+                + PrepareNumber(s[109]) + "," //CoverageSum2Magenta 
+                + PrepareNumber(s[110]) + "," //CoverageSum2Yellow 
                 + "'" + s[111] + "'," //MeterGroup1 
                 + "'" + s[112] + "'," //MeterGroup2
-                + prepareNumber(s[113]) + ","
-                + prepareNumber(s[114]) + ","
-                + prepareNumber(s[115]) + ","
-                + prepareNumber(s[116]) + ","
-                + prepareNumber(s[117]) + ","
-                + prepareNumber(s[118]) + ","
-                + prepareNumber(s[119]) + ","
-                + prepareNumber(s[120])
+                + PrepareNumber(s[113]) + ","
+                + PrepareNumber(s[114]) + ","
+                + PrepareNumber(s[115]) + ","
+                + PrepareNumber(s[116]) + ","
+                + PrepareNumber(s[117]) + ","
+                + PrepareNumber(s[118]) + ","
+                + PrepareNumber(s[119]) + ","
+                + PrepareNumber(s[120])
                 + ");"
             );
         }
 
-        private static string prepareNumber(string num)
+        private static string PrepareNumber(string num)
         {
-            if (num.Length == 0) return "0";
-            return num;
+            return num.Length == 0 ? "0" : num;
         }
     }
 }

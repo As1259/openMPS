@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Management;
 using System.Runtime.CompilerServices;
-using de.fearvel.openMPS.SQLiteConnectionTools.Connector;
 
 namespace de.fearvel.openMPS.SQLiteConnectionTools
 {
