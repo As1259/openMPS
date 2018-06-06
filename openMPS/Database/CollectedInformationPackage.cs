@@ -1,10 +1,6 @@
-﻿using System;
-using System.Data;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using de.fearvel.net.SQL.Connector;
+﻿using System.Runtime.CompilerServices;
 
-namespace de.fearvel.openMPS.SQLiteConnectionTools
+namespace de.fearvel.openMPS.Database
 {
     /// <inheritdoc />
     public class CollectedInformationPackage : SqLiteConnect

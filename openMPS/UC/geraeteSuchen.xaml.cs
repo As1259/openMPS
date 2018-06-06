@@ -13,10 +13,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.SQLiteConnectionTools;
 using de.fearvel.openMPS.Tools;
 using de.fearvel.net;
 using de.fearvel.net.Ping;
+using de.fearvel.openMPS.Database;
 
 namespace de.fearvel.openMPS.UC
 {

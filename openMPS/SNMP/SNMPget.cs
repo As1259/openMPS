@@ -8,7 +8,7 @@ using System;
 using System.Data;
 using System.Net;
 using System.Runtime.CompilerServices;
-using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Database;
 using SnmpSharpNet;
 
 namespace de.fearvel.openMPS.SNMP

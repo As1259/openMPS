@@ -14,7 +14,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Fluent:Ribbon Grid.Row="0" Name="Ribbon_control" IsMinimizedChanged="Ribbon_control_IsMinimizedChanged">
+            <Fluent:Ribbon Grid.Row="0" Name="Ribbon_control" IsMinimizedChanged="Ribbon_control_IsMinimizedChanged" >
 
 
                 <!--Backstage-->
@@ -77,7 +77,7 @@
 
             </Fluent:Ribbon>
 
-            <Grid Name="MainGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Grid Name="MainGrid" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  />
         </Grid>
         <Grid x:Name="grid_additionalThings">
             <!--<Image x:Name="logo" Margin="1036,44,48,475" />-->

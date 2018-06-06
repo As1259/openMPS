@@ -4,15 +4,9 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Management;
 using System.Runtime.CompilerServices;
 
-namespace de.fearvel.openMPS.SQLiteConnectionTools
+namespace de.fearvel.openMPS.Database
 {
     /// <summary>
     ///     Contains the connection to the config SQLITE

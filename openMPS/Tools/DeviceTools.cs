@@ -7,8 +7,8 @@
 using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.SQLiteConnectionTools;
 
 namespace de.fearvel.openMPS.Tools
 {

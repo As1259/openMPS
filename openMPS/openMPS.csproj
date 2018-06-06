@@ -239,13 +239,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SNMP\SNMPget.cs" />
-    <Compile Include="SQLiteConnectionTools\CollectedInformationPackage.cs" />
-    <Compile Include="SQLiteConnectionTools\OID.cs" />
-    <Compile Include="SQLiteConnectionTools\Collector.cs" />
-    <Compile Include="SQLiteConnectionTools\MPSSQLiteException.cs" />
-    <Compile Include="SQLiteConnectionTools\Config.cs" />
-    <Compile Include="SQLiteConnectionTools\SQLiteCollectedInformationPackageException.cs" />
-    <Compile Include="SQLiteConnectionTools\SQLiteConnect.cs" />
+    <Compile Include="Database\CollectedInformationPackage.cs" />
+    <Compile Include="Database\OID.cs" />
+    <Compile Include="Database\Collector.cs" />
+    <Compile Include="Database\Exceptions\MPSSQLiteException.cs" />
+    <Compile Include="Database\Config.cs" />
+    <Compile Include="Database\Exceptions\SQLiteCollectedInformationPackageException.cs" />
+    <Compile Include="Database\SQLiteConnect.cs" />
     <Compile Include="Tools\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>

@@ -11,7 +11,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Database;
 using Image = System.Windows.Controls.Image;
 
 //using Google.Authenticator;

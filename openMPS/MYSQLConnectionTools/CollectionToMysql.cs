@@ -10,7 +10,8 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using de.fearvel.manastone.serialManagement;
 using de.fearvel.net.SQL.Connector;
-using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Database;
+
 namespace de.fearvel.openMPS.MYSQLConnectionTools
 {
     /// <summary>

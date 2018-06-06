@@ -9,7 +9,7 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Database;
 
 namespace de.fearvel.openMPS.UC.Einstellungen
 {
@@ -29,7 +29,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         /// <summary>
         ///     array of Usercontrols
         /// </summary>
-        private readonly UserControl[] ucontrols = new UserControl[3];
+        private readonly UserControl[] _ucontrols = new UserControl[3];
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="EinstellungenMain" /> class.
@@ -49,11 +49,11 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         {
             trv_einstellungen.Items.Clear();
             loadTreeview();
-            ucontrols[0] = new Informationen();
-            ucontrols[1] = new einstellungenOID();
-            ucontrols[2] = new EinstellungenTechniker();
+            _ucontrols[0] = new Informationen();
+            _ucontrols[1] = new einstellungenOID();
+            _ucontrols[2] = new EinstellungenTechniker();
 
-            grid_setting.Children.Add(ucontrols[0]);
+            grid_setting.Children.Add(_ucontrols[0]);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                 {
                     grid_setting.Children.Clear();
                     var a = Convert.ToInt32(dt.Rows[0].Field<long>("UC"));
-                    grid_setting.Children.Add(ucontrols[Convert.ToInt32(dt.Rows[0].Field<long>("UC"))]);
+                    grid_setting.Children.Add(_ucontrols[Convert.ToInt32(dt.Rows[0].Field<long>("UC"))]);
                 }
                 else if (trv_einstellungen.SelectedValue.ToString().Contains("Login"))
                 {

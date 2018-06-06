@@ -4,15 +4,10 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.IO;
-using System.Management;
 using System.Runtime.CompilerServices;
 
-namespace de.fearvel.openMPS.SQLiteConnectionTools
+namespace de.fearvel.openMPS.Database
 {
     /// <summary>
     ///     Contains the connection to the config SQLITE
@@ -44,7 +39,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             if (Query("SELECT * FROM Directory").Rows.Count == 0)
             {
                 NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('MPS-Version'," +
-                         "'" + FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion + "');");
+                         "'" + FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion + "');");
             }
         }
         public void GenerateCredentialsTable()

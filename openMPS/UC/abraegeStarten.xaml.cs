@@ -14,8 +14,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using de.fearvel.manastone.serialManagement;
+using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.SQLiteConnectionTools;
 using de.fearvel.openMPS.Tools;
 
 namespace de.fearvel.openMPS.UC
@@ -210,7 +210,7 @@ namespace de.fearvel.openMPS.UC
 
                 bt_client.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_clientEnable));
                 bt_senden.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_sendenEnable));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(getNormalView));
+                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(GetNormalView));
             }
             else
             {
@@ -242,33 +242,24 @@ namespace de.fearvel.openMPS.UC
                 Collector.shellDT("update INFO set Uebertragungsweg='smtpSend';");
                 var filename = prepareOpenMPSFile();
                 var mail = new MailMessage();
-                var SmtpServer = new SmtpClient(Config
-                    .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_server'").Rows[0]
-                    .Field<string>("Value"));
-
-                mail.From = new MailAddress(Config
-                    .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_sendaddress'").Rows[0]
-                    .Field<string>("Value"));
-                mail.To.Add(Config
-                    .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_receiveaddress'").Rows[0]
-                    .Field<string>("Value"));
+                var SmtpServer = new SmtpClient(Config.GetInstance().Directory["cred_connection_smtp_server"]);
+                mail.From = new MailAddress(Config.GetInstance().Directory["cred_connection_smtp_sendaddress"]);
+                mail.To.Add(Config.GetInstance().Directory["cred_connection_smtp_receiveaddress"]);
                 mail.Subject = "MPS2018 Gerätedaten";
                 mail.Body = "MPS2018 Gerätedaten";
                 mail.Attachments.Add(new Attachment(filename));
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new NetworkCredential(Config
-                        .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_user'").Rows[0]
-                        .Field<string>("Value"),
-                   Config.GetInstance().Query("select * from CREDENTIALS " +
-                                          "where Name = 'conn_smtp_password'").Rows[0].Field<string>("Value"));
+                SmtpServer.Credentials = new NetworkCredential(
+                    Config.GetInstance().Directory["cred_connection_smtp_user"],
+                    Config.GetInstance().Directory["cred_connection_smtp_password"]);
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);
                 MessageBox.Show("E-Mail wurde versand", "Erfolg", MessageBoxButton.OK, MessageBoxImage.Information);
                 bt_client.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_clientDisable));
                 bt_senden.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(bt_sendenDisable));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(getNormalView));
+                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(GetNormalView));
                 var fInfo = new FileInfo(filename)
                 {
                     IsReadOnly = false
@@ -317,9 +308,7 @@ namespace de.fearvel.openMPS.UC
                 + Directory.GetCurrentDirectory() + "\\" + filename;
             var mail = new MAPI();
             mail.AddAttachment(filename);
-            mail.AddRecipientTo(Config
-                .GetInstance().Query("select * from CREDENTIALS where Name = 'conn_smtp_sendaddress'")
-                .Rows[0].Field<string>("Value"));
+            mail.AddRecipientTo(Config.GetInstance().Directory["cred_connection_smtp_sendaddress"]);
             try
             {
                 mail.SendMailPopup(emailHead, emailProsaBody);
@@ -354,7 +343,7 @@ namespace de.fearvel.openMPS.UC
         /// <summary>
         ///     Gets the normal view.
         /// </summary>
-        private void getNormalView()
+        private void GetNormalView()
         {
             progress.Value = 100;
             progress.Visibility = Visibility.Hidden;

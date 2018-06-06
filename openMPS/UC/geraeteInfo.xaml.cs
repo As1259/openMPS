@@ -11,8 +11,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.SQLiteConnectionTools;
 using de.fearvel.openMPS.Tools;
 
 namespace de.fearvel.openMPS.UC

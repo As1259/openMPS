@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Database;
 
 namespace de.fearvel.openMPS.UC.Einstellungen
 {

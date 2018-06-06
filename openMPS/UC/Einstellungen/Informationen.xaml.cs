@@ -6,12 +6,13 @@
 
 using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using de.fearvel.manastone.serialManagement;
 using de.fearvel.net.SQL.Connector;
+using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.MYSQLConnectionTools;
-using de.fearvel.openMPS.SQLiteConnectionTools;
 using Microsoft.Win32;
 
 namespace de.fearvel.openMPS.UC.Einstellungen
@@ -45,7 +46,9 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         public void loadFields()
         {
            // lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
-            lbl_val_PV.Content = $"{Config.GetInstance().Directory["MPS-Version"]}";
+            lbl_val_DBV.Content = $"{Config.GetInstance().Directory["MPS-Version"]}";
+            lbl_val_PV.Content = FileVersionInfo
+                .GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
             lbl_val_OIDV.Content = $"{OID.GetInstance().Directory["OID-Version"]}";
         }
 

@@ -8,13 +8,9 @@
              d:DesignHeight="500"
              Background="White" Width="850">
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="433,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
-                 Width="80" x:Name="tb_Progvers" IsReadOnly="true" BorderThickness="0" />
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="433,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top"
-                 Width="80" x:Name="tb_oidvers" IsReadOnly="true" BorderThickness="0" />
         <Label Content="Kundennummer:" HorizontalAlignment="Left" Margin="11,48,0,0" VerticalAlignment="Top" />
         <Label Content="Programmversion:" HorizontalAlignment="Left" Margin="301,48,0,0" VerticalAlignment="Top" />
-        <Label Content="OIDVersion:" HorizontalAlignment="Left" Margin="301,76,0,0" VerticalAlignment="Top" />
+        <Label Content="OIDVersion:" HorizontalAlignment="Left" Margin="301,107,0,0" VerticalAlignment="Top" />
         <Button Content="Bekannte Geräte Exportieren" HorizontalAlignment="Left"
                 Margin="658,77,0,0" VerticalAlignment="Top" Width="170" Height="23"
                 x:Name="bt_export_bg" Click="bt_export_bg_Click" />
@@ -31,13 +27,16 @@
                 x:Name="bt_updoid_file" />
         <Label Content="[Kundennummer]" HorizontalAlignment="Left" Margin="123,48,0,0" VerticalAlignment="Top"
                x:Name="lbl_val_kundennummer" FontWeight="DemiBold" />
-        <Label Content="[PV]" HorizontalAlignment="Left" Margin="433,48,0,0" VerticalAlignment="Top"
+        <Label Content="[PV]" HorizontalAlignment="Left" Margin="433,49,0,0" VerticalAlignment="Top"
                x:Name="lbl_val_PV" FontWeight="DemiBold" />
-        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="433,76,0,0" VerticalAlignment="Top"
+        <Label Content="[DBV]" HorizontalAlignment="Left" Margin="433,76,0,0" VerticalAlignment="Top"
+               x:Name="lbl_val_DBV" FontWeight="DemiBold" />
+        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="433,107,0,0" VerticalAlignment="Top"
                x:Name="lbl_val_OIDV" FontWeight="DemiBold" />
         <Button Content="Nutzerdaten Löschen" HorizontalAlignment="Left"
                 Margin="658,219,0,0" VerticalAlignment="Top" Width="170" Height="23"
                 x:Name="bt_delUserdata" Click="bt_delUserdata_Click" />
+        <Label Content="config.db Version:" HorizontalAlignment="Left" Margin="301,76,0,0" VerticalAlignment="Top" />
 
     </Grid>
 </UserControl>

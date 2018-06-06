@@ -4,7 +4,9 @@ using System.Data;
 using System.IO;
 using System.Management;
 using de.fearvel.net.SQL.Connector;
-namespace de.fearvel.openMPS.SQLiteConnectionTools
+using de.fearvel.openMPS.Database.Exceptions;
+
+namespace de.fearvel.openMPS.Database
 {
     public abstract class SqLiteConnect
     {
@@ -43,7 +45,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             }
             catch (Exception)
             {
-                throw new SQLiteConnectionTools.MPSSQLiteException();
+                throw new MPSSQLiteException();
             }
         }
 
@@ -78,7 +80,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             }
             catch (Exception)
             {
-                throw new SQLiteConnectionTools.MPSSQLiteException();
+                throw new MPSSQLiteException();
             }
         }
        
@@ -176,7 +178,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             if (_opened)
                 _connection.Close();
             else
-                throw new SQLiteConnectionTools.MPSSQLiteException();
+                throw new MPSSQLiteException();
         }
 
         /// <summary>
@@ -188,7 +190,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
             if (_opened)
                 _connection.NonQuery(cmd);
             else
-                throw new SQLiteConnectionTools.MPSSQLiteException();
+                throw new MPSSQLiteException();
         }
 
         /// <summary>
@@ -201,7 +203,7 @@ namespace de.fearvel.openMPS.SQLiteConnectionTools
         {
             if (_opened)
                 return _connection.Query(cmd);
-            throw new SQLiteConnectionTools.MPSSQLiteException();
+            throw new MPSSQLiteException();
         }
     }
 }

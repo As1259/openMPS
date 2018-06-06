@@ -5,11 +5,15 @@
 #endregion
 
 using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using de.fearvel.openMPS.SQLiteConnectionTools;
+using de.fearvel.openMPS.Database;
+using de.fearvel.openMPS.Database.Exceptions;
 using de.fearvel.openMPS.UC;
 using de.fearvel.openMPS.UC.Einstellungen;
 using Fluent;
@@ -24,20 +28,20 @@ namespace de.fearvel.openMPS
         /// <summary>
         ///     The configname
         /// </summary>
-        public const string CONFIGNAME = @"core\oMPS.oConfig";
+        public const string Configname = @"core\oMPS.oConfig";
 
         /// <summary>
         ///     The erfassungname
         /// </summary>
-        public const string ERFASSUNGNAME = @"core\oMPS.oData";
+        public const string Erfassungname = @"core\oMPS.oData";
 
         public static int Programid = 10001;
 
         /// <summary>
         ///     The ucontrol
         /// </summary>
-        private readonly UserControl[] ucontrol = new UserControl[3];
 
+        private Dictionary<Type, UserControl> _userControls;
         /// <summary>
         ///     Initializes a new instance of the <see cref="RibbonWindow" /> class.
         /// </summary>
@@ -57,16 +61,9 @@ namespace de.fearvel.openMPS
             //zurueck.IsEnabled = false;
             try
             {
-                ucontrol[0] = new GeraeteSuchen();
-                ucontrol[1] = new geraeteBearbeiten();
-                ucontrol[2] = new AbraegeStarten();
-                openSuchen();
-                grid_help.Children.Add(new start());
-
-                grid_settings.Children.Add(new EinstellungenMainV2());
-
+                LoadUserControls();
+                OpenSuchen();
                 LoadDatabases();
-
                 var a = new openRegistration();
                 a.ShowDialog();
             }
@@ -77,6 +74,30 @@ namespace de.fearvel.openMPS
                     , MessageBoxButton.OK, MessageBoxImage.Error);
                 Close();
             }
+        }
+
+        private void LoadUserControls()
+        {
+            _userControls = new Dictionary<Type, UserControl>();
+            Dispatcher.Invoke(new ThreadStart(LoadDelayableUserControl));
+            Dispatcher.Invoke(new ThreadStart(LoadBackstageUserControls));
+
+        }
+
+        public void LoadBackstageUserControls()
+        {
+            _userControls.Add(typeof(start), new start());
+            _userControls.Add(typeof(EinstellungenMainV2), new EinstellungenMainV2());
+            grid_help.Children.Add(_userControls[typeof(start)]);
+            grid_settings.Children.Add(_userControls[typeof(EinstellungenMainV2)]);
+        }
+        private void LoadDelayableUserControl()
+        {
+            _userControls.Add(typeof(GeraeteSuchen), new GeraeteSuchen());
+
+            _userControls.Add(typeof(geraeteBearbeiten), new geraeteBearbeiten());
+            _userControls.Add(typeof(AbraegeStarten), new AbraegeStarten());
+
         }
 
         private void LoadDatabases()
@@ -104,26 +125,32 @@ namespace de.fearvel.openMPS
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void bt_geraetSuchen(object sender, RoutedEventArgs e)
         {
-            openSuchen();
+            OpenSuchen();
         }
 
-        private void openSuchen()
+        private void DisplayUserControl(UserControl uc, string text = "")
         {
             MainGrid.Children.Clear();
-            MainGrid.Children.Add(ucontrol[0]);
-            tbl_info.Text = "Die automatische Suche nach Druckern ist sehr komplex und nimmt einige Zeit in Anspruch." +
-                            " Im Schnitt ca. 6 Sekunden pro IP-Adresse, die abgeprüft wird. Wenn Sie nur eine kleine Anzahl an Geräten" +
-                            " haben ist es für Sie möglicherweise effektiver, die Geräte über den Bereich ‚Geräte bearbeiten‘ manuell anzulegen.";
+            MainGrid.Children.Add(uc);
+            tbl_info.Text = text;
+        }
+        private void OpenSuchen()
+        {
+            DisplayUserControl(_userControls[typeof(GeraeteSuchen)],
+                "Die automatische Suche nach Druckern wird im Schnitt ca. 0.03 Sekunden pro IP-Adresse benötigen,");
+
+        }
+        private void OpenBearbeiten()
+        {
+            DisplayUserControl(_userControls[typeof(geraeteBearbeiten)],
+                "Hier können Sie neue Geräte hinzufügen, oder die IP-Adressen bereits erfasster Geräte anpassen." +
+                " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
+                "werden, oder nicht.");
         }
 
         private void bt_geraetBearbeiten(object sender, RoutedEventArgs e)
         {
-            MainGrid.Children.Clear();
-            MainGrid.Children.Add(ucontrol[1]);
-            tbl_info.Text =
-                "Hier können Sie neue Geräte hinzufügen, oder die IP-Adressen bereits erfasster Geräte anpassen." +
-                " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
-                "werden, oder nicht.";
+            OpenBearbeiten();
         }
 
         /// <summary>
@@ -133,11 +160,13 @@ namespace de.fearvel.openMPS
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void bt_abfrageStarten(object sender, RoutedEventArgs e)
         {
-            MainGrid.Children.Clear();
-            MainGrid.Children.Add(ucontrol[2]);
-            tbl_info.Text = "";
+            OpenAbfrage();
         }
 
+        private void OpenAbfrage()
+        {
+            DisplayUserControl(_userControls[typeof(AbraegeStarten)]);
+        }
         /// <summary>
         ///     Loads the abfrage starten.
         /// </summary>
@@ -153,24 +182,6 @@ namespace de.fearvel.openMPS
         }
 
 
-        /// <summary>
-        ///     Handles the Click event of the bt_einstellungen control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_einstellungen_Click(object sender, RoutedEventArgs e)
-        {
-            MainGrid.Children.Clear();
-            MainGrid.Children.Add(ucontrol[3]);
-            tbl_info.Text = "";
-        }
-
-
-        private void bt_verbrauchsmaterialinfo(object sender, RoutedEventArgs e)
-        {
-            MainGrid.Children.Clear();
-            MainGrid.Children.Add(new geraeteInfo());
-        }
 
 
         private void bsi_close_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -191,5 +202,7 @@ namespace de.fearvel.openMPS
                 Height = Height + 95;
             }
         }
+
+
     }
 }

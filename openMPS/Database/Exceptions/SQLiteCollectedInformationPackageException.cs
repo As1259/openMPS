@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace de.fearvel.openMPS.SQLiteConnectionTools
+namespace de.fearvel.openMPS.Database.Exceptions
 {
     /// <inheritdoc />
     /// <summary>
