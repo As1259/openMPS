@@ -7,6 +7,8 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using de.fearvel.manastone.serialManagement;
@@ -45,11 +47,13 @@ namespace de.fearvel.openMPS.UC.Einstellungen
 
         public void loadFields()
         {
-           // lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
+            // lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
             lbl_val_DBV.Content = $"{Config.GetInstance().Directory["MPS-Version"]}";
             lbl_val_PV.Content = FileVersionInfo
                 .GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
             lbl_val_OIDV.Content = $"{OID.GetInstance().Directory["OID-Version"]}";
+            lbl_val_UUID.Content = $"{Config.GetInstance().Directory["UUID"]}";
+
         }
 
         private string FillNumberStrings(string s, int l)
@@ -64,7 +68,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             {
                 Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD"
             };
-            if ((bool) dia.ShowDialog())
+            if ((bool)dia.ShowDialog())
                 if (dia.FileName.Contains("oMPSDD"))
                     try
                     {
@@ -136,7 +140,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             {
                 Filter = "oMPSDD (*.oMPSDD)|*.oMPSDD"
             };
-            if (!(bool) dia.ShowDialog())
+            if (!(bool)dia.ShowDialog())
             {
                 return;
             }
@@ -144,7 +148,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             try
             {
                 var sqlCon = createPreparedFile(dia.FileName);
-                var dt =Config.GetInstance().Query("Select * from DEVICES");
+                var dt = Config.GetInstance().Query("Select * from DEVICES");
                 for (var i = 0; i < dt.Rows.Count; i++)
                 {
                     var aktiv = 0;
@@ -207,28 +211,6 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             //}
         }
 
-       //private void bt_updoid_file_Click(object sender, RoutedEventArgs e)
-       //{
-       //    var dia = new OpenFileDialog
-       //    {
-       //        Filter = "oOID (*.oOID)|*.oOID"
-       //    };
-       //    if ((bool) dia.ShowDialog())
-       //    {
-       //        try
-       //        {
-       //            var sqlCon = new SQLiteConnector(dia.FileName, ENCKEY);
-       //            CollectionToMysql.updateOID(sqlCon);
-       //        }
-       //        catch (Exception)
-       //        {
-       //            MessageBox.Show("Datei konnte nicht eingelesen werden", "ERROR", MessageBoxButton.OK,
-       //                MessageBoxImage.Error);
-       //        }
-       //
-       //        loadFields();
-       //    }
-       //}
 
         private void Bt_deactivate_OnClick(object sender, RoutedEventArgs e)
         {
@@ -241,6 +223,31 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             Config.GetInstance().NonQuery("Delete from DEVICES");
             Collector.shell("Delete from Collector");
             Collector.shell("update INFO set ErfassungsDatum =  null, Kundennummer = '', Uebertragungsweg = ''");
+        }
+
+        private void bt_updoid_file_Click(object sender, RoutedEventArgs e)
+        {
+            var dia = new OpenFileDialog
+            {
+                Filter = "db (*.db)|*.db"
+            };
+
+            try
+            {
+                if ((bool)dia.ShowDialog())
+                {
+                    OidUpdateFileHandler.GetInstance().Update(dia.FileName);
+                    loadFields();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Datei konnte nicht eingelesen werden", "ERROR", MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+
+            loadFields();
+
         }
     }
 }

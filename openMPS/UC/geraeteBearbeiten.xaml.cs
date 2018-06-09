@@ -61,7 +61,7 @@ namespace de.fearvel.openMPS.UC
         /// </summary>
         public void loadGridData()
         {
-            dt =Config.GetInstance().Query("Select * from devices");
+            dt = Config.GetInstance().Query("Select * from devices");
             geraeteGrid.ItemsSource = dt.DefaultView;
             //   geraeteGrid.IsReadOnly = true;
             geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
@@ -87,7 +87,7 @@ namespace de.fearvel.openMPS.UC
         {
             try
             {
-                drv = (DataRowView) geraeteGrid.SelectedItem;
+                drv = (DataRowView)geraeteGrid.SelectedItem;
                 var ipAddress = ScanIP.ConvertStringToAddress(drv["IP"].ToString());
                 unlockElements();
                 bt_del.IsEnabled = true;
@@ -152,7 +152,7 @@ namespace de.fearvel.openMPS.UC
             try
             {
                 ScanIP.ConvertStringToAddress(ipAddress);
-                if (!(bool) cb_aktiv.IsChecked) aktiv = "0";
+                if (!(bool)cb_aktiv.IsChecked) aktiv = "0";
                 if (selected)
                 {
                     if (drv["IP"].ToString().CompareTo(ipAddress) == 0)
@@ -165,7 +165,7 @@ namespace de.fearvel.openMPS.UC
                     else
                     {
                         var thread = new Thread(UpdateDevicesViaThread);
-                        thread.Start(new object[] {ipAddress, aktiv, drv["IP"].ToString()});
+                        thread.Start(new object[] { ipAddress, aktiv, drv["IP"].ToString() });
                         lockElements();
                     }
                 }
@@ -180,8 +180,8 @@ namespace de.fearvel.openMPS.UC
                     else
                     {
                         lockElements();
-                        var thread = new Thread(insertInDevicesViaThread);
-                        thread.Start(new object[] {ipAddress, aktiv});
+                        var thread = new Thread(InsertInDevicesViaThread);
+                        thread.Start(new object[] { ipAddress, aktiv });
                     }
                 }
             }
@@ -198,10 +198,10 @@ namespace de.fearvel.openMPS.UC
         /// <param name="param">The parameter.</param>
         private void UpdateDevicesViaThread(object param)
         {
-            var obj = (object[]) param;
-            var ipAddress = (string) obj[0];
-            var aktiv = (string) obj[1];
-            var altIP = (string) obj[2];
+            var obj = (object[])param;
+            var ipAddress = (string)obj[0];
+            var aktiv = (string)obj[1];
+            var altIP = (string)obj[2];
             var ident = DeviceTools.identDevice(ipAddress);
             var modell = "";
             var serial = "";
@@ -212,7 +212,7 @@ namespace de.fearvel.openMPS.UC
 
             if (ident.Length > 0)
             {
-                var dt =Config.GetInstance().Query("select * from OID where OIDPrivateID='" + ident + "'");
+                var dt = OID.GetInstance().GetOidRowByPrivateId(ident);
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
@@ -230,7 +230,7 @@ namespace de.fearvel.openMPS.UC
             }
 
             var ipAlt = ScanIP.ConvertStringToAddress(altIP);
-            DeviceTools.updateDevices(
+            Config.GetInstance().UpdateDeviceTable(
                 aktiv,
                 ip,
                 modell,
@@ -246,11 +246,11 @@ namespace de.fearvel.openMPS.UC
         ///     Inserts the in bekannte geraete via thread.
         /// </summary>
         /// <param name="param">The parameter.</param>
-        private void insertInDevicesViaThread(object param)
+        private void InsertInDevicesViaThread(object param)
         {
-            var obj = (object[]) param;
-            var ipAddress = (string) obj[0];
-            var aktiv = (string) obj[1];
+            var obj = (object[])param;
+            var ipAddress = (string)obj[0];
+            var aktiv = (string)obj[1];
             var ident = DeviceTools.identDevice(ipAddress);
             var modell = "";
             var serial = "";
@@ -260,7 +260,7 @@ namespace de.fearvel.openMPS.UC
 
             if (ident.Length > 0)
             {
-                var dt =Config.GetInstance().Query("select * from OID where OIDPrivateID='" + ident + "'");
+                var dt = OID.GetInstance().GetOidRowByPrivateId(ident);
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
@@ -277,13 +277,13 @@ namespace de.fearvel.openMPS.UC
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
 
-            DeviceTools.insertInDevices(
-                aktiv,
-                ip,
-                modell,
-                serial,
-                asset
-            );
+            Config.GetInstance().InsertInDeviceTable(
+                 aktiv,
+                 ip,
+                 modell,
+                 serial,
+                 asset
+             );
             geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(loadGridData));
         }
 
@@ -340,7 +340,7 @@ namespace de.fearvel.openMPS.UC
                 {
                     Wrapped = true
                 };
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -360,7 +360,7 @@ namespace de.fearvel.openMPS.UC
                 {
                     Wrapped = true
                 };
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 
@@ -380,7 +380,7 @@ namespace de.fearvel.openMPS.UC
                 {
                     Wrapped = true
                 };
-                ((TextBox) sender).MoveFocus(request);
+                ((TextBox)sender).MoveFocus(request);
             }
         }
 

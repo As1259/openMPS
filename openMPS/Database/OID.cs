@@ -5,7 +5,7 @@
 #endregion
 
 using System.Runtime.CompilerServices;
-
+using System.Data;
 namespace de.fearvel.openMPS.Database
 {
     /// <summary>
@@ -37,6 +37,11 @@ namespace de.fearvel.openMPS.Database
             {
                 NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('OID-Version','0.0.0.0');");
             }
+        }
+
+        public DataTable GetOidRowByPrivateId(string ident)
+        {
+            return Query("SELECT * FROM OID Where OIDPrivateID='" + ident + "'");
         }
 
         public void GenerateOidTable()

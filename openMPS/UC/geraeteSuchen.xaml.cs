@@ -48,7 +48,7 @@ namespace de.fearvel.openMPS.UC
         /// </summary>
         public void LoadGridData()
         {
-            _dt =Config.GetInstance().Query("Select Aktiv,IP, Modell,Seriennummer,AssetNumber from Devices");
+            _dt = Config.GetInstance().Query("Select Aktiv,IP, Modell,Seriennummer,AssetNumber from Devices");
             geraeteGrid.ItemsSource = _dt.DefaultView;
             geraeteGrid.IsReadOnly = true;
         }
@@ -152,12 +152,11 @@ namespace de.fearvel.openMPS.UC
                             "Select * from Devices where IP='" + ipAddress.ToString() + "';").Rows.Count >
                         0)
                     {
-                        var dts =Config.GetInstance().Query(
-                            "select * from OID where OIDPrivateID='" + ident + "'");
+                        var dts = OID.GetInstance().GetOidRowByPrivateId(ident);
                         modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
                         serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
                         asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
-                        DeviceTools.updateDevices(
+                        Config.GetInstance().UpdateDeviceTable(
                             "1",
                             ScanIP.ConvertStringToAddress(ipAddress.ToString()),
                             modell,
@@ -168,14 +167,14 @@ namespace de.fearvel.openMPS.UC
                     }
                     else
                     {
-                        var dts =Config.GetInstance().Query(
-                            "select * from OID where OIDPrivateID='" + ident + "'");
+                        var dts = OID.GetInstance().GetOidRowByPrivateId(ident);
+
                         modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
                         serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
                         asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
-                       Config.GetInstance().Query("Delete from Devices where IP = '" +
-                                              ipAddress.ToString() + "'; ");
-                        DeviceTools.insertInDevices(
+                        Config.GetInstance().Query("Delete from Devices where IP = '" +
+                                               ipAddress.ToString() + "'; ");
+                        Config.GetInstance().InsertInDeviceTable(
                             "1",
                             ScanIP.ConvertStringToAddress(ipAddress.ToString()),
                             modell,
@@ -185,6 +184,7 @@ namespace de.fearvel.openMPS.UC
 
                     }
                 geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+
                 ButtonSuchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
 
             }
@@ -205,7 +205,7 @@ namespace de.fearvel.openMPS.UC
         /// <returns></returns>
         private string identDevice(string ip)
         {
-            var dt =Config.GetInstance().Query("Select * from OID");
+            var dt = OID.GetInstance().Query("Select * from OID");
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (SNMPget.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
                     return dt.Rows[i].Field<string>("OIDPrivateID");

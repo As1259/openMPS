@@ -7,6 +7,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,15 +26,7 @@ namespace de.fearvel.openMPS
     /// </summary>
     public partial class MainWindow
     {
-        /// <summary>
-        ///     The configname
-        /// </summary>
-        public const string Configname = @"core\oMPS.oConfig";
-
-        /// <summary>
-        ///     The erfassungname
-        /// </summary>
-        public const string Erfassungname = @"core\oMPS.oData";
+        private Thread _dbConnectionLoader;
 
         public static int Programid = 10001;
 
@@ -47,34 +40,14 @@ namespace de.fearvel.openMPS
         /// </summary>
         public MainWindow()
         {
+            _dbConnectionLoader = new Thread(new ThreadStart(LoadDatabases));
+            _dbConnectionLoader.Start();
             InitializeComponent();
             Loaded += RibbonWindow_Load;
         }
 
-        /// <summary>
-        ///     Handles the Load event of the RibbonWindow control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        public void RibbonWindow_Load(object sender, RoutedEventArgs e)
-        {
-            //zurueck.IsEnabled = false;
-            try
-            {
-                LoadUserControls();
-                OpenSuchen();
-                LoadDatabases();
-                var a = new openRegistration();
-                a.ShowDialog();
-            }
-            catch (MPSSQLiteException)
-            {
-                MessageBox.Show("Fehler!!\nKonfigurationsdatei nicht gefunden!!\nFehlercode. 55534552\n",
-                    "!!!Kritischer Fehler!!!\n"
-                    , MessageBoxButton.OK, MessageBoxImage.Error);
-                Close();
-            }
-        }
+
+
 
         private void LoadUserControls()
         {
@@ -104,28 +77,6 @@ namespace de.fearvel.openMPS
         {
             Config.GetInstance().Open();
             OID.GetInstance().Open();
-
-        }
-
-        /// <summary>
-        ///     Handles the backstageExit event of the bt control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void Bt_backstageExit(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-
-        /// <summary>
-        ///     Handles the geraetSuchen event of the bt control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_geraetSuchen(object sender, RoutedEventArgs e)
-        {
-            OpenSuchen();
         }
 
         private void DisplayUserControl(UserControl uc, string text = "")
@@ -134,12 +85,13 @@ namespace de.fearvel.openMPS
             MainGrid.Children.Add(uc);
             tbl_info.Text = text;
         }
+
         private void OpenSuchen()
         {
             DisplayUserControl(_userControls[typeof(GeraeteSuchen)],
                 "Die automatische Suche nach Druckern wird im Schnitt ca. 0.03 Sekunden pro IP-Adresse benötigen,");
-
         }
+
         private void OpenBearbeiten()
         {
             DisplayUserControl(_userControls[typeof(geraeteBearbeiten)],
@@ -148,45 +100,34 @@ namespace de.fearvel.openMPS
                 "werden, oder nicht.");
         }
 
-        private void bt_geraetBearbeiten(object sender, RoutedEventArgs e)
-        {
-            OpenBearbeiten();
-        }
-
-        /// <summary>
-        ///     Handles the abfrageStarten event of the bt control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_abfrageStarten(object sender, RoutedEventArgs e)
-        {
-            OpenAbfrage();
-        }
-
         private void OpenAbfrage()
         {
             DisplayUserControl(_userControls[typeof(AbraegeStarten)]);
         }
+        
         /// <summary>
-        ///     Loads the abfrage starten.
+        ///     Handles the Load event of the RibbonWindow control.
         /// </summary>
-        private void loadAbfrageStarten()
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        public void RibbonWindow_Load(object sender, RoutedEventArgs e)
         {
-            if (!MainGrid.CheckAccess())
+            //zurueck.IsEnabled = false;
+            try
             {
-                MainGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(loadAbfrageStarten));
-                return;
+                while (_dbConnectionLoader.IsAlive){}           // Überprüfung auf vollständiges Laden/ Erzeugen der Internen Datenbank  
+                LoadUserControls();
+                OpenSuchen();                
+                //var a = new openRegistration();
+                //a.ShowDialog();
             }
-
-            MainGrid.Children.Add(new AbraegeStarten());
-        }
-
-
-
-
-        private void bsi_close_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Environment.Exit(0);
+            catch (MPSSQLiteException)
+            {
+                MessageBox.Show("Fehler!!\nKonfigurationsdatei Fehlerhaft",
+                    "!!!Kritischer Fehler!!!\n"
+                    , MessageBoxButton.OK, MessageBoxImage.Error);
+                Close();
+            }
         }
 
         private void Ribbon_control_IsMinimizedChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -203,6 +144,33 @@ namespace de.fearvel.openMPS
             }
         }
 
+        /// <summary>
+        ///     Handles the geraetSuchen event of the bt control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        private void bt_geraetSuchen(object sender, RoutedEventArgs e)
+        {
+            OpenSuchen();
+        } 
 
+        private void bt_geraetBearbeiten(object sender, RoutedEventArgs e)
+        {
+            OpenBearbeiten();
+        }
+        /// <summary>
+        ///     Handles the abfrageStarten event of the bt control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        private void bt_abfrageStarten(object sender, RoutedEventArgs e)
+        {
+            OpenAbfrage();
+        }
+
+        private void bsi_close_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }

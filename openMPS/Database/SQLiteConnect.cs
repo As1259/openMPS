@@ -49,7 +49,11 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-
+        public void UpdateDirectory()
+        {
+            _directory.Clear();
+            ReadFromDirectory();
+        }
         protected SqLiteConnect()
         {
             Directory = new Dictionary<string, string>();
@@ -83,7 +87,7 @@ namespace de.fearvel.openMPS.Database
                 throw new MPSSQLiteException();
             }
         }
-       
+
         public virtual void OpenEncrypted(string name)
         {
             try
@@ -128,7 +132,7 @@ namespace de.fearvel.openMPS.Database
             SqliteConnector c = new SqliteConnector(Path.Combine(FilePath, FileName));
             _connection = c;
             _opened = true;
-          //  Open(Path.Combine(FilePath, FileName));
+            //  Open(Path.Combine(FilePath, FileName));
             GenerateTables();
         }
 
