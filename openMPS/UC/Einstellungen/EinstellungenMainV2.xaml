@@ -8,11 +8,13 @@
              d:DesignHeight="600" d:DesignWidth="1050"
              Background="Transparent" Loaded="UserControl_Loaded">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="500" Margin="200,70,0,0" VerticalAlignment="Top" Width="850"
-              Background="LightGray" x:Name="grid_setting" />
-        <ListBox HorizontalAlignment="Left" Margin="0,70,0,0" Height="500" VerticalAlignment="Top" Width="200"
-                  Background="White" x:Name="ListBoxEinstellungen" IsManipulationEnabled="False" SelectionChanged="ListBoxEinstellungen_SelectionChanged" >
-        </ListBox>
+        <Border Margin="0,30,0,0" BorderThickness="0,1,0,0" BorderBrush="Black">
+            <Grid HorizontalAlignment="Left" Height="570" Margin="200,0,0,0" VerticalAlignment="Top" Width="850"
+                  Background="LightGray" x:Name="grid_setting"  />
+        </Border>
+        <ListBox HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="200"
+                 Background="White" x:Name="ListBoxEinstellungen" IsManipulationEnabled="False" SelectionChanged="ListBoxEinstellungen_SelectionChanged" 
+                 BorderBrush="Black" BorderThickness="0,1,1,0" Margin="0,30,0,0"/>
 
     </Grid>
 </UserControl>

@@ -40,7 +40,7 @@
                  MaxLength="3" />
         <DataGrid HorizontalAlignment="Left" x:Name="geraeteGrid" Height="335" Margin="25,100,0,0"
                   VerticalAlignment="Top" Width="1127" CanUserAddRows="False" CanUserDeleteRows="False"
-                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" />
+                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" BorderThickness="1" BorderBrush="Black"/>
         <Label Content="." HorizontalAlignment="Left" Margin="176,29,0,0" VerticalAlignment="Top" />
         <Label Content="." HorizontalAlignment="Left" Margin="216,29,0,0" VerticalAlignment="Top" />
         <Label Content="." HorizontalAlignment="Left" Margin="256,29,0,0" VerticalAlignment="Top" />

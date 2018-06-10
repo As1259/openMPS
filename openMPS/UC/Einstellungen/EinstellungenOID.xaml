@@ -10,7 +10,7 @@
     <Grid>
         <DataGrid HorizontalAlignment="Left" Height="436" Margin="10,54,0,0" VerticalAlignment="Top" Width="830"
                   x:Name="dg_data" ColumnWidth="auto" IsReadOnly="true" CanUserAddRows="False" CanUserDeleteRows="False"
-                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" />
+                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" BorderThickness="1" BorderBrush="Black"/>
         <Label Content="OID-Version:&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,23,0,0" VerticalAlignment="Top"
                Width="120" Height="26" />
         <Label Content="" HorizontalAlignment="Left" Margin="100,23,0,0" VerticalAlignment="Top" Width="120"

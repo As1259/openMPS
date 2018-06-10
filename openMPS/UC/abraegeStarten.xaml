@@ -10,7 +10,7 @@
     <Grid>
         <DataGrid HorizontalAlignment="Left" x:Name="geraeteGrid" Height="335" Margin="25,100,0,0"
                   VerticalAlignment="Top" Width="1127" CanUserAddRows="False" CanUserDeleteRows="False"
-                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" />
+                  CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False" IsReadOnly="True" BorderThickness="1" BorderBrush="Black"/>
         <Button x:Name="bt_start" Click="Bt_start_Click" Content="Werte abfragen" HorizontalAlignment="Left"
                 Margin="25,25,0,0" VerticalAlignment="Top" Width="135" Height="25" />
         <Button x:Name="bt_senden" Content="E-Mail direkt senden" HorizontalAlignment="Left" Margin="265,27,0,0"

@@ -24,7 +24,7 @@ namespace de.fearvel.openMPS
     /// <summary>
     ///     Interaktionslogik für MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : IRibbonWindow
     {
         private Thread _dbConnectionLoader;
 
@@ -172,5 +172,7 @@ namespace de.fearvel.openMPS
         {
             Environment.Exit(0);
         }
+
+        public RibbonTitleBar TitleBar { get; }
     }
 }

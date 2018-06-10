@@ -11,7 +11,7 @@
         <DataGrid HorizontalAlignment="Left" x:Name="geraeteGrid" Height="335" Margin="25,100,0,0"
                   VerticalAlignment="Top" Width="1127" CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False"
-                  SelectedCellsChanged="geraeteGrid_SelectedCellsChanged" />
+                  SelectedCellsChanged="geraeteGrid_SelectedCellsChanged" BorderThickness="1" BorderBrush="Black"/>
         <TextBox x:Name="tb_ip_block1" HorizontalAlignment="Left" Height="17" Margin="299,30,0,0" TextWrapping="Wrap"
                  Text="255" VerticalAlignment="Top" Width="35" TabIndex="1" Panel.ZIndex="1" IsEnabled="false"
                  FontFamily="Arial" FontSize="12" MaxLength="3" TextAlignment="Center" TextChanged="tb_switch" />

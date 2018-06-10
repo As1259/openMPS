@@ -1,13 +1,30 @@
-﻿<Fluent:RibbonWindow x:Class="de.fearvel.openMPS.MainWindow"
+﻿<mah:MetroWindow x:Class="de.fearvel.openMPS.MainWindow"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:Fluent="urn:fluent-ribbon"
+                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                      Title="openMPS"
                      Icon="openmps_Nco_12.ico"
                      Width="1200"
                      Height="600"
-                     IsCollapsed="False"
-                     ResizeMode="NoResize">
+                     ResizeMode="NoResize"
+                     GlowBrush="{DynamicResource AccentColorBrush}"
+                     ShowIconOnTitleBar="False"
+                     ShowTitleBar="True"
+                     WindowStartupLocation="CenterScreen"
+                     >
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/cobalt.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
     <Grid>
         <Grid Panel.ZIndex="0">
             <Grid.RowDefinitions>
@@ -19,7 +36,7 @@
 
                 <!--Backstage-->
                 <Fluent:Ribbon.Menu>
-                    <Fluent:Backstage Background="Blue" x:Name="backstage">
+                    <Fluent:Backstage Background="#3373F2" x:Name="backstage">
                         <Fluent:BackstageTabControl Background="white">
 
 
@@ -71,7 +88,9 @@
                         <Fluent:Button Header="Hilfe" x:Name="bt_info"
                                    Click="bt_start"
                            Width="70"/>
-                        --><!--<Fluent:Button Header="Verbrauchsmaterialien" Click="bt_verbrauchsmaterialinfo"/>--><!--
+                        -->
+                <!--<Fluent:Button Header="Verbrauchsmaterialien" Click="bt_verbrauchsmaterialinfo"/>-->
+                <!--
                     </Fluent:RibbonGroupBox>
                 </Fluent:RibbonTabItem>-->
 
@@ -85,4 +104,4 @@
         </Grid>
 
     </Grid>
-</Fluent:RibbonWindow>
+</mah:MetroWindow>
