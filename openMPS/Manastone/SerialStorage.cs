@@ -23,12 +23,12 @@ namespace de.fearvel.manastone.serialManagement
         private static readonly string Manafile = "\\MANASTONE.L";
         private static SQLITEConnector _sqlCon;
 
-        private static string CreateHashedKey()
+        private static string CreateHashedKey() //dead
         {
             var os = new ManagementObject("Win32_OperatingSystem=@");
-            var sh = new SpookyHashV2();
-            var b = sh.ComputeHash((string) os["SerialNumber"] + (string) os["InstallDate"]);
-            return b.Aggregate("", (current, t) => current + t);
+           // var sh = new SpookyHashV2();
+           // var b = sh.ComputeHash((string) os["SerialNumber"] + (string) os["InstallDate"]);
+            return null; //b.Aggregate("", (current, t) => current + t);
         }
 
         internal static void OpenSerialStorage()

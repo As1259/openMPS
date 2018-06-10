@@ -13,7 +13,7 @@ namespace de.fearvel.manastone.serialManagement.InstallBased
 {
     public class I01 : Serial
     {
-        private readonly CRC hash = new CRC(CRC.Standards[CRC.Standard.ARC]);
+      //  private readonly CRC hash = new CRC(CRC.Standards[CRC.Standard.ARC]);
 
         public I01()
         {
@@ -74,16 +74,16 @@ namespace de.fearvel.manastone.serialManagement.InstallBased
         public override bool SerialValidity(string s)
         {
             var ser = StoreSerial(s);
-            var h = hash.ComputeHash(ser.Praefix + ser.LicenseType +
-                                     FillIdNr(ser.CustomerIdentificationNumber.ToString())
-                                     + FillIdNr(ser.AuthorityIdentificationNumber.ToString())
-                                     + FillIdNr(ser.ProgramIdentificationNumber.ToString()) +
-                                     ser.DateOfExpiry.ToString("ddMMyy"));
-            var j = ser.Praefix + ser.LicenseType + FillIdNr(ser.CustomerIdentificationNumber.ToString())
-                    + FillIdNr(ser.AuthorityIdentificationNumber.ToString())
-                    + FillIdNr(ser.ProgramIdentificationNumber.ToString()) + ser.DateOfExpiry.ToString("ddMMyy");
-            var o = h.Aggregate("", (current, t) => current + t);
-            return ByteArrayHashToString(h).CompareTo(ser.Hash) == 0;
+         //  var h = hash.ComputeHash(ser.Praefix + ser.LicenseType +
+         //                           FillIdNr(ser.CustomerIdentificationNumber.ToString())
+         //                           + FillIdNr(ser.AuthorityIdentificationNumber.ToString())
+         //                           + FillIdNr(ser.ProgramIdentificationNumber.ToString()) +
+         //                           ser.DateOfExpiry.ToString("ddMMyy"));
+         //  var j = ser.Praefix + ser.LicenseType + FillIdNr(ser.CustomerIdentificationNumber.ToString())
+         //          + FillIdNr(ser.AuthorityIdentificationNumber.ToString())
+         //          + FillIdNr(ser.ProgramIdentificationNumber.ToString()) + ser.DateOfExpiry.ToString("ddMMyy");
+         //  var o = h.Aggregate("", (current, t) => current + t);
+            return false; // ByteArrayHashToString(h).CompareTo(ser.Hash) == 0;
         }
 
         private string ByteArrayHashToString(byte[] b)

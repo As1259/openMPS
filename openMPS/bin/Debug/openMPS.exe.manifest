@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ControlzEx.dll" size="168960">
-      <assemblyIdentity name="ControlzEx" version="2.2.0.4" publicKeyToken="F08B075E934B7045" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ControlzEx.dll" size="180224">
+      <assemblyIdentity name="ControlzEx" version="3.0.2.4" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8DHH+mLC9prIZYhlSlA9YXG5T426RE8898verQtrHv4=</dsig:DigestValue>
+        <dsig:DigestValue>Vcrgr4UXrC14eyEKxvecmqx/WANbafqvYgqQ8z4mdvw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -91,14 +91,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Fluent.dll" size="618496">
-      <assemblyIdentity name="Fluent" version="5.0.1.10" publicKeyToken="3E436E32A8C5546F" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Fluent.dll" size="753664">
+      <assemblyIdentity name="Fluent" version="6.0.0.208" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vHG1ROmVpG1Kc4x1t4hNrVsJyOFieNREWP9AtZCqJEA=</dsig:DigestValue>
+        <dsig:DigestValue>8qTrsYztQS+QH3COz4VlICVADiHGRh2S7FypWdiIsk4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Independentsoft.Msg.dll" size="258048">
-      <assemblyIdentity name="Independentsoft.Msg" version="2.0.350.20519" publicKeyToken="76BE97FE952F1EC7" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MahApps.Metro.dll" size="1097216">
+      <assemblyIdentity name="MahApps.Metro" version="1.6.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YbHaSzSkwVBghYjN1XI0HVIpAX/isjIONPdJSeuC6IU=</dsig:DigestValue>
+        <dsig:DigestValue>dwDpDassbbEWU78yi7LaEuMQRe7cfUsyu3H918plZek=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -139,26 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="471552">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="469504">
       <assemblyIdentity name="openMPS" version="2.5.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5t7zw/Kx+7JOZ9CoL7K+ZxtVmB3a323Bo/0zEncoS3s=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ProgressRing.Forms.Plugin.dll" size="5632">
-      <assemblyIdentity name="ProgressRing.Forms.Plugin" version="1.0.6379.36402" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>TDXf+lxZ3qJEQ2DeDWa3M2aLD6eIt1h43aofEYhguIQ=</dsig:DigestValue>
+        <dsig:DigestValue>Q3eRzXDKqsC6Fk2sb5TkB9CC+N2ijBShcl5cXaM1W8c=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -175,50 +163,50 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.Core.dll" size="29184">
-      <assemblyIdentity name="System.Data.HashFunction.Core" version="1.8.2.2" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.Core.dll" size="18944">
+      <assemblyIdentity name="System.Data.HashFunction.Core" version="2.0.0.0" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>fgdGQvIhdk8cEMIeN4ynGN6lRgQJzWgR8NfLivIcmhg=</dsig:DigestValue>
+        <dsig:DigestValue>ZWnSjDnPNyO37N3rxlIshPs7NdYlFzoJY4wFD39mLVE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.CRC.dll" size="18944">
-      <assemblyIdentity name="System.Data.HashFunction.CRC" version="1.8.2.2" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.CRC.dll" size="19456">
+      <assemblyIdentity name="System.Data.HashFunction.CRC" version="2.0.0.0" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0lV2Nviw+D6xvos5hG/41Ky3UV4zfsdtvUQ8vWleKA8=</dsig:DigestValue>
+        <dsig:DigestValue>RnmulpRALdXqDOAp0h+4TJi+4gKRHHQ1rrZIECk5nQY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.Interfaces.dll" size="5120">
-      <assemblyIdentity name="System.Data.HashFunction.Interfaces" version="1.0.0.2" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.Interfaces.dll" size="6144">
+      <assemblyIdentity name="System.Data.HashFunction.Interfaces" version="2.0.0.0" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mRdWEgpPMPUJHatKuAVw4ZbG6qRBNm7x4VsA+qYUsdc=</dsig:DigestValue>
+        <dsig:DigestValue>vN+22DbfaNiy5ukr5jMaNMOwC+OOeVVnbSxj1btWoVk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.SpookyHash.dll" size="14336">
-      <assemblyIdentity name="System.Data.HashFunction.SpookyHash" version="1.8.2.2" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Data.HashFunction.SpookyHash.dll" size="22528">
+      <assemblyIdentity name="System.Data.HashFunction.SpookyHash" version="2.0.0.0" publicKeyToken="80C9288E394C1322" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>273ZgTw+YYy6AND94+kBkWekmgMXsAHrn6bBi4K/KFY=</dsig:DigestValue>
+        <dsig:DigestValue>cN3JPhSBK9WKSoK439LMW97ulwjFsLi5hf327jT+cv8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -259,6 +247,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.ValueTuple.dll" size="79208">
+      <assemblyIdentity name="System.ValueTuple" version="4.0.2.0" publicKeyToken="CC7B13FFCD2DDD51" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>4c2JuU6Ii9/Gz4zIYIc1xA1LwNNYDT+SEAIwS2lsYcM=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="System.Windows.Interactivity.dll" size="55904">
       <assemblyIdentity name="System.Windows.Interactivity" version="4.5.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -270,61 +270,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WinFormAnimation.dll" size="37376">
-      <assemblyIdentity name="WinFormAnimation" version="1.5.6298.3372" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sR7dUHxu99vC/05g3ErhWT5//pU//GdNkyaGpWSbgII=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Core.dll" size="562232">
-      <assemblyIdentity name="Xamarin.Forms.Core" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bv0gUIzqWLxAbUPKg9Z2NNYPJdfquyrD3AxlM19/iJ4=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Platform.dll" size="12352">
-      <assemblyIdentity name="Xamarin.Forms.Platform" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vIzDcj0TVeqTPeyQCBTx9QBn30vAX5ZOF7aRTUqP9Jg=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Xamarin.Forms.Xaml.dll" size="79416">
-      <assemblyIdentity name="Xamarin.Forms.Xaml" version="2.0.0.0" language="neutral" processorArchitecture="msil" />
-      <hash>
-        <dsig:Transforms>
-          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-        </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Uqju3NSwNHtuIuIJeSSrbu9a57E+ydbjAqK+lcPK6lE=</dsig:DigestValue>
-      </hash>
-    </dependentAssembly>
-  </dependency>
-  <file name="openMPS.exe.config" size="2105">
+  <file name="openMPS.exe.config" size="2358">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>WipcCa/ceTBvLU2Tcsb2H/nrZtJYxeqlfYJ8Htpur8w=</dsig:DigestValue>
+      <dsig:DigestValue>3v5i5STJ/KT7DPscMGGeWhHRYDr3h4E+32PhzzxZk5s=</dsig:DigestValue>
     </hash>
   </file>
   <file name="openmps_Nco_12.ico" size="27427">
