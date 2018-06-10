@@ -85,3 +85,5 @@ C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.a
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.csproj.CopyComplete
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.exe
 C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\openMPS.pdb
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\CustomControls\UserControl1.g.cs
+C:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\obj\Debug\UC\CustomControls\UserControl1.baml

@@ -53,7 +53,8 @@ namespace de.fearvel.openMPS.UC
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         public void geraeteSuchen_Load(object sender, RoutedEventArgs e)
         {
-            loadGridData();
+            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -61,8 +62,8 @@ namespace de.fearvel.openMPS.UC
         /// </summary>
         public void loadGridData()
         {
-            dt = Config.GetInstance().Query("Select * from devices");
-            geraeteGrid.ItemsSource = dt.DefaultView;
+            Config.GetInstance().UpdateDevices();
+            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
             //   geraeteGrid.IsReadOnly = true;
             geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
             geraeteGrid.Columns[0].IsReadOnly = true;
@@ -447,5 +448,7 @@ namespace de.fearvel.openMPS.UC
         {
             progresslabel.Content = progress.Value + " %";
         }
+
+
     }
 }

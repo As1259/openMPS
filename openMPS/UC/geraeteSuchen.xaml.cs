@@ -48,8 +48,10 @@ namespace de.fearvel.openMPS.UC
         /// </summary>
         public void LoadGridData()
         {
-            _dt = Config.GetInstance().Query("Select Aktiv,IP, Modell,Seriennummer,AssetNumber from Devices");
-            geraeteGrid.ItemsSource = _dt.DefaultView;
+            Config.GetInstance().UpdateDevices();
+            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
+
             geraeteGrid.IsReadOnly = true;
         }
 
@@ -60,7 +62,9 @@ namespace de.fearvel.openMPS.UC
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         public void GeraeteSuchen_Load(object sender, RoutedEventArgs e)
         {
-            LoadGridData();
+            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
+
             var ip = ScanIP.GetIpMask();
             var ipaddr = ScanIP.FindIpRange(ScanIP.GetIpMask());
             var start = ipaddr[0].GetAddressBytes();

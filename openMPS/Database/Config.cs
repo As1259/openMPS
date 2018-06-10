@@ -5,6 +5,7 @@
 #endregion
 
 using System;
+using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
@@ -16,6 +17,13 @@ namespace de.fearvel.openMPS.Database
     public class Config : SqLiteConnect
     {
         private static Config _instance;
+        private DataTable _devices;
+
+        public DataTable Devices
+        {
+            get => _devices ?? (_devices = Query("Select * from Devices"));
+            set => _devices = value;
+        }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static Config GetInstance()
@@ -99,6 +107,11 @@ namespace de.fearvel.openMPS.Database
                 + " AssetNumber='" + assetNumber + "'"
                 + " where ip='" + altIp[0] + "." + altIp[1] + "." + altIp[2] + "." + altIp[3] + "';";
             Config.GetInstance().NonQuery(cmd);
+        }
+
+        public void UpdateDevices()
+        {
+            _devices = Query("Select * from Devices");
         }
 
     }
