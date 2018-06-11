@@ -4,7 +4,7 @@
   <description asmv2:iconFile="openmps_Nco_12.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="openMPS" version="2.5.2.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="openMPS" version="2.5.2.2" language="neutral" processorArchitecture="msil" />
     <commandLine file="openMPS.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="474112">
-      <assemblyIdentity name="openMPS" version="2.5.2.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="482304">
+      <assemblyIdentity name="openMPS" version="2.5.2.2" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>S+2Kruh7jHa9T2uDg2GQ9HIPIYYMWirT/4ivJSSGZvs=</dsig:DigestValue>
+        <dsig:DigestValue>ZTygra6iPwSKDLOgdtZVBRRP3ZgXiFN2Me2j48TptT8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

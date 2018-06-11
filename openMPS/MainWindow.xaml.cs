@@ -67,6 +67,7 @@ namespace de.fearvel.openMPS
         private void LoadDelayableUserControl()
         {
             _userControls.Add(typeof(GeraeteSuchen), new GeraeteSuchen());
+            _userControls.Add(typeof(DeviceManagement), new DeviceManagement());
 
             _userControls.Add(typeof(geraeteBearbeiten), new geraeteBearbeiten());
             _userControls.Add(typeof(AbraegeStarten), new AbraegeStarten());
@@ -99,12 +100,19 @@ namespace de.fearvel.openMPS
                 " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
                 "werden, oder nicht.");
         }
+        private void OpenDeviceManagement()
+        {
+            DisplayUserControl(_userControls[typeof(DeviceManagement)],
+                "Hier können Sie neue Geräte suchen, bearbeiten, oder die IP-Adressen neuer Geräte manuell hinzufügen." +
+                " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
+                "werden, oder nicht.");
+        }
 
         private void OpenAbfrage()
         {
             DisplayUserControl(_userControls[typeof(AbraegeStarten)]);
         }
-        
+
         /// <summary>
         ///     Handles the Load event of the RibbonWindow control.
         /// </summary>
@@ -115,9 +123,9 @@ namespace de.fearvel.openMPS
             //zurueck.IsEnabled = false;
             try
             {
-                while (_dbConnectionLoader.IsAlive){}           // Überprüfung auf vollständiges Laden/ Erzeugen der Internen Datenbank  
+                while (_dbConnectionLoader.IsAlive) { }           // Überprüfung auf vollständiges Laden/ Erzeugen der Internen Datenbank  
                 LoadUserControls();
-                OpenSuchen();                
+                OpenSuchen();
                 //var a = new openRegistration();
                 //a.ShowDialog();
             }
@@ -152,7 +160,7 @@ namespace de.fearvel.openMPS
         private void bt_geraetSuchen(object sender, RoutedEventArgs e)
         {
             OpenSuchen();
-        } 
+        }
 
         private void bt_geraetBearbeiten(object sender, RoutedEventArgs e)
         {
@@ -174,5 +182,11 @@ namespace de.fearvel.openMPS
         }
 
         public RibbonTitleBar TitleBar { get; }
+
+        private void ButtonDeviceManagement_OnClick(object sender, RoutedEventArgs e)
+        {
+            OpenDeviceManagement();
+
+        }
     }
 }

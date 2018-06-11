@@ -66,6 +66,9 @@
                         <Fluent:Button Header="Geräte bearbeiten" x:Name="bt_geraetEdit"
                                        Click="bt_geraetBearbeiten"
                                        Width="70" />
+                        <Fluent:Button Header="Geräte Verwaltung" x:Name="ButtonDeviceManagement"
+                                       Click="ButtonDeviceManagement_OnClick"
+                                       Width="70" />
                         <Fluent:Button Header="Werte abfragen und senden" x:Name="bt_abfrage"
                                        Click="bt_abfrageStarten"
                                        Width="100" />

@@ -3,6 +3,8 @@ FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\App.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\erstStart2GEN.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\openRegistration.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\abraegeStarten.xaml;;
+FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\CustomControls\DeviceProps.xaml;;
+FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\DeviceManagement.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\Einstellungen\EinstellungenMainV2.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\Einstellungen\EinstellungenMain.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\Einstellungen\EinstellungenOID.xaml;;
@@ -13,5 +15,4 @@ FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\geraeteBearbeit
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\geraeteInfo.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\geraeteSuchen.xaml;;
 FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\start.xaml;;
-FC:\Users\schreiner.andreas\Documents\Sources\openMPS\openMPS\UC\CustomControls\UserControl1.xaml;;
 
