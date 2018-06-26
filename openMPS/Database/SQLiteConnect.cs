@@ -234,6 +234,19 @@ namespace de.fearvel.openMPS.Database
                 return _connection.Query(cmd);
             throw new MPSSQLiteException();
         }
+        protected void InsertIntoDirectory(string key, string value)
+        {
+            using (var command = new SQLiteCommand(
+                "Insert Into Directory"
+                + " (Identifier,val)"
+                + " Values (@Identifier,@val);"))
+            {
+                command.Parameters.AddWithValue("@Identifier", key);
+                command.Parameters.AddWithValue("@val", value);
+                command.Prepare();
+                NonQuery(command);
+            }
+        }
     }
 }
 

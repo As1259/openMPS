@@ -5,11 +5,13 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
+using de.fearvel.openMPS.Database.Exceptions;
 
 namespace de.fearvel.openMPS.Database
 {
@@ -20,6 +22,38 @@ namespace de.fearvel.openMPS.Database
     {
         private static Config _instance;
         private DataTable _devices;
+        private Dictionary<string, bool> _flags;
+
+        public Dictionary<string, bool> Flags
+        {
+            get
+            {
+                if (_flags.Count == 0)
+                {
+                    ReadFromFlags();
+                }
+
+                return _flags;
+
+            }
+            private set => _flags = value;
+        }
+
+        private void ReadFromFlags()
+        {
+            try
+            {
+                foreach (DataRow ds in Query("select * from Flags;").Rows)
+                {
+                    _flags.Add(ds.Field<string>("Identifier"), ds.Field<bool>("val"));
+                }
+            }
+            catch (Exception)
+            {
+                throw new MPSSQLiteException();
+            }
+        }
+
 
         public DataTable Devices
         {
@@ -39,6 +73,8 @@ namespace de.fearvel.openMPS.Database
         {
             GenerateInformationTable();
             GenerateDevicesTable();
+            GenerateFlagTable();
+
         }
 
         public void GenerateInformationTable()
@@ -46,14 +82,18 @@ namespace de.fearvel.openMPS.Database
             NonQuery("CREATE TABLE IF NOT EXISTS Directory" +
                      " (Identifier varchar(200),val Text," +
                      " CONSTRAINT uq_Version_Identifier UNIQUE (Identifier));");
-            if (Query("SELECT * FROM Directory").Rows.Count == 0)
-            {
-                NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('MPS-Version'," +
-                         "'" + FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion + "');");
-                NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('UUID','" + Guid.NewGuid().ToString() + "');");
-            }
+            if (Query("SELECT * FROM Directory").Rows.Count != 0) return;
+            NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('MPS-Version'," +
+                     "'" + FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion + "');");
+            NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('UUID','" + Guid.NewGuid().ToString() + "');");
         }
 
+        private void GenerateFlagTable()
+        {
+            NonQuery("CREATE TABLE IF NOT EXISTS Flags" +
+                     " (Identifier varchar(200),val bool," +
+                     " CONSTRAINT uq_Version_Identifier UNIQUE (Identifier));");
+            }
         public void GenerateDevicesTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS DEVICES" +
@@ -120,7 +160,7 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-      
+
         public void UpdateDevices()
         {
             _devices = Query("Select * from Devices");
@@ -128,15 +168,28 @@ namespace de.fearvel.openMPS.Database
 
         private void ReadInitialisationFile()
         {
-            if (File.Exists(@"init.db"))
+            if (!File.Exists(@"init.db")) return;
+            var tempConnection = new InitialisationFile();
+            foreach (var dictItem in tempConnection.LoadInitialSettings())
             {
-
+                InsertIntoDirectory(dictItem.Key, dictItem.Value);
             }
+
+            InsertIntoFlags("Initialized", true);
         }
 
-        private void InsertIntoDirectory(string key, string value)
+        private void InsertIntoFlags(string key, bool value)
         {
-
+            using (var command = new SQLiteCommand(
+                "Insert Into Flags"
+                + " (Identifier,val)"
+                + " Values (@Identifier,@val);"))
+            {
+                command.Parameters.AddWithValue("@Identifier", key);
+                command.Parameters.AddWithValue("@val", value);
+                command.Prepare();
+                NonQuery(command);
+            }
         }
 
     }

@@ -370,8 +370,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="a_openMPS.pfx" />
-    <Resource Include="core\oMPS.oConfig" />
-    <Resource Include="core\oMPS.oData" />
     <None Include="openMPS_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
@@ -382,9 +380,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="bg.ico" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace de.fearvel.openMPS.Database
     public class InitialisationFile
     {
         private SqliteConnector _connection;
-        public InitialisationFile(string fileName)
+        public InitialisationFile(string fileName = "init.db")
         {
             _connection = new SqliteConnector(fileName);
         }
