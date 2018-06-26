@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="482816">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="483840">
       <assemblyIdentity name="openMPS" version="2.5.3.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iQeWP/BOx0AG3t2WsV1qjPJkr3cVMsn4l0RCuzrCNkE=</dsig:DigestValue>
+        <dsig:DigestValue>CwgGtwer6Gr4Lma4vV+vEdAEeLmwiuLK2rnjFQxfKYs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

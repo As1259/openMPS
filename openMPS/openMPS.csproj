@@ -124,7 +124,7 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="de.fearvel.net, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="de.fearvel.net, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Network-tools\de.fearvel.net\bin\Release\de.fearvel.net.dll</HintPath>
     </Reference>
@@ -205,6 +205,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Database\InitialisationFile.cs" />
     <Compile Include="Database\Exceptions\OidUpdateFileException.cs" />
     <Compile Include="Database\OIDUpdateFileHandler.cs" />
     <Compile Include="UC\erstStart2GEN.xaml.cs">

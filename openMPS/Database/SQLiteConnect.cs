@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.IO;
 using System.Management;
 using de.fearvel.net.SQL.Connector;
@@ -199,11 +200,35 @@ namespace de.fearvel.openMPS.Database
 
         /// <summary>
         ///     Execute sql quarry
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        public void NonQuery(SQLiteCommand cmd)
+        {
+            if (_opened)
+                _connection.NonQuery(cmd);
+            else
+                throw new MPSSQLiteException();
+        }
+
+        /// <summary>
+        ///     Execute sql quarry
         ///     returns DataTable
         /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
         public DataTable Query(string cmd)
+        {
+            if (_opened)
+                return _connection.Query(cmd);
+            throw new MPSSQLiteException();
+        }
+        /// <summary>
+        ///     Execute sql quarry
+        ///     returns DataTable
+        /// </summary>
+        /// <param name="cmd">The command.</param>
+        /// <returns></returns>
+        public DataTable Query(SQLiteCommand cmd)
         {
             if (_opened)
                 return _connection.Query(cmd);

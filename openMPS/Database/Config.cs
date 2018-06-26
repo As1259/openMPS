@@ -7,7 +7,9 @@
 using System;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Data.SQLite;
 
 namespace de.fearvel.openMPS.Database
 {
@@ -38,7 +40,7 @@ namespace de.fearvel.openMPS.Database
             GenerateInformationTable();
             GenerateDevicesTable();
         }
-        
+
         public void GenerateInformationTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS Directory" +
@@ -73,18 +75,22 @@ namespace de.fearvel.openMPS.Database
         public void InsertInDeviceTable(string aktiv, byte[] ipAddress, string modell, string serial,
             string assetNumber)
         {
-            var cmd =
+            using (var command = new SQLiteCommand(
                 "Insert into Devices"
                 + " (Aktiv,IP,Modell,Seriennummer,AssetNumber)"
-                + " Values("
-                + " '" + aktiv + "',"
-                + " '" + ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3] + "',"
-                + " '" + modell + "',"
-                + " '" + serial + "',"
-                + " '" + assetNumber + "'"
-                + ");";
-            Config.GetInstance().NonQuery(cmd);
+                + " Values (@Aktiv,@IPAddress,@Modell,@Seriennummer,@AssetNumber);"))
+            {
+                command.Parameters.AddWithValue("@Aktiv", aktiv);
+                command.Parameters.AddWithValue("@IPAddress",
+                    ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3]);
+                command.Parameters.AddWithValue("@Modell", modell);
+                command.Parameters.AddWithValue("@Seriennummer", serial);
+                command.Parameters.AddWithValue("@AssetNumber", assetNumber);
+                command.Prepare();
+                NonQuery(command);
+            }
         }
+
         /// <summary>
         ///     Updates the Devices.
         /// </summary>
@@ -97,21 +103,40 @@ namespace de.fearvel.openMPS.Database
         public void UpdateDeviceTable(string aktiv, byte[] ipAddress, string modell, string serial,
             string assetNumber, byte[] altIp)
         {
-            var cmd =
-                "Update Devices"
-                + " set"
-                + " Aktiv='" + aktiv + "',"
-                + " ip='" + ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3] + "',"
-                + " Modell='" + modell + "',"
-                + " Seriennummer='" + serial + "',"
-                + " AssetNumber='" + assetNumber + "'"
-                + " where ip='" + altIp[0] + "." + altIp[1] + "." + altIp[2] + "." + altIp[3] + "';";
-            Config.GetInstance().NonQuery(cmd);
+            using (var command = new SQLiteCommand(
+                "Update Devices set Aktiv=@Aktiv, ip=@IPAddress, Modell=@Modell, Seriennummer=@Seriennummer, AssetNumber=@AssetNumber" +
+                " where ip=@AltIPAddress;"))
+            {
+                command.Parameters.AddWithValue("@Aktiv", aktiv);
+                command.Parameters.AddWithValue("@IPAddress",
+                    ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3]);
+                command.Parameters.AddWithValue("@Modell", modell);
+                command.Parameters.AddWithValue("@Seriennummer", serial);
+                command.Parameters.AddWithValue("@AssetNumber", assetNumber);
+                command.Parameters.AddWithValue("@AltIPAddress",
+                    altIp[0] + "." + altIp[1] + "." + altIp[2] + "." + altIp[3]);
+                command.Prepare();
+                NonQuery(command);
+            }
         }
 
+      
         public void UpdateDevices()
         {
             _devices = Query("Select * from Devices");
+        }
+
+        private void ReadInitialisationFile()
+        {
+            if (File.Exists(@"init.db"))
+            {
+
+            }
+        }
+
+        private void InsertIntoDirectory(string key, string value)
+        {
+
         }
 
     }

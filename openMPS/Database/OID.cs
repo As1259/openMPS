@@ -6,6 +6,8 @@
 
 using System.Runtime.CompilerServices;
 using System.Data;
+using System.Data.SQLite;
+
 namespace de.fearvel.openMPS.Database
 {
     /// <summary>
@@ -41,7 +43,13 @@ namespace de.fearvel.openMPS.Database
 
         public DataTable GetOidRowByPrivateId(string ident)
         {
-            return Query("SELECT * FROM OID Where OIDPrivateID='" + ident + "'");
+            using (var command = new SQLiteCommand(
+                "SELECT * FROM OID Where OIDPrivateID = @OIDPrivateID;"))
+            {
+                command.Parameters.AddWithValue("@OIDPrivateID", ident);
+                command.Prepare();
+                return Query(command);
+            }
         }
 
         public void GenerateOidTable()
