@@ -28,7 +28,6 @@ namespace de.fearvel.openMPS.UC
         /// <summary>
         ///     The DataTable
         /// </summary>
-        private DataTable _dt;
 
         public IPAddress StartIpAddress { get; private set; }
         public IPAddress EndIpAddress { get; private set; }

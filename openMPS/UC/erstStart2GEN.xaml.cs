@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using de.fearvel.manastone.serialManagement;
 
-namespace de.fearvel.openMPS
+namespace de.fearvel.openMPS.UC
 {
     /// <summary>
     ///     Interaktionslogik für erstStart.xaml

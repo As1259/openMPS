@@ -787,7 +787,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
                     + "'" + dt.Rows[i].Field<string>("MeterGroup1") + "'," //MeterGroup1 
                     + "'" + dt.Rows[i].Field<string>("MeterGroup2") + "'," //MeterGroup2
                     + "'" + DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "',"
-                    + "'" + SerialManager.GetSerialContainer(MainWindow.Programid).CustomerIdentificationNumber +
+                    + "'" + SerialManager.GetSerialContainer(UC.MainWindow.Programid).CustomerIdentificationNumber +
                     "'," //Kundennummer
                     + Config.GetInstance().Query("Select version from INFO").Rows[0].Field<long>("version") + ","
                     + Config.GetInstance().Query("Select OIDVersion from INFO").Rows[0].Field<long>("OIDVersion") + ""

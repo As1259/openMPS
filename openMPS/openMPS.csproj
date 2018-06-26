@@ -124,7 +124,8 @@
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\ControlzEx.dll</HintPath>
     </Reference>
-    <Reference Include="de.fearvel.net">
+    <Reference Include="de.fearvel.net, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Network-tools\de.fearvel.net\bin\Release\de.fearvel.net.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -206,7 +207,7 @@
     </ApplicationDefinition>
     <Compile Include="Database\Exceptions\OidUpdateFileException.cs" />
     <Compile Include="Database\OIDUpdateFileHandler.cs" />
-    <Compile Include="erstStart2GEN.xaml.cs">
+    <Compile Include="UC\erstStart2GEN.xaml.cs">
       <DependentUpon>erstStart2GEN.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manastone\I01.cs" />
@@ -225,7 +226,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="UC\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SNMP\SNMPget.cs" />
@@ -278,14 +279,14 @@
     <Compile Include="UC\geraeteSuchen.xaml.cs">
       <DependentUpon>geraeteSuchen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\start.xaml.cs">
-      <DependentUpon>start.xaml</DependentUpon>
+    <Compile Include="UC\InfoPage.xaml.cs">
+      <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="erstStart2GEN.xaml">
+    <Page Include="UC\erstStart2GEN.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -293,7 +294,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="UC\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -349,7 +350,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\start.xaml">
+    <Page Include="UC\InfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

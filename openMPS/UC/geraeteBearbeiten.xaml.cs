@@ -30,7 +30,6 @@ namespace de.fearvel.openMPS.UC
         /// <summary>
         ///     The DataTable
         /// </summary>
-        private DataTable dt;
 
         /// <summary>
         ///     bool for selected on grid
