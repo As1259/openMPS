@@ -206,8 +206,8 @@
     </ApplicationDefinition>
     <Compile Include="Database\InitialisationFile.cs" />
     <Compile Include="Database\Exceptions\OidUpdateFileException.cs" />
-    <Compile Include="Database\OIDUpdateFileHandler.cs" />
-    <Compile Include="UC\erstStart2GEN.xaml.cs">
+    <Compile Include="Database\OidUpdateFileHandler.cs" />
+    <Compile Include="UserInterface\Windows\erstStart2GEN.xaml.cs">
       <DependentUpon>erstStart2GEN.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manastone\I01.cs" />
@@ -226,67 +226,61 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UC\MainWindow.xaml.cs">
+    <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SNMP\SNMPget.cs" />
     <Compile Include="Database\CollectedInformationPackage.cs" />
-    <Compile Include="Database\OID.cs" />
+    <Compile Include="Database\Oid.cs" />
     <Compile Include="Database\Collector.cs" />
     <Compile Include="Database\Exceptions\MPSSQLiteException.cs" />
     <Compile Include="Database\Config.cs" />
     <Compile Include="Database\Exceptions\SQLiteCollectedInformationPackageException.cs" />
-    <Compile Include="Database\SQLiteConnect.cs" />
+    <Compile Include="Database\SqliteConnect.cs" />
     <Compile Include="Tools\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tools\DeviceTools.cs" />
     <Compile Include="Tools\mapi.cs" />
     <Compile Include="Tools\ScanIP.cs" />
-    <Compile Include="UC\abraegeStarten.xaml.cs">
-      <DependentUpon>abraegeStarten.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\RetrieveDeviceInformation.xaml.cs">
+      <DependentUpon>RetrieveDeviceInformation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\CustomControls\DeviceProps.xaml.cs">
+    <Compile Include="UserInterface\UserControls\CustomControls\DeviceProps.xaml.cs">
       <DependentUpon>DeviceProps.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\DeviceManagement.xaml.cs">
+    <Compile Include="UserInterface\UserControls\DeviceManagement.xaml.cs">
       <DependentUpon>DeviceManagement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\Einstellungen\EinstellungenMainV2.xaml.cs">
-      <DependentUpon>EinstellungenMainV2.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\Settings\SettingsV2.xaml.cs">
+      <DependentUpon>SettingsV2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\Einstellungen\EinstellungenMain.xaml.cs">
-      <DependentUpon>EinstellungenMain.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\Settings\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\Einstellungen\EinstellungenOID.xaml.cs">
-      <DependentUpon>EinstellungenOID.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\Settings\EinstellungenOid.xaml.cs">
+      <DependentUpon>EinstellungenOid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\Einstellungen\EinstellungenTechniker.xaml.cs">
+    <Compile Include="UserInterface\UserControls\Settings\EinstellungenTechniker.xaml.cs">
       <DependentUpon>EinstellungenTechniker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\Einstellungen\Informationen.xaml.cs">
-      <DependentUpon>Informationen.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\Settings\BasicInformation.xaml.cs">
+      <DependentUpon>BasicInformation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\Einstellungen\TechnikLogin.xaml.cs">
-      <DependentUpon>TechnikLogin.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\EditDevices.xaml.cs">
+      <DependentUpon>EditDevices.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\geraeteBearbeiten.xaml.cs">
-      <DependentUpon>geraeteBearbeiten.xaml</DependentUpon>
+    <Compile Include="UserInterface\UserControls\SearchForDevices.xaml.cs">
+      <DependentUpon>SearchForDevices.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UC\geraeteInfo.xaml.cs">
-      <DependentUpon>geraeteInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UC\geraeteSuchen.xaml.cs">
-      <DependentUpon>geraeteSuchen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UC\InfoPage.xaml.cs">
+    <Compile Include="UserInterface\UserControls\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UC\erstStart2GEN.xaml">
+    <Page Include="UserInterface\Windows\erstStart2GEN.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -294,7 +288,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\MainWindow.xaml">
+    <Page Include="UserInterface\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -302,55 +296,47 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UC\abraegeStarten.xaml">
+    <Page Include="UserInterface\UserControls\RetrieveDeviceInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\CustomControls\DeviceProps.xaml">
+    <Page Include="UserInterface\UserControls\CustomControls\DeviceProps.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\DeviceManagement.xaml">
+    <Page Include="UserInterface\UserControls\DeviceManagement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\Einstellungen\EinstellungenMainV2.xaml">
+    <Page Include="UserInterface\UserControls\Settings\SettingsV2.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UC\Einstellungen\EinstellungenMain.xaml">
+    <Page Include="UserInterface\UserControls\Settings\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\Einstellungen\EinstellungenOID.xaml">
+    <Page Include="UserInterface\UserControls\Settings\EinstellungenOid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\Einstellungen\EinstellungenTechniker.xaml">
+    <Page Include="UserInterface\UserControls\Settings\EinstellungenTechniker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\Einstellungen\Informationen.xaml">
+    <Page Include="UserInterface\UserControls\Settings\BasicInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\Einstellungen\TechnikLogin.xaml">
+    <Page Include="UserInterface\UserControls\EditDevices.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\geraeteBearbeiten.xaml">
+    <Page Include="UserInterface\UserControls\SearchForDevices.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UC\geraeteInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UC\geraeteSuchen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UC\InfoPage.xaml">
+    <Page Include="UserInterface\UserControls\InfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

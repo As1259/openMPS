@@ -13,13 +13,13 @@ namespace de.fearvel.openMPS.Database
     /// <summary>
     ///     Contains the connection to the config SQLITE
     /// </summary>
-    public class OID : SqLiteConnect
+    public class Oid : SqliteConnect
     {
-        private static OID _instance;
+        private static Oid _instance;
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static OID GetInstance()
+        public static Oid GetInstance()
         {
-            return _instance ?? (_instance = new OID());
+            return _instance ?? (_instance = new Oid());
         }
 
         protected override string FileName => "OID.db";

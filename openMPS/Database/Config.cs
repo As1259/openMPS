@@ -18,7 +18,7 @@ namespace de.fearvel.openMPS.Database
     /// <summary>
     ///     Contains the connection to the config SQLITE
     /// </summary>
-    public class Config : SqLiteConnect
+    public class Config : SqliteConnect
     {
         private static Config _instance;
         private DataTable _devices;
@@ -71,13 +71,13 @@ namespace de.fearvel.openMPS.Database
 
         public override void GenerateTables()
         {
-            GenerateInformationTable();
-            GenerateDevicesTable();
-            GenerateFlagTable();
+            CreateInformationTable();
+            CreateDevicesTable();
+            CreateFlagTable();
 
         }
 
-        public void GenerateInformationTable()
+        public void CreateInformationTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS Directory" +
                      " (Identifier varchar(200),val Text," +
@@ -88,13 +88,13 @@ namespace de.fearvel.openMPS.Database
             NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('UUID','" + Guid.NewGuid().ToString() + "');");
         }
 
-        private void GenerateFlagTable()
+        private void CreateFlagTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS Flags" +
                      " (Identifier varchar(200),val bool," +
                      " CONSTRAINT uq_Version_Identifier UNIQUE (Identifier));");
             }
-        public void GenerateDevicesTable()
+        public void CreateDevicesTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS DEVICES" +
                      " (Aktiv BOOL NOT NULL DEFAULT 'true'," +
@@ -160,22 +160,9 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-
         public void UpdateDevices()
         {
             _devices = Query("Select * from Devices");
-        }
-
-        private void ReadInitialisationFile()
-        {
-            if (!File.Exists(@"init.db")) return;
-            var tempConnection = new InitialisationFile();
-            foreach (var dictItem in tempConnection.LoadInitialSettings())
-            {
-                InsertIntoDirectory(dictItem.Key, dictItem.Value);
-            }
-
-            InsertIntoFlags("Initialized", true);
         }
 
         private void InsertIntoFlags(string key, bool value)

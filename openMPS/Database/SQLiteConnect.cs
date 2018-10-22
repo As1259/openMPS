@@ -9,7 +9,7 @@ using de.fearvel.openMPS.Database.Exceptions;
 
 namespace de.fearvel.openMPS.Database
 {
-    public abstract class SqLiteConnect
+    public abstract class SqliteConnect 
     {
         /// <summary>
         ///     Contains the connection to the config SQLITE
@@ -56,7 +56,7 @@ namespace de.fearvel.openMPS.Database
             _directory.Clear();
             ReadFromDirectory();
         }
-        protected SqLiteConnect()
+        protected SqliteConnect()
         {
             Directory = new Dictionary<string, string>();
         }

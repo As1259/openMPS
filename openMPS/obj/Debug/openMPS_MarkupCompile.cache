@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\schreiner.andreas\Documents\openMPS\openMPS\App.xaml
-171797585090
+151780982891
 
-43508319438
+41-1415982936
 90-489258445
-UC\erstStart2GEN.xaml;openRegistration.xaml;UC\MainWindow.xaml;Tools\CircularProgressBar.xaml;UC\abraegeStarten.xaml;UC\CustomControls\DeviceProps.xaml;UC\DeviceManagement.xaml;UC\Einstellungen\EinstellungenMainV2.xaml;UC\Einstellungen\EinstellungenMain.xaml;UC\Einstellungen\EinstellungenOID.xaml;UC\Einstellungen\EinstellungenTechniker.xaml;UC\Einstellungen\Informationen.xaml;UC\Einstellungen\TechnikLogin.xaml;UC\geraeteBearbeiten.xaml;UC\geraeteInfo.xaml;UC\geraeteSuchen.xaml;UC\InfoPage.xaml;
+UserInterface\Windows\erstStart2GEN.xaml;openRegistration.xaml;UserInterface\MainWindow.xaml;Tools\CircularProgressBar.xaml;UserInterface\UserControls\RetrieveDeviceInformation.xaml;UserInterface\UserControls\CustomControls\DeviceProps.xaml;UserInterface\UserControls\DeviceManagement.xaml;UserInterface\UserControls\Settings\SettingsV2.xaml;UserInterface\UserControls\Settings\Settings.xaml;UserInterface\UserControls\Settings\EinstellungenOid.xaml;UserInterface\UserControls\Settings\EinstellungenTechniker.xaml;UserInterface\UserControls\Settings\BasicInformation.xaml;UserInterface\UserControls\EditDevices.xaml;UserInterface\UserControls\SearchForDevices.xaml;UserInterface\UserControls\InfoPage.xaml;
 
 False
 

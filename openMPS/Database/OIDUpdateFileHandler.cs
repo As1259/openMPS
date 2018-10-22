@@ -59,7 +59,7 @@ namespace de.fearvel.openMPS.Database
             _connection.Query("Select val from Directory Where Identifier = 'OID-Version'", out DataTable fileOidDt);
             var fileOid = fileOidDt.Rows[0].Field<string>("val");
             ;
-            var version = OID.GetInstance().Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
+            var version = Oid.GetInstance().Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
             if (version.CompareTo(fileOid) < 0)
 
             {
@@ -67,12 +67,12 @@ namespace de.fearvel.openMPS.Database
 
                 if (dt.Rows.Count > 0)
                 {
-                    OID.GetInstance().NonQuery("Delete from OID");
-                    OID.GetInstance().NonQuery("delete from sqlite_sequence where name = 'OID';");
+                    Oid.GetInstance().NonQuery("Delete from OID");
+                    Oid.GetInstance().NonQuery("delete from sqlite_sequence where name = 'OID';");
 
 
                     for (var i = 0; i < dt.Rows.Count; i++)
-                        OID.GetInstance().NonQuery(
+                        Oid.GetInstance().NonQuery(
                             "insert into OID"
                             + "("
                             + "HerstellerName,"
@@ -336,8 +336,8 @@ namespace de.fearvel.openMPS.Database
                             + "'" + dt.Rows[i].Field<string>("YellowLevel") + "'"
                             + ");"
                         );
-                    OID.GetInstance().NonQuery("Update Directory set val = '" + fileOid + "' Where Identifier = 'OID-Version';");
-                    OID.GetInstance().UpdateDirectory();
+                    Oid.GetInstance().NonQuery("Update Directory set val = '" + fileOid + "' Where Identifier = 'OID-Version';");
+                    Oid.GetInstance().UpdateDirectory();
                     MessageBox.Show("OID's erfolgreich Eingelesen\nSie haben nun die OID-Version: " + fileOid, "Infomation", MessageBoxButton.OK,
                         MessageBoxImage.Information);
                 }

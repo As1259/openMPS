@@ -3,7 +3,7 @@
 namespace de.fearvel.openMPS.Database
 {
     /// <inheritdoc />
-    public class CollectedInformationPackage : SqLiteConnect
+    public class CollectedInformationPackage : SqliteConnect
     {
         private static CollectedInformationPackage _instance;
 
