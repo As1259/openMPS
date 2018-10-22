@@ -39,7 +39,8 @@ namespace de.fearvel.openMPS.Database
         {
             try
             {
-                foreach (DataRow ds in _connection.Query("select * from Directory;").Rows)
+                _connection.Query("select * from Directory;", out DataTable dt);
+                foreach (DataRow ds in dt.Rows)
                 {
                     _directory.Add(ds.Field<string>("Identifier"), ds.Field<string>("val"));
                 }
@@ -218,9 +219,11 @@ namespace de.fearvel.openMPS.Database
         /// <returns></returns>
         public DataTable Query(string cmd)
         {
-            if (_opened)
-                return _connection.Query(cmd);
-            throw new MPSSQLiteException();
+            if (!_opened)
+                throw new MPSSQLiteException();
+
+             _connection.Query(cmd, out DataTable dt);
+            return dt;
         }
         /// <summary>
         ///     Execute sql quarry
@@ -230,9 +233,11 @@ namespace de.fearvel.openMPS.Database
         /// <returns></returns>
         public DataTable Query(SQLiteCommand cmd)
         {
-            if (_opened)
-                return _connection.Query(cmd);
-            throw new MPSSQLiteException();
+            if (!_opened)
+                throw new MPSSQLiteException();
+
+            _connection.Query(cmd, out DataTable dt);
+            return dt;
         }
         protected void InsertIntoDirectory(string key, string value)
         {

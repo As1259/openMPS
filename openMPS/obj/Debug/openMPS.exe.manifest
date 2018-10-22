@@ -4,7 +4,7 @@
   <description asmv2:iconFile="openmps_Nco_12.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="openMPS" version="2.5.3.1" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="openMPS" version="2.5.3.2" language="neutral" processorArchitecture="msil" />
     <commandLine file="openMPS.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de.fearvel.net.dll" size="10752">
-      <assemblyIdentity name="de.fearvel.net" version="2.2.1.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de.fearvel.net.dll" size="11776">
+      <assemblyIdentity name="de.fearvel.net" version="2.4.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dfFcmF1kCPA+kzsXONjuqMcvYv93nyl0jn3UPj+Y4CU=</dsig:DigestValue>
+        <dsig:DigestValue>dsf3UUKVEOa3gO4uxdXDc02q7HTD10Zj0gIzA/DF0rk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="283648">
-      <assemblyIdentity name="openMPS" version="2.5.3.1" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="285696">
+      <assemblyIdentity name="openMPS" version="2.5.3.2" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Zy4JllJsRYexlS8x+reXn+TRvIrmMRGzvoS75dzjheo=</dsig:DigestValue>
+        <dsig:DigestValue>da2f6KttgnqHBv/SGQiGSQ3nTmMFb/mcN/gD9yzawtM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

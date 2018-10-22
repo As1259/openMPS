@@ -56,13 +56,14 @@ namespace de.fearvel.openMPS.Database
 
         private void UpdateOid()
         {
-            var fileOid = _connection.Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
+            _connection.Query("Select val from Directory Where Identifier = 'OID-Version'", out DataTable fileOidDt);
+            var fileOid = fileOidDt.Rows[0].Field<string>("val");
             ;
             var version = OID.GetInstance().Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
             if (version.CompareTo(fileOid) < 0)
 
             {
-                var dt = _connection.Query("Select * from OID");
+                _connection.Query("Select * from OID", out DataTable dt);
 
                 if (dt.Rows.Count > 0)
                 {

@@ -73,7 +73,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                     try
                     {
                         var sqlCon = new SqliteConnector(dia.FileName, ENCKEY);
-                        var dt = sqlCon.Query("Select * from DEVICES");
+                        sqlCon.Query("Select * from DEVICES", out DataTable dt);
                         Config.GetInstance().NonQuery("Delete from Devices");
 
 
@@ -98,7 +98,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                     try
                     {
                         var sqlCon = new SqliteConnector(dia.FileName);
-                        var dt = sqlCon.Query("Select * from bekanntegeraete");
+                        sqlCon.Query("Select * from bekanntegeraete", out DataTable dt);
                         Config.GetInstance().NonQuery("Delete from Devices");
 
 
@@ -128,7 +128,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
         private void ImportoMpsdd(string filename)
         {
             var sqlCON = new SqliteConnector(filename);
-            var dt = sqlCON.Query("Select * from bekanntegeraete");
+            sqlCON.Query("Select * from bekanntegeraete", out DataTable dt);
             for (var i = 0; i < dt.Rows.Count; i++)
             {
             }
@@ -160,7 +160,7 @@ namespace de.fearvel.openMPS.UC.Einstellungen
                                  + "'" + dt.Rows[i].Field<string>("Seriennummer") + "',"
                                  + "'" + dt.Rows[i].Field<string>("AssetNumber") + "');";
 
-                    sqlCon.Query(sqlCMD);
+                    sqlCon.NonQuery(sqlCMD);
                 }
             }
             catch (Exception)
@@ -174,13 +174,13 @@ namespace de.fearvel.openMPS.UC.Einstellungen
             var sqlCon = new SqliteConnector(filename);
             sqlCon.SetPassword(ENCKEY);
 
-            sqlCon.Query(" CREATE TABLE `DEVICES` ("
-                            + "`Aktiv`	BOOL NOT NULL DEFAULT 'true',                "
-                            + "`IP`	VARCHAR(39) NOT NULL DEFAULT '',                 "
-                            + "`Modell`	varchar(250),                                "
-                            + "`Seriennummer`	varchar(250),                        "
-                            + "`AssetNumber`	varchar(250) NOT NULL DEFAULT '',        "
-                            + "`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT);      ");
+            sqlCon.NonQuery(" CREATE TABLE `DEVICES` ("
+                            + "`Aktiv` BOOL NOT NULL DEFAULT 'true', "
+                            + "`IP` VARCHAR(39) NOT NULL DEFAULT '', "
+                            + "`Modell` varchar(250), "
+                            + "`Seriennummer` varchar(250), "
+                            + "`AssetNumber` varchar(250) NOT NULL DEFAULT '', "
+                            + "`id`	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT); ");
             return sqlCon;
         }
 

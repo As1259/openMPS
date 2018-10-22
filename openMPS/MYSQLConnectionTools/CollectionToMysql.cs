@@ -116,22 +116,25 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
         /// <returns></returns>
         public static DataTable shellDT(string cmd)
         {
-            if (opened)
-                return connection.Query(cmd);
-            throw new ArgumentException();
+            if (!opened)
+                throw new ArgumentException();
+
+            connection.Query(cmd, out DataTable dt);
+            return dt;
         }
 
 
 
         public static void updateOID(SqliteConnector sqlCon)
         {
-            var fileOID = sqlCon.Query("Select * from INFO").Rows[0].Field<long>("OIDVersion");
+            sqlCon.Query("Select * from INFO", out DataTable fileOIDDt);
+            var fileOID = fileOIDDt.Rows[0].Field<long>("OIDVersion");
             ;
             var version = Config.GetInstance().Query("Select OIDVersion from INFO").Rows[0].Field<long>("OIDVersion");
             if (version < fileOID)
 
             {
-                var dt = sqlCon.Query("Select * from OID");
+                 sqlCon.Query("Select * from OID", out DataTable dt);
 
                 if (dt.Rows.Count > 0)
                 {

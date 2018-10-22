@@ -30,7 +30,8 @@ namespace de.fearvel.openMPS.Database
             try
             {
                 var directory = new Dictionary<string, string>();
-                foreach (DataRow ds in _connection.Query("select * from Directory;").Rows)
+                _connection.Query("select * from Directory;", out DataTable dt);
+                foreach (DataRow ds in  dt.Rows)
                 {
                     directory.Add(ds.Field<string>("Identifier"), ds.Field<string>("val"));
                 }

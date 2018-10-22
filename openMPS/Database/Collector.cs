@@ -115,9 +115,11 @@ namespace de.fearvel.openMPS.Database
         /// <returns></returns>
         public static DataTable shellDT(string cmd)
         {
-            if (opened)
-                return _connection.Query(cmd);
-            throw new SQLiteErfassungException();
+            if (!opened)
+                throw new SQLiteErfassungException();
+
+            _connection.Query(cmd, out DataTable dt);
+            return dt;
         }
 
         /// <summary>
@@ -127,7 +129,7 @@ namespace de.fearvel.openMPS.Database
         {
             try
             {
-                _connection.Query("select * from INFO;");
+                _connection.Query("select * from INFO;", out DataTable dt);
             }
             catch (Exception e)
             {
