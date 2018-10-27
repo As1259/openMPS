@@ -177,11 +177,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         ///     Gains the data.
         /// </summary>
         /// <returns></returns>
-        private DataTable gainData()
+        private DataTable GainData()
         {
             DataTable dt;
             Collector.shell("Delete from Collector;");
-            dt =Config.GetInstance().Query("select *  from Devices where aktiv='1' or aktiv='True'");
+            dt = Config.GetInstance().Query("select *  from Devices where aktiv='1' or aktiv='True'");
 
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")).Length > 0)
@@ -190,6 +190,27 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                             DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")));
             return dt;
         }
+        private DataTable GainDataV2()
+        {
+            var dt = Config.GetInstance().Query("select * from Devices where aktiv='1' or aktiv='True'");
+            DataTable resultTable = null;
+            for (var i = 0; i < dt.Rows.Count; i++)
+                if (DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")).Length > 0)
+                    if (ScanIP.PingIp(new IPAddress(ScanIP.ConvertStringToAddress(dt.Rows[i].Field<string>("ip")))))
+                    {
+                        if( SNMPget.ReadDeviceOiDs(dt.Rows[i].Field<string>("ip"),
+                            DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")),out DataRow dr))
+                        {
+                            if (resultTable == null)
+                            {
+                                resultTable = dr.Table;
+                            }
+                            resultTable.Rows.Add(dr);
+                        }
+                    }
+            return resultTable;
+        }
+
 
         /// <summary>
         ///     Updates the data grid.
@@ -199,7 +220,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             if (SerialManager.CheckLicence(MainWindow.Programid))
             {
-                var dt = gainData();
+                var dt = GainData();
                 dt = Collector.shellDT("Select * from Collector");
                 this.dt = dt;
                 geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(updateGrid));
@@ -274,9 +295,9 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
         private string prepareOpenMPSFile()
         {
-            Collector.shellDT("update INFO set version=" +Config.GetInstance().Query(
+            Collector.shellDT("update INFO set version=" + Config.GetInstance().Query(
                                   "Select version from INFO").Rows[0].Field<long>("version") + ";");
-            Collector.shellDT("update INFO set OIDversion=" +Config.GetInstance().Query(
+            Collector.shellDT("update INFO set OIDversion=" + Config.GetInstance().Query(
                                   "Select OIDversion from INFO").Rows[0].Field<long>("OIDversion") + ";");
 
             var filename =

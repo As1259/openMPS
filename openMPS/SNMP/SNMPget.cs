@@ -178,6 +178,22 @@ namespace de.fearvel.openMPS.SNMP
             WriteToTable(oidValues, ip);
         }
 
+        public static bool ReadDeviceOiDs(string ip, string ident, out DataRow dr)
+        {
+            var dt = Config.GetInstance().Query("Select * from OID where OIDPrivateID='" + ident + "'");
+            var s = new string[AbgefragteOids.Length];
+
+            try
+            {
+                dr = GetOidValues(ip, dt);
+                return true;
+            }
+            catch (SnmpException)
+            {
+                dr = null;
+                return false;
+            }
+        }
         /// <summary>
         ///     Finds the alive printer.
         /// </summary>
@@ -252,6 +268,24 @@ namespace de.fearvel.openMPS.SNMP
                 {
                     oidValues[i] = "";
                     oidValues[i] = GetOidValue(ip, oid[i]);
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+
+            return oidValues;
+        }
+
+        public static DataRow GetOidValues(string ip, DataTable oid)
+        {
+            var oidValues = oid.NewRow();
+            try
+            {
+                for (var i = 0; i < oid.Columns.Count; i++)
+                {
+                    oidValues[i] = GetOidValue(ip, (string)oid.Rows[0][i]);
                 }
             }
             catch (Exception)

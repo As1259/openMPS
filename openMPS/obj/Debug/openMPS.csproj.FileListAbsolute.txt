@@ -266,3 +266,12 @@ C:\Users\schreiner.andreas\Documents\openMPS\openMPS\obj\Debug\UserInterface\Use
 C:\Users\schreiner.andreas\Documents\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\BasicInformation.baml
 C:\Users\schreiner.andreas\Documents\openMPS\openMPS\obj\Debug\UserInterface\UserControls\EditDevices.baml
 C:\Users\schreiner.andreas\Documents\openMPS\openMPS\obj\Debug\UserInterface\UserControls\SearchForDevices.baml
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\fnLogger.dll
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\nunit.framework.dll
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\Newtonsoft.Json.dll
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\fnLogger.pdb
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\fnLogger.dll.config
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\nunit.framework.pdb
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\nunit.framework.xml
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\bin\Debug\Newtonsoft.Json.xml
+C:\Users\schreiner.andreas\Documents\openMPS\openMPS\obj\Debug\openMPS.exe.config
