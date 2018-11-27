@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\schreiner.andreas\Documents\openMPS\openMPS\obj\Debug\
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\
 de.fearvel.openMPS
 none
 false
 DEBUG;TRACE
-C:\Users\schreiner.andreas\Documents\openMPS\openMPS\App.xaml
-151780982891
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\App.xaml
+16-593736784
 
-461306725861
-93-1012154532
-UserInterface\Windows\erstStart2GEN.xaml;openRegistration.xaml;UserInterface\MainWindow.xaml;Tools\CircularProgressBar.xaml;UserInterface\UserControls\RetrieveDeviceInformation.xaml;UserInterface\UserControls\CustomControls\DeviceProps.xaml;UserInterface\UserControls\DeviceManagement.xaml;UserInterface\UserControls\Settings\SettingsV2.xaml;UserInterface\UserControls\Settings\Settings.xaml;UserInterface\UserControls\Settings\EinstellungenOid.xaml;UserInterface\UserControls\Settings\EinstellungenTechniker.xaml;UserInterface\UserControls\Settings\BasicInformation.xaml;UserInterface\UserControls\EditDevices.xaml;UserInterface\UserControls\SearchForDevices.xaml;UserInterface\UserControls\InfoPage.xaml;
+461629065663
+146279386941
+UserInterface\SimpleWindow.xaml;UserInterface\Windows\erstStart2GEN.xaml;openRegistration.xaml;UserInterface\MainWindow.xaml;Tools\CircularProgressBar.xaml;UserInterface\UserControls\RetrieveDeviceInformation.xaml;UserInterface\UserControls\CustomControls\DeviceProps.xaml;UserInterface\UserControls\DeviceManagement.xaml;UserInterface\UserControls\Settings\SettingsV2.xaml;UserInterface\UserControls\Settings\Settings.xaml;UserInterface\UserControls\Settings\EinstellungenOid.xaml;UserInterface\UserControls\Settings\EinstellungenTechniker.xaml;UserInterface\UserControls\Settings\BasicInformation.xaml;UserInterface\UserControls\EditDevices.xaml;UserInterface\UserControls\SearchForDevices.xaml;UserInterface\UserControls\InfoPage.xaml;
 
 True
 

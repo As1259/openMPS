@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using de.fearvel.net.Ping;
+using de.fearvel.net;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.SNMP;
 using de.fearvel.openMPS.Tools;
@@ -138,7 +138,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="state">The state.</param>
         private void SearchForPrinter(object state)
         {
-            var fp = new FPing(StartIpAddress, EndIpAddress);
+            var fp = new FnPing(StartIpAddress, EndIpAddress);
 
             var pingResultsIps = fp.RangePing();
 

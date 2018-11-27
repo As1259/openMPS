@@ -7,13 +7,15 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
-using de.fearvel.fnLogger;
+using de.fearvel.net.DataTypes;
+using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.Database.Exceptions;
 using de.fearvel.openMPS.UserInterface.UserControls.Settings;
@@ -46,8 +48,14 @@ namespace de.fearvel.openMPS.UserInterface
             _dbConnectionLoader.Start();
             InitializeComponent();
             Loaded += RibbonWindow_Load;
-            FnLog.SetInstance("","fnLog.db","");
-            FnLog.GetInstance().Log(FnLogController.LogType.RuntimeInfo,"ProgramInfo","Program Started");
+            FnLog.SetInstance(new FnLogInitPackage(
+                "https://log.fearvel.de:9024",
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+                Version.Parse(GetFileVersion()),
+                FnLog.TelemetryType.LogLocalSendAll,
+                "fnlog.db", "")
+            );
+            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "Program Started");
         }
 
 
@@ -93,14 +101,14 @@ namespace de.fearvel.openMPS.UserInterface
 
         private void OpenSuchen()
         {
-            FnLog.GetInstance().Log(FnLogController.LogType.RuntimeInfo, "ProgramInfo", "opening SearchForDevices");
+            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening SearchForDevices");
             DisplayUserControl(_userControls[typeof(SearchForDevices)],
                 "Die automatische Suche nach Druckern wird im Schnitt ca. 0.03 Sekunden pro IP-Adresse benötigen,");
         }
 
         private void OpenBearbeiten()
         {
-            FnLog.GetInstance().Log(FnLogController.LogType.RuntimeInfo, "ProgramInfo", "opening EditDevices");
+            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening EditDevices");
             DisplayUserControl(_userControls[typeof(EditDevices)],
                 "Hier können Sie neue Geräte hinzufügen, oder die IP-Adressen bereits erfasster Geräte anpassen." +
                 " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
@@ -108,7 +116,7 @@ namespace de.fearvel.openMPS.UserInterface
         }
         private void OpenDeviceManagement()
         {
-            FnLog.GetInstance().Log(FnLogController.LogType.RuntimeInfo, "ProgramInfo", "opening DeviceManagement");
+            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening DeviceManagement");
             DisplayUserControl(_userControls[typeof(DeviceManagement)],
                 "Hier können Sie neue Geräte suchen, bearbeiten, oder die IP-Adressen neuer Geräte manuell hinzufügen." +
                 " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
@@ -117,7 +125,7 @@ namespace de.fearvel.openMPS.UserInterface
 
         private void OpenAbfrage()
         {
-            FnLog.GetInstance().Log(FnLogController.LogType.RuntimeInfo, "ProgramInfo", "opening RetrieveDeviceInformation");
+            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening RetrieveDeviceInformation");
             DisplayUserControl(_userControls[typeof(RetrieveDeviceInformation)]);
         }
 
@@ -195,6 +203,12 @@ namespace de.fearvel.openMPS.UserInterface
         {
             OpenDeviceManagement();
 
+        }
+        private string GetFileVersion()
+        {
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fvi.FileVersion;
         }
     }
 }
