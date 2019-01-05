@@ -180,7 +180,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         private DataTable GainData()
         {
             DataTable dt;
-            Collector.shell("Delete from Collector;");
+            Collector.Shell("Delete from Collector;");
             dt = Config.GetInstance().Query("select *  from Devices where aktiv='1' or aktiv='True'");
 
             for (var i = 0; i < dt.Rows.Count; i++)

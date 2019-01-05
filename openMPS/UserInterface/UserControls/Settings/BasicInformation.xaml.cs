@@ -218,8 +218,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
         private void bt_delUserdata_Click(object sender, RoutedEventArgs e)
         {
             Config.GetInstance().NonQuery("Delete from DEVICES");
-            Collector.shell("Delete from Collector");
-            Collector.shell("update INFO set ErfassungsDatum =  null, Kundennummer = '', Uebertragungsweg = ''");
+            Collector.Shell("Delete from Collector");
+            Collector.Shell("update INFO set ErfassungsDatum =  null, Kundennummer = '', Uebertragungsweg = ''");
         }
 
         private void bt_updoid_file_Click(object sender, RoutedEventArgs e)

@@ -59,7 +59,7 @@ namespace de.fearvel.openMPS.Database
             _connection.Query("Select val from Directory Where Identifier = 'OID-Version'", out DataTable fileOidDt);
             var fileOid = fileOidDt.Rows[0].Field<string>("val");
             ;
-            var version = Oid.GetInstance().Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
+            var version = Config.GetInstance().Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
             if (version.CompareTo(fileOid) < 0)
 
             {
@@ -67,16 +67,16 @@ namespace de.fearvel.openMPS.Database
 
                 if (dt.Rows.Count > 0)
                 {
-                    Oid.GetInstance().NonQuery("Delete from OID");
-                    Oid.GetInstance().NonQuery("delete from sqlite_sequence where name = 'OID';");
+                    Config.GetInstance().NonQuery("Delete from OID");
+                    Config.GetInstance().NonQuery("delete from sqlite_sequence where name = 'OID';");
 
 
                     for (var i = 0; i < dt.Rows.Count; i++)
-                        Oid.GetInstance().NonQuery(
+                        Config.GetInstance().NonQuery(
                             "insert into OID"
                             + "("
                             + "HerstellerName,"
-                            + "OIDPrivateID,"
+                            + "OidPrivateId,"
                             + "ProfileName,"
                             + "DeviceName,"
                             + "DeviceType,"
@@ -205,7 +205,7 @@ namespace de.fearvel.openMPS.Database
                             + " Values"
                             + " ("
                             + "'" + dt.Rows[i].Field<string>("HerstellerName") + "'," //HerstellerName 
-                            + "'" + dt.Rows[i].Field<string>("OIDPrivateID") + "'," //OIDPrivateID 
+                            + "'" + dt.Rows[i].Field<string>("OidPrivateId") + "'," //OidPrivateId 
                             + "'" + dt.Rows[i].Field<string>("ProfileName") + "'," //ProfileName 
                             + "'" + dt.Rows[i].Field<string>("DeviceName") + "'," //DeviceName 
                             + "'" + dt.Rows[i].Field<string>("DeviceType") + "'," //DeviceType 
@@ -336,8 +336,8 @@ namespace de.fearvel.openMPS.Database
                             + "'" + dt.Rows[i].Field<string>("YellowLevel") + "'"
                             + ");"
                         );
-                    Oid.GetInstance().NonQuery("Update Directory set val = '" + fileOid + "' Where Identifier = 'OID-Version';");
-                    Oid.GetInstance().UpdateDirectory();
+                    Config.GetInstance().NonQuery("Update Directory set val = '" + fileOid + "' Where Identifier = 'OID-Version';");
+                    Config.GetInstance().UpdateDirectory();
                     MessageBox.Show("OID's erfolgreich Eingelesen\nSie haben nun die OID-Version: " + fileOid, "Infomation", MessageBoxButton.OK,
                         MessageBoxImage.Information);
                 }

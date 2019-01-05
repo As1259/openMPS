@@ -13,13 +13,13 @@ namespace de.fearvel.openMPS.Database
     /// <summary>
     ///     Contains the connection to the config SQLITE
     /// </summary>
-    public class Oid : SqliteConnect
+    public class Oid_DEPRECATED : SqliteConnect
     {
-        private static Oid _instance;
+        private static Oid_DEPRECATED _instance;
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static Oid GetInstance()
+        public static Oid_DEPRECATED GetInstance()
         {
-            return _instance ?? (_instance = new Oid());
+            return _instance ?? (_instance = new Oid_DEPRECATED());
         }
 
         protected override string FileName => "OID.db";
@@ -44,9 +44,9 @@ namespace de.fearvel.openMPS.Database
         public DataTable GetOidRowByPrivateId(string ident)
         {
             using (var command = new SQLiteCommand(
-                "SELECT * FROM OID Where OIDPrivateID = @OIDPrivateID;"))
+                "SELECT * FROM OID Where OidPrivateId = @OidPrivateId;"))
             {
-                command.Parameters.AddWithValue("@OIDPrivateID", ident);
+                command.Parameters.AddWithValue("@OidPrivateId", ident);
                 command.Prepare();
                 return Query(command);
             }
@@ -57,7 +57,7 @@ namespace de.fearvel.openMPS.Database
             NonQuery("CREATE TABLE IF NOT EXISTS `OID` (" +
                      " `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                      " `HerstellerName` VARCHAR ( 100 ) NOT NULL DEFAULT ''," +
-                     " `OIDPrivateID` VARCHAR ( 100 ) NOT NULL DEFAULT ''," +
+                     " `OidPrivateId` VARCHAR ( 100 ) NOT NULL DEFAULT ''," +
                      " `ProfileName` VARCHAR ( 100 ) NOT NULL DEFAULT ''," +
                      " `DeviceName` VARCHAR ( 100 ) NOT NULL DEFAULT ''," +
                      " `DeviceType` VARCHAR ( 100 ) NOT NULL DEFAULT ''," +
@@ -113,5 +113,10 @@ namespace de.fearvel.openMPS.Database
                      " `YellowLevel` varchar ( 50 ) DEFAULT ''" +
                      ");");
         }
+
+        public void UpdateOid()
+        {
+        }
+
     }
 }

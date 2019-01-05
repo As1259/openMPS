@@ -210,7 +210,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var dt = Oid.GetInstance().Query("Select * from OID");
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (SNMPget.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
-                    return dt.Rows[i].Field<string>("OIDPrivateID");
+                    return dt.Rows[i].Field<string>("OidPrivateId");
             return "Generic";
         }
 

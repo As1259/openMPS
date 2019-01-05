@@ -48,8 +48,15 @@ namespace de.fearvel.openMPS.UserInterface
             _dbConnectionLoader.Start();
             InitializeComponent();
             Loaded += RibbonWindow_Load;
-            FnLog.SetInstance(new FnLogInitPackage(
-                "https://log.fearvel.de:9024",
+            //FnLog.SetInstance(new FnLogInitPackage(
+            //    "https://log.fearvel.de:9024",
+            //    System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+            //    Version.Parse(GetFileVersion()),
+            //    FnLog.TelemetryType.LogLocalSendAll,
+            //    "fnlog.db", "")
+            //);
+            FnLog.SetInstance(new FnLog.FnLogInitPackage(
+                "https://localhost:9024",
                 System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
                 Version.Parse(GetFileVersion()),
                 FnLog.TelemetryType.LogLocalSendAll,
@@ -58,15 +65,11 @@ namespace de.fearvel.openMPS.UserInterface
             FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "Program Started");
         }
 
-
-
-
         private void LoadUserControls()
         {
             _userControls = new Dictionary<Type, UserControl>();
             Dispatcher.Invoke(new ThreadStart(LoadDelayableUserControl));
             Dispatcher.Invoke(new ThreadStart(LoadBackstageUserControls));
-
         }
 
         public void LoadBackstageUserControls()

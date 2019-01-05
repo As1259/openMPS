@@ -4,7 +4,7 @@
   <description asmv2:iconFile="openmps_Nco_12.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="openMPS" version="2.5.3.2" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="openMPS" version="2.6.0.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="openMPS.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de.fearvel.net.dll" size="23040">
-      <assemblyIdentity name="de.fearvel.net" version="2.6.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de.fearvel.net.dll" size="29696">
+      <assemblyIdentity name="de.fearvel.net" version="2.6.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>F9buxS3vGzvYI1Fa1dhofr2m7ZFY4WJFnLtNgb1WYFE=</dsig:DigestValue>
+        <dsig:DigestValue>4+IPssAVEYjk0tOgRNe/wT7TAFscbzvHGzNWw34h8hU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -200,13 +200,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="268800">
-      <assemblyIdentity name="openMPS" version="2.5.3.2" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="openMPS" version="2.6.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rFUbtjHs/HDtbenf8DeuMOrxRytpzj783Ob3+8YqpVM=</dsig:DigestValue>
+        <dsig:DigestValue>KfE1A8/eUK+UCqrmF0fXw+7ibRjY+7CiEQ8zba8w5fo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

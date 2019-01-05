@@ -214,6 +214,7 @@
     <Compile Include="Database\InitialisationFile.cs" />
     <Compile Include="Database\Exceptions\OidUpdateFileException.cs" />
     <Compile Include="Database\OidUpdateFileHandler.cs" />
+    <Compile Include="Datatypes\DataScanWrap.cs" />
     <Compile Include="UserInterface\SimpleWindow.xaml.cs">
       <DependentUpon>SimpleWindow.xaml</DependentUpon>
     </Compile>

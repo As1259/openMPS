@@ -163,7 +163,7 @@ namespace de.fearvel.openMPS.SNMP
         public static void ReadDeviceOiDs(string ip, string ident)
         {
             string[] oidValues = null;
-            var dt = Config.GetInstance().Query("Select * from OID where OIDPrivateID='" + ident + "'");
+            var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
             var s = new string[AbgefragteOids.Length];
 
             for (var i = 0; i < AbgefragteOids.Length; i++) s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
@@ -180,7 +180,7 @@ namespace de.fearvel.openMPS.SNMP
 
         public static bool ReadDeviceOiDs(string ip, string ident, out DataRow dr)
         {
-            var dt = Config.GetInstance().Query("Select * from OID where OIDPrivateID='" + ident + "'");
+            var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
             var s = new string[AbgefragteOids.Length];
 
             try
@@ -417,7 +417,7 @@ namespace de.fearvel.openMPS.SNMP
         /// <param name="ip"></param>
         public static void WriteToTable(string[] s, string ip)
         {
-            Collector.shell(
+            Collector.Shell(
                 "insert into Collector "
                 + "("
                 + "Manufacturer,"

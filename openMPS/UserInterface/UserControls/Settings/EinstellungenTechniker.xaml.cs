@@ -40,7 +40,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
 
         private void bt_SQLite_dec_Click(object sender, RoutedEventArgs e)
         {
-            Collector.disableENC();
+            Collector.DisableEnc();
             Config.GetInstance().DisableEncryption();
         }
 
@@ -73,7 +73,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
 
         private void bt_SQLite_enc_Click(object sender, RoutedEventArgs e)
         {
-            Collector.enableENC();
+            Collector.EnableEnc();
             Config.GetInstance().EnableEncryption();
         }
     }

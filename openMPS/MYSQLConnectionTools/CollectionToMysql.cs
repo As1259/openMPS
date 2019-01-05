@@ -148,7 +148,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
          //                   "insert into OID"
          //                   + "("
          //                   + "HerstellerName,"
-         //                   + "OIDPrivateID,"
+         //                   + "OidPrivateId,"
          //                   + "ProfileName,"
          //                   + "DeviceName,"
          //                   + "DeviceType,"
@@ -277,7 +277,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
          //                   + " Values"
          //                   + " ("
          //                   + "'" + dt.Rows[i].Field<string>("HerstellerName") + "'," //HerstellerName 
-         //                   + "'" + dt.Rows[i].Field<string>("OIDPrivateID") + "'," //OIDPrivateID 
+         //                   + "'" + dt.Rows[i].Field<string>("OidPrivateId") + "'," //OidPrivateId 
          //                   + "'" + dt.Rows[i].Field<string>("ProfileName") + "'," //ProfileName 
          //                   + "'" + dt.Rows[i].Field<string>("DeviceName") + "'," //DeviceName 
          //                   + "'" + dt.Rows[i].Field<string>("DeviceType") + "'," //DeviceType 

@@ -70,19 +70,16 @@ namespace de.fearvel.openMPS.Database
             catch (Exception)
             {
                 open(name);
-                enableENC();
+                EnableEnc();
             }
         }
 
-        public static void enableENC()
+        public static void EnableEnc()
         {
             _connection.SetPassword(Enckey);
         }
 
-        public static void disableENC()
-        {
-            _connection.SetPassword("");
-        }
+        public static void DisableEnc() => _connection.SetPassword("");
 
         /// <summary>
         ///     Closes this connection.
@@ -99,7 +96,7 @@ namespace de.fearvel.openMPS.Database
         ///     executes sql quarry
         /// </summary>
         /// <param name="cmd">The command.</param>
-        public static void shell(string cmd)
+        public static void Shell(string cmd)
         {
             if (opened)
                 _connection.NonQuery(cmd);

@@ -39,7 +39,7 @@ namespace de.fearvel.openMPS.Tools
                 Debug.Write("\n\n " + SNMPget.GetOidValue(ip, "1.3.6.1.2.1.1.2.0"));
                 Debug.Write("\n\n " + dt.Rows[i].Field<string>("ProfileName"));
                 if (profile.Contains(dt.Rows[i].Field<string>("ProfileName")))
-                    return dt.Rows[i].Field<string>("OIDPrivateID");
+                    return dt.Rows[i].Field<string>("OidPrivateId");
             }
 
             return "Generic";
