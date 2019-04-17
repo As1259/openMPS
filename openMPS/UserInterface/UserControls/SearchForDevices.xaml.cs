@@ -154,7 +154,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                             "Select * from Devices where IP='" + ipAddress.ToString() + "';").Rows.Count >
                         0)
                     {
-                        var dts = Oid.GetInstance().GetOidRowByPrivateId(ident);
+                        var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
                         modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
                         serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
                         asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
@@ -169,7 +169,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     }
                     else
                     {
-                        var dts = Oid.GetInstance().GetOidRowByPrivateId(ident);
+                        var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
 
                         modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
                         serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
@@ -207,7 +207,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <returns></returns>
         private string identDevice(string ip)
         {
-            var dt = Oid.GetInstance().Query("Select * from OID");
+            var dt = Config.GetInstance().Query("Select * from OID");
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (SNMPget.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
                     return dt.Rows[i].Field<string>("OidPrivateId");

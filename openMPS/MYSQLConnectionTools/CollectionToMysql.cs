@@ -416,7 +416,7 @@ namespace de.fearvel.openMPS.MYSQLConnectionTools
          //   }
          //   else
          //   {
-         //       MessageBox.Show("Sie verwenden bereits die neuste OID-Version", "Infomation", MessageBoxButton.OK,
+         //       MessageBox.Show("Sie verwenden bereits die neuste OidVersion", "Infomation", MessageBoxButton.OK,
          //           MessageBoxImage.Information);
          //   }
         }

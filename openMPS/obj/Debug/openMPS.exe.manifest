@@ -4,7 +4,7 @@
   <description asmv2:iconFile="openmps_Nco_12.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="openMPS" version="2.6.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="openMPS" version="2.6.1.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="openMPS.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de.fearvel.net.dll" size="29696">
-      <assemblyIdentity name="de.fearvel.net" version="2.6.1.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="de.fearvel.net.dll" size="54272">
+      <assemblyIdentity name="de.fearvel.net" version="2.6.5.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4+IPssAVEYjk0tOgRNe/wT7TAFscbzvHGzNWw34h8hU=</dsig:DigestValue>
+        <dsig:DigestValue>XqLkyAoKZ/X/ckMahEb5JURUxfd+F7mmLHjD34u6Qfc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -194,19 +194,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>EzSbSQiTQfBIv1l0hQtOQkfeehQBYpD90ehVrg31lfM=</dsig:DigestValue>
+        <dsig:DigestValue>tmdJuB4UifzY11SyrTnr4NtoE0TjkqP0nckjVkO9vQY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="268800">
-      <assemblyIdentity name="openMPS" version="2.6.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="openMPS.exe" size="266752">
+      <assemblyIdentity name="openMPS" version="2.6.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>KfE1A8/eUK+UCqrmF0fXw+7ibRjY+7CiEQ8zba8w5fo=</dsig:DigestValue>
+        <dsig:DigestValue>7I0egQqEduuM1X+ZgciElGsprZBg0ZrXbdOersyBCgM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1500,7 +1500,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>p9vv2MB+zroxfDLUlnRBvsiRCZGyjpdKJb52HXJMfFo=</dsig:DigestValue>
+      <dsig:DigestValue>zsvT/+eNVEa/vAfSN6pgCvYR76ElVn1oRQMgRwKS584=</dsig:DigestValue>
     </hash>
   </file>
   <file name="openmps_Nco_12.ico" size="27427">

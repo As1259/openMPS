@@ -32,7 +32,7 @@ namespace de.fearvel.openMPS.Tools
         /// <returns></returns>
         public static string identDevice(string ip)
         {
-            var dt =Oid.GetInstance().Query("Select * from OID");
+            var dt = Config.GetInstance().Query("Select * from OID");
             var profile = SNMPget.GetOidValue(ip, "1.3.6.1.2.1.1.2.0");
             for (var i = 0; i < dt.Rows.Count; i++)
             {

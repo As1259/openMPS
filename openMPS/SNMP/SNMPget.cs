@@ -5,11 +5,16 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Windows.Navigation;
 using de.fearvel.openMPS.Database;
+using de.fearvel.openMPS.DataTypes;
 using SnmpSharpNet;
+using Oid = SnmpSharpNet.Oid;
 
 namespace de.fearvel.openMPS.SNMP
 {
@@ -29,129 +34,170 @@ namespace de.fearvel.openMPS.SNMP
         /// <summary>
         ///     The abgefragte oids
         /// </summary>
-        private static readonly string[] AbgefragteOids =
+        private static Dictionary<string, Type> AbgefragteOids = new Dictionary<string, Type>()
         {
-            "Manufacturer",
-            "Model",
-            "SerialNumber",
-            "MACAddress",
-            "IPAddresse",
-            "HostName",
-            "LocalID",
-            "DescriptionLocation",
-            "AssetNumber",
-            "InstalledMemory",
-            "FirmwareVersion",
-            "FirmwareVersion2",
-            "FirmwareVersion3",
-            "FirmwareVersion4",
-            "InstallationDate",
-            "ServiceContactIsColor",
-            "IsDuplex",
-            "PowerActive",
-            "PowerIdle",
-            "PowerSleep1",
-            "PowerSleep2",
-            "TotalPages",
-            "TotalPagesMono",
-            "TotalPagesColor",
-            "TotalPagesFullColor",
-            "TotalPagesTwoColor",
-            "TotalPagesSingleColor",
-            "TotalPagesDuplex",
-            "UsagePages",
-            "UsagePagesMono",
-            "UsagePagesColor",
-            "UsagePagesFullColor",
-            "UsagePagesTwoColor",
-            "UsagePagesSingleColor",
-            "PrinterPages",
-            "PrinterPagesMono",
-            "PrinterPagesColor",
-            "PrinterPagesFullColor",
-            "PrinterPagesTwoColor",
-            "PrinterPagesSingleColor",
-            "CopyPages",
-            "CopyPagesMono",
-            "CopyPagesColor",
-            "CopyPagesFullColor",
-            "CopyPagesTwoColor",
-            "CopyPagesSingleColor",
-            "FaxPages",
-            "FaxPagesMono",
-            "FaxPagesColor",
-            "OtherPagesOther",
-            "PagesMonoOther",
-            "PagesColorOther",
-            "PagesFullColor",
-            "OtherPagesTwoColor",
-            "OtherPagesSingleColor",
-            "FaxesSentFaxesReceived",
-            "ScansTotalScansTotalMono",
-            "ScansTotalColor",
-            "ScansUsageScansUsageMono",
-            "ScansUsageColor",
-            "ScansCopy",
-            "ScansCopyMono",
-            "ScansCopyColor",
-            "ScansFax",
-            "ScansFaxMono",
-            "ScansFaxColor",
-            "Scansemail",
-            "ScansemailMono",
-            "ScansemailColor",
-            "ScansNet",
-            "ScansNetMono",
-            "ScansNetColor",
-            "ListPages",
-            "LargePages",
-            "LargePagesMono",
-            "LargePagesColor",
-            "LargePagesFullColor",
-            "LargePagesTwoColor",
-            "LargePagesSingleColor",
-            "TotalLargeSheets",
-            "SquareFeetSquareMeters",
-            "LinearFeetStapledSets",
-            "Level1Pages",
-            "Level2Pages",
-            "Level3Pages",
-            "ColorUsageOffice",
-            "ColorUsageOfficeAccent",
-            "ColorUsageProfessional",
-            "ColorUsageProfessionalAccent",
-            "DoubleClickTotal",
-            "DoubleClickMono",
-            "DoubleClickColor",
-            "DoubleClickFullColor",
-            "DoubleClickTwoColor",
-            "DoubleClickSingleColor",
-            "DoubleClickDuplex",
-            "DevelopmentTotal",
-            "DevelopmentMono",
-            "DevelopmentColor",
-            "CoverageAverageBlack",
-            "CoverageAverageCyan",
-            "CoverageAverageMagenta",
-            "CoverageAverageYellow",
-            "CoverageSumBlack",
-            "CoverageSumCyan",
-            "CoverageSumMagenta",
-            "CoverageSumYellow",
-            "CoverageSum2Black",
-            "CoverageSum2Cyan",
-            "CoverageSum2Magenta",
-            "CoverageSum2Yellow",
-            "MeterGroup1",
-            "MeterGroup2",
-            "BlackLevelMax",
-            "CyanLevelMax",
-            "MagentaLevelMax",
-            "YellowLevelMax",
-            "BlackLevel",
-            "CyanLevel",
-            "MagentaLevel",
-            "YellowLevel"
+            {
+                "OidPrivateId", typeof(string)
+            },
+            {
+                "VendorName", typeof(string)
+            },
+            {
+                "Model", typeof(string)
+            },
+            {
+                "SerialNumber", typeof(string)
+            },
+            {
+                "MacAddress", typeof(string)
+            },
+            {
+                "IpAddress", typeof(string)
+            },
+            {
+                "HostName", typeof(string)
+            },
+            {
+                "DescriptionLocation", typeof(string)
+            },
+            {
+                "AssetNumber", typeof(string)
+            },
+            {
+                "FirmwareVersion", typeof(string)
+            },
+            {
+                "PowerSleep1", typeof(string)
+            },
+            {
+                "PowerSleep2", typeof(string)
+            },
+            {
+                "ProfileName", typeof(string)
+            },
+            {
+                "DeviceName", typeof(string)
+            },
+            {
+                "DeviceType", typeof(string)
+            },
+            {
+                "Manufacturer", typeof(string)
+            },
+            {
+                "TotalPages", typeof(long)
+            },
+            {
+                "TotalPagesMono", typeof(long)
+            },
+            {
+                "TotalPagesColor", typeof(long)
+            },
+            {
+                "TotalPagesDuplex", typeof(long)
+            },
+            {
+                "PrinterPages", typeof(long)
+            },
+            {
+                "PrinterPagesMono", typeof(long)
+            },
+            {
+                "PrinterPagesColor", typeof(long)
+            },
+            {
+                "PrinterPagesFullColor", typeof(long)
+            },
+            {
+                "PrinterPagesTwoColor", typeof(long)
+            },
+            {
+                "CopyPagesMono", typeof(long)
+            },
+            {
+                "CopyPagesColor", typeof(long)
+            },
+            {
+                "CopyPagesFullColor", typeof(long)
+            },
+            {
+                "CopyPagesTwoColor", typeof(long)
+            },
+            {
+                "CopyPagesSingleColor", typeof(long)
+            },
+            {
+                "FaxesSentFaxesReceived", typeof(long)
+            },
+            {
+                "ScansTotalScansTotalMono", typeof(long)
+            },
+            {
+                "ScansTotalColor", typeof(long)
+            },
+            {
+                "ScansCopyMono", typeof(long)
+            },
+            {
+                "ScansCopyColor", typeof(long)
+            },
+            {
+                "ScansEmail", typeof(long)
+            },
+            {
+                "ScansEmailMono", typeof(long)
+            },
+            {
+                "ScansNet", typeof(long)
+            },
+            {
+                "ScansNetMono", typeof(long)
+            },
+            {
+                "ScansNetColor", typeof(long)
+            },
+            {
+                "LargePagesMono", typeof(long)
+            },
+            {
+                "LargePagesFullColor", typeof(long)
+            },
+            {
+                "CoverageAverageBlack", typeof(long)
+            },
+            {
+                "CoverageAverageCyan", typeof(long)
+            },
+            {
+                "CoverageAverageMagenta", typeof(long)
+            },
+            {
+                "CoverageAverageYellow", typeof(long)
+            },
+            {
+                "BlackLevelMax", typeof(long)
+            },
+            {
+                "CyanLevelMax", typeof(long)
+            },
+            {
+                "MagentaLevelMax", typeof(long)
+            },
+            {
+                "YellowLevelMax", typeof(long)
+            },
+            {
+                "BlackLevel", typeof(long)
+            },
+            {
+                "CyanLevel", typeof(long)
+            },
+            {
+                "MagentaLevel", typeof(long)
+            },
+            {
+                "YellowLevel", typeof(long)
+            }
         };
 
         /// <summary>
@@ -160,40 +206,57 @@ namespace de.fearvel.openMPS.SNMP
         /// </summary>
         /// <param name="ip">The ip.</param>
         /// <param name="ident">The ident.</param>
-        public static void ReadDeviceOiDs(string ip, string ident)
-        {
-            string[] oidValues = null;
-            var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
-            var s = new string[AbgefragteOids.Length];
+        //  public static void ReadDeviceOiDs(string ip, string ident)
+        //  {
+        //      string[] oidValues = null;
+        //      var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
+        //
+        //      var e = AbgefragteOids.Keys.ToArray();
+        //      var s = new string[AbgefragteOids.Keys.Count];
+        //      for (var i = 0;i < AbgefragteOids.Keys.Count; i++) { 
+        //          s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
+        //      }
+        //      try
+        //      {
+        //          oidValues = GetOidValues(ip, s);
+        //      }
+        //      catch (SnmpException)
+        //      {
+        //      }
+        //  }
 
-            for (var i = 0; i < AbgefragteOids.Length; i++) s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
+        // public static void ReadDeviceOidsBack(string ip, string ident)
+        // {
+        //     string[] oidValues = null;
+        //     var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
+        //
+        //     var s = new string[AbgefragteOids.Length];
+        //     for (var i = 0;
+        //         i < AbgefragteOids.Length;
+        //         i++) s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
+        //     try
+        //     {
+        //         oidValues = GetOidValues(ip, s);
+        //     }
+        //     catch (SnmpException)
+        //     {
+        //     }
+        // }
+        public static bool ReadDeviceOiDs(string ip, string ident, out OidData oidData)
+        {
+            var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
             try
             {
-                oidValues = GetOidValues(ip, s);
-            }
-            catch (SnmpException)
-            {
-            }
-
-            WriteToTable(oidValues, ip);
-        }
-
-        public static bool ReadDeviceOiDs(string ip, string ident, out DataRow dr)
-        {
-            var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
-            var s = new string[AbgefragteOids.Length];
-
-            try
-            {
-                dr = GetOidValues(ip, dt);
+                oidData = GetOidValues(ip, dt);
                 return true;
             }
             catch (SnmpException)
             {
-                dr = null;
+                oidData = null;
                 return false;
             }
         }
+
         /// <summary>
         ///     Finds the alive printer.
         /// </summary>
@@ -207,7 +270,7 @@ namespace de.fearvel.openMPS.SNMP
             }
             catch (SnmpException)
             {
-                // ignored
+// ignored
             }
 
             return false;
@@ -223,7 +286,6 @@ namespace de.fearvel.openMPS.SNMP
         public static string GetOidValue(string ip, string oid)
         {
             var oidValue = "";
-
             try
             {
                 if (oid.Length > 0)
@@ -245,12 +307,38 @@ namespace de.fearvel.openMPS.SNMP
             }
             catch (Exception)
             {
-                // ignored
+// ignored
             }
 
             return oidValue;
         }
 
+  //      /// <summary>
+  //      ///     Gets the specific values of an OID Array.
+  //      ///     string[0,n] == OID
+  //      ///     string[1,n] == Values
+  //      /// </summary>
+  //      /// <param name="ip">The ip string.</param>
+  //      /// <param name="oid">The oid string[].</param>
+  //      /// <returns>string[2,n]</returns>
+//       public static string[] GetOidValuesDEPR(string ip, string[] oid)
+//       {
+//           var oidValues = new string[AbgefragteOids.Length];
+//           try
+//           {
+//               for (var i = 0; i < oidValues.Length; i++)
+//               {
+//                   oidValues[i] = "";
+//                   oidValues[i] = GetOidValue(ip, oid[i]);
+//               }
+//           }
+//           catch (Exception)
+//           {
+    //    /// ignored
+//           }
+//
+//           return oidValues;
+//       }
         /// <summary>
         ///     Gets the specific values of an OID Array.
         ///     string[0,n] == OID
@@ -259,417 +347,124 @@ namespace de.fearvel.openMPS.SNMP
         /// <param name="ip">The ip string.</param>
         /// <param name="oid">The oid string[].</param>
         /// <returns>string[2,n]</returns>
-        public static string[] GetOidValues(string ip, string[] oid)
+        //    public static List<Oid> GetOidValues(string ip, string[] oid)
+        //    {
+        //        var oidValues = new string[AbgefragteOids.Keys.Count];
+        //        var val = new Dictionary<string,Type>();
+        //
+        //        try
+        //        {
+        //            for (var i = 0; i < AbgefragteOids.Keys.Count; i++)
+        //            {
+        //                oidValues[i] = "";
+        //                oidValues[i] = GetOidValue(ip, oid[i]);
+        //            }
+        //
+        //            foreach (var pair in AbgefragteOids)
+        //            {
+        //             val =   
+        //                oidValues[i] = GetOidValue(ip, oid[i]);
+        //            }
+        //
+        //
+        //        }
+        //        catch (Exception)
+        //        {
+        //            // ignored
+        //        }
+        //
+        //        return oidValues;
+        //    }
+        public static OidData GetOidValues(string ip, DataTable oid)
         {
-            var oidValues = new string[AbgefragteOids.Length];
+            var data = new OidData();
+            var strDict = new Dictionary<string, string>();
+            var longDict = new Dictionary<string, long>();
+
             try
             {
-                for (var i = 0; i < oidValues.Length; i++)
+                foreach (var pair in AbgefragteOids)
                 {
-                    oidValues[i] = "";
-                    oidValues[i] = GetOidValue(ip, oid[i]);
+                    if (pair.Value == typeof(string))
+                    {
+                        strDict.Add(pair.Key, GetOidValue(ip, oid.Rows[0].Field<string>(pair.Key)));
+                    }
+                    else
+                    {
+                        var dataStr = GetOidValue(ip, oid.Rows[0].Field<string>(pair.Key));
+                        if (dataStr.Length > 0)
+                        {
+                            longDict.Add(pair.Key, long.Parse(dataStr));
+
+                        }
+                        else
+                        {
+                            longDict.Add(pair.Key, 0);
+
+                        }
+
+                    }
                 }
+                data.VendorName = strDict["VendorName"];
+                data.Model = strDict["Model"];
+                data.SerialNumber = strDict["SerialNumber"];
+                data.MacAddress = strDict["MacAddress"];
+                data.IpAddress = strDict["IpAddress"];
+                data.HostName = strDict["HostName"];
+                data.DescriptionLocation = strDict["DescriptionLocation"];
+                data.AssetNumber = strDict["AssetNumber"];
+                data.FirmwareVersion = strDict["FirmwareVersion"];
+                data.PowerSleep1 = strDict["PowerSleep1"];
+                data.PowerSleep2 = strDict["PowerSleep2"];
+                data.ProfileName = strDict["ProfileName"];
+                data.DeviceName = strDict["DeviceName"];
+                data.DeviceType = strDict["DeviceType"];
+                data.Manufacturer = strDict["Manufacturer"];
+                data.TotalPages = longDict["TotalPages"];
+                data.TotalPagesMono = longDict["TotalPagesMono"];
+                data.TotalPagesColor = longDict["TotalPagesColor"];
+                data.TotalPagesDuplex = longDict["TotalPagesDuplex"];
+                data.PrinterPages = longDict["PrinterPages"];
+                data.PrinterPagesMono = longDict["PrinterPagesMono"];
+                data.PrinterPagesColor = longDict["PrinterPagesColor"];
+                data.PrinterPagesFullColor = longDict["PrinterPagesFullColor"];
+                data.PrinterPagesTwoColor = longDict["PrinterPagesTwoColor"];
+                data.CopyPagesMono = longDict["CopyPagesMono"];
+                data.CopyPagesColor = longDict["CopyPagesColor"];
+                data.CopyPagesFullColor = longDict["CopyPagesFullColor"];
+                data.CopyPagesTwoColor = longDict["CopyPagesTwoColor"];
+                data.CopyPagesSingleColor = longDict["CopyPagesSingleColor"];
+                data.FaxesSentFaxesReceived = longDict["FaxesSentFaxesReceived"];
+                data.ScansTotalScansTotalMono = longDict["ScansTotalScansTotalMono"];
+                data.ScansTotalColor = longDict["ScansTotalColor"];
+                data.ScansCopyMono = longDict["ScansCopyMono"];
+                data.ScansCopyColor = longDict["ScansCopyColor"];
+                data.ScansEmail = longDict["ScansEmail"];
+                data.ScansEmailMono = longDict["ScansEmailMono"];
+                data.ScansNet = longDict["ScansNet"];
+                data.ScansNetMono = longDict["ScansNetMono"];
+                data.ScansNetColor = longDict["ScansNetColor"];
+                data.LargePagesMono = longDict["LargePagesMono"];
+                data.LargePagesFullColor = longDict["LargePagesFullColor"];
+                data.CoverageAverageBlack = longDict["CoverageAverageBlack"];
+                data.CoverageAverageCyan = longDict["CoverageAverageCyan"];
+                data.CoverageAverageMagenta = longDict["CoverageAverageMagenta"];
+                data.CoverageAverageYellow = longDict["CoverageAverageYellow"];
+                data.BlackLevelMax = longDict["BlackLevelMax"];
+                data.CyanLevelMax = longDict["CyanLevelMax"];
+                data.MagentaLevelMax = longDict["MagentaLevelMax"];
+                data.YellowLevelMax = longDict["YellowLevelMax"];
+                data.BlackLevel = longDict["BlackLevel"];
+                data.CyanLevel = longDict["CyanLevel"];
+                data.MagentaLevel = longDict["MagentaLevel"];
+                data.YellowLevel = longDict["YellowLevel"];
             }
             catch (Exception)
             {
-                // ignored
+// ignored
             }
 
-            return oidValues;
-        }
-
-        public static DataRow GetOidValues(string ip, DataTable oid)
-        {
-            var oidValues = oid.NewRow();
-            try
-            {
-                for (var i = 0; i < oid.Columns.Count; i++)
-                {
-                    oidValues[i] = GetOidValue(ip, (string)oid.Rows[0][i]);
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
-            return oidValues;
-        }
-
-        /// <summary>
-        ///     Writes to table.
-        ///     Arraybelegung
-        ///     [0]   Manufacturer
-        ///     [1]   Model
-        ///     [2]   SerialNumber
-        ///     [3]   MACAddress
-        ///     [4]   IPAddresse
-        ///     [5]   HostName
-        ///     [6]   LocalID
-        ///     [7]   DescriptionLocation
-        ///     [8]   AssetNumber
-        ///     [9]   InstalledMemory
-        ///     [10]  FirmwareVersion
-        ///     [11]  FirmwareVersion2
-        ///     [12]  FirmwareVersion3
-        ///     [13]  FirmwareVersion4
-        ///     [14]  InstallationDate
-        ///     [15]  ServiceContactIsColor
-        ///     [16]  IsDuplex
-        ///     [17]  PowerActive
-        ///     [18]  PowerIdle
-        ///     [19]  PowerSleep1
-        ///     [20]  PowerSleep2
-        ///     [21]  TotalPages
-        ///     [22]  TotalPagesMono
-        ///     [23]  TotalPagesColor
-        ///     [24]  TotalPagesFullColor
-        ///     [25]  TotalPagesTwoColor
-        ///     [26]  TotalPagesSingleColor
-        ///     [27]  TotalPagesDuplex
-        ///     [28]  UsagePages
-        ///     [29]  UsagePagesMono
-        ///     [30]  UsagePagesColor
-        ///     [31]  UsagePagesFullColor
-        ///     [32]  UsagePagesTwoColor
-        ///     [33]  UsagePagesSingleColor
-        ///     [34]  PrinterPages
-        ///     [35]  PrinterPagesMono
-        ///     [36]  PrinterPagesColor
-        ///     [37]  PrinterPagesFullColor
-        ///     [38]  PrinterPagesTwoColor
-        ///     [39]  PrinterPagesSingleColor
-        ///     [40]  CopyPages
-        ///     [41]  CopyPagesMono
-        ///     [42]  CopyPagesColor
-        ///     [43]  CopyPagesFullColor
-        ///     [44]  CopyPagesTwoColor
-        ///     [45]  CopyPagesSingleColor
-        ///     [46]  FaxPages
-        ///     [47]  FaxPagesMono
-        ///     [48]  FaxPagesColor
-        ///     [49]  OtherPagesOther
-        ///     [50]  PagesMonoOther
-        ///     [51]  PagesColorOther
-        ///     [52]  PagesFullColor
-        ///     [53]  OtherPagesTwoColor
-        ///     [54]  OtherPagesSingleColor
-        ///     [55]  FaxesSentFaxesReceived
-        ///     [56]  ScansTotalScansTotalMono
-        ///     [57]  ScansTotalColor
-        ///     [58]  ScansUsageScansUsageMono
-        ///     [59]  ScansUsageColor
-        ///     [60]  ScansCopy
-        ///     [61]  ScansCopyMono
-        ///     [62]  ScansCopyColor
-        ///     [63]  ScansFax
-        ///     [64]  ScansFaxMono
-        ///     [65]  ScansFaxColor
-        ///     [66]  Scansemail
-        ///     [67]  ScansemailMono
-        ///     [68]  ScansemailColor
-        ///     [69]  ScansNet
-        ///     [70]  ScansNetMono
-        ///     [71]  ScansNetColor
-        ///     [72]  ListPages
-        ///     [73]  LargePages
-        ///     [74]  LargePagesMono
-        ///     [75]  LargePagesColor
-        ///     [76]  LargePagesFullColor
-        ///     [77]  LargePagesTwoColor
-        ///     [78]  LargePagesSingleColor
-        ///     [79]  TotalLargeSheets
-        ///     [80]  SquareFeetSquareMeters
-        ///     [81]  LinearFeetStapledSets
-        ///     [82]  Level1Pages
-        ///     [83]  Level2Pages
-        ///     [84]  Level3Pages
-        ///     [85]  ColorUsageOffice
-        ///     [86]  ColorUsageOfficeAccent
-        ///     [87]  ColorUsageProfessional
-        ///     [88]  ColorUsageProfessionalAccent
-        ///     [89]  DoubleClickTotal
-        ///     [90]  DoubleClickMono
-        ///     [91]  DoubleClickColor
-        ///     [92]  DoubleClickFullColor
-        ///     [93]  DoubleClickTwoColor
-        ///     [94]  DoubleClickSingleColor
-        ///     [95]  DoubleClickDuplex
-        ///     [96]  DevelopmentTotal
-        ///     [97]  DevelopmentMono
-        ///     [98]  DevelopmentColor
-        ///     [99]  CoverageAverageBlack
-        ///     [100] CoverageAverageCyan
-        ///     [101] CoverageAverageMagenta
-        ///     [102] CoverageAverageYellow
-        ///     [103] CoverageSumBlack
-        ///     [104] CoverageSumCyan
-        ///     [105] CoverageSumMagenta
-        ///     [106] CoverageSumYellow
-        ///     [107] CoverageSum2Black
-        ///     [108] CoverageSum2Cyan
-        ///     [109] CoverageSum2Magenta
-        ///     [110] CoverageSum2Yellow
-        ///     [111] MeterGroup1
-        ///     [112] MeterGroup2
-        /// </summary>
-        /// <param name="s">The String Array</param>
-        /// <param name="ip"></param>
-        public static void WriteToTable(string[] s, string ip)
-        {
-            Collector.Shell(
-                "insert into Collector "
-                + "("
-                + "Manufacturer,"
-                + "Model,"
-                + "SerialNumber,"
-                + "MACAddress,"
-                + "IPAddresse,"
-                + "HostName,"
-                + "LocalID,"
-                + "DescriptionLocation,"
-                + "AssetNumber,"
-                + "InstalledMemory,"
-                + "FirmwareVersion,"
-                + "FirmwareVersion2,"
-                + "FirmwareVersion3,"
-                + "FirmwareVersion4,"
-                + "InstallationDate,"
-                + "ServiceContactIsColor,"
-                + "IsDuplex,"
-                + "PowerActive,"
-                + "PowerIdle,"
-                + "PowerSleep1,"
-                + "PowerSleep2,"
-                + "TotalPages,"
-                + "TotalPagesMono,"
-                + "TotalPagesColor,"
-                + "TotalPagesFullColor,"
-                + "TotalPagesTwoColor,"
-                + "TotalPagesSingleColor,"
-                + "TotalPagesDuplex,"
-                + "UsagePages,"
-                + "UsagePagesMono,"
-                + "UsagePagesColor,"
-                + "UsagePagesFullColor,"
-                + "UsagePagesTwoColor,"
-                + "UsagePagesSingleColor,"
-                + "PrinterPages,"
-                + "PrinterPagesMono,"
-                + "PrinterPagesColor,"
-                + "PrinterPagesFullColor,"
-                + "PrinterPagesTwoColor,"
-                + "PrinterPagesSingleColor,"
-                + "CopyPages,"
-                + "CopyPagesMono,"
-                + "CopyPagesColor,"
-                + "CopyPagesFullColor,"
-                + "CopyPagesTwoColor,"
-                + "CopyPagesSingleColor,"
-                + "FaxPages,"
-                + "FaxPagesMono,"
-                + "FaxPagesColor,"
-                + "OtherPagesOther,"
-                + "PagesMonoOther,"
-                + "PagesColorOther,"
-                + "PagesFullColor,"
-                + "OtherPagesTwoColor,"
-                + "OtherPagesSingleColor,"
-                + "FaxesSentFaxesReceived,"
-                + "ScansTotalScansTotalMono,"
-                + "ScansTotalColor,"
-                + "ScansUsageScansUsageMono,"
-                + "ScansUsageColor,"
-                + "ScansCopy,"
-                + "ScansCopyMono,"
-                + "ScansCopyColor,"
-                + "ScansFax,"
-                + "ScansFaxMono,"
-                + "ScansFaxColor,"
-                + "Scansemail,"
-                + "ScansemailMono,"
-                + "ScansemailColor,"
-                + "ScansNet,"
-                + "ScansNetMono,"
-                + "ScansNetColor,"
-                + "ListPages,"
-                + "LargePages,"
-                + "LargePagesMono,"
-                + "LargePagesColor,"
-                + "LargePagesFullColor,"
-                + "LargePagesTwoColor,"
-                + "LargePagesSingleColor,"
-                + "TotalLargeSheets,"
-                + "SquareFeetSquareMeters,"
-                + "LinearFeetStapledSets,"
-                + "Level1Pages,"
-                + "Level2Pages,"
-                + "Level3Pages,"
-                + "ColorUsageOffice,"
-                + "ColorUsageOfficeAccent,"
-                + "ColorUsageProfessional,"
-                + "ColorUsageProfessionalAccent,"
-                + "DoubleClickTotal,"
-                + "DoubleClickMono,"
-                + "DoubleClickColor,"
-                + "DoubleClickFullColor,"
-                + "DoubleClickTwoColor,"
-                + "DoubleClickSingleColor,"
-                + "DoubleClickDuplex,"
-                + "DevelopmentTotal,"
-                + "DevelopmentMono,"
-                + "DevelopmentColor,"
-                + "CoverageAverageBlack,"
-                + "CoverageAverageCyan,"
-                + "CoverageAverageMagenta,"
-                + "CoverageAverageYellow,"
-                + "CoverageSumBlack,"
-                + "CoverageSumCyan,"
-                + "CoverageSumMagenta,"
-                + "CoverageSumYellow,"
-                + "CoverageSum2Black,"
-                + "CoverageSum2Cyan,"
-                + "CoverageSum2Magenta,"
-                + "CoverageSum2Yellow,"
-                + "MeterGroup1,"
-                + "MeterGroup2,"
-                + "BlackLevelMax,"
-                + "CyanLevelMax,"
-                + "MagentaLevelMax,"
-                + "YellowLevelMax,"
-                + "BlackLevel,"
-                + "CyanLevel,"
-                + "MagentaLevel,"
-                + "YellowLevel)"
-                + " Values ("
-                + "'" + s[0] + "'," //Manufacturer 
-                + "'" + s[1] + "'," //Model 
-                + "'" + s[2] + "'," //SerialNumber 
-                + "'" + s[3] + "'," //MACAddress 
-                + "'" + ip + "'," //IPAddresse 
-                + "'" + s[5] + "'," //HostName 
-                + "'" + s[6] + "'," //LocalID 
-                + "'" + s[7] + "'," //DescriptionLocation 
-                + "'" + s[8] + "'," //AssetNumber 
-                + "'" + s[9] + "'," //InstalledMemory 
-                + "'" + s[10] + "'," //FirmwareVersion 
-                + "'" + s[11] + "'," //FirmwareVersion2 
-                + "'" + s[12] + "'," //FirmwareVersion3 
-                + "'" + s[13] + "'," //FirmwareVersion4 
-                + "'" + s[14] + "'," //InstallationDate 
-                + "'" + s[15] + "'," //ServiceContactIsColor 
-                + "'" + s[16] + "'," //IsDuplex 
-                + "'" + s[17] + "'," //PowerActive 
-                + "'" + s[18] + "'," //PowerIdle 
-                + "'" + s[19] + "'," //PowerSleep1 
-                + "'" + s[20] + "'," //PowerSleep2 
-                + PrepareNumber(s[21]) + "," //TotalPages 
-                + PrepareNumber(s[22]) + "," //TotalPagesMono 
-                + PrepareNumber(s[23]) + "," //TotalPagesColor 
-                + PrepareNumber(s[24]) + "," //TotalPagesFullColor 
-                + PrepareNumber(s[25]) + "," //TotalPagesTwoColor 
-                + PrepareNumber(s[26]) + "," //TotalPagesSingleColor 
-                + PrepareNumber(s[27]) + "," //TotalPagesDuplex 
-                + PrepareNumber(s[28]) + "," //UsagePages 
-                + PrepareNumber(s[29]) + "," //UsagePagesMono 
-                + PrepareNumber(s[30]) + "," //UsagePagesColor 
-                + PrepareNumber(s[31]) + "," //UsagePagesFullColor 
-                + PrepareNumber(s[32]) + "," //UsagePagesTwoColor 
-                + PrepareNumber(s[33]) + "," //UsagePagesSingleColor 
-                + PrepareNumber(s[34]) + "," //PrinterPages 
-                + PrepareNumber(s[35]) + "," //PrinterPagesMono 
-                + PrepareNumber(s[36]) + "," //PrinterPagesColor 
-                + PrepareNumber(s[37]) + "," //PrinterPagesFullColor 
-                + PrepareNumber(s[38]) + "," //PrinterPagesTwoColor 
-                + PrepareNumber(s[39]) + "," //PrinterPagesSingleColor 
-                + PrepareNumber(s[40]) + "," //CopyPages 
-                + PrepareNumber(s[41]) + "," //CopyPagesMono 
-                + PrepareNumber(s[42]) + "," //CopyPagesColor 
-                + PrepareNumber(s[43]) + "," //CopyPagesFullColor 
-                + PrepareNumber(s[44]) + "," //CopyPagesTwoColor 
-                + PrepareNumber(s[45]) + "," //CopyPagesSingleColor 
-                + PrepareNumber(s[46]) + "," //FaxPages 
-                + PrepareNumber(s[47]) + "," //FaxPagesMono 
-                + PrepareNumber(s[48]) + "," //FaxPagesColor 
-                + PrepareNumber(s[49]) + "," //OtherPagesOther 
-                + PrepareNumber(s[50]) + "," //PagesMonoOther 
-                + PrepareNumber(s[51]) + "," //PagesColorOther 
-                + PrepareNumber(s[52]) + "," //PagesFullColor 
-                + PrepareNumber(s[53]) + "," //OtherPagesTwoColor 
-                + PrepareNumber(s[54]) + "," //OtherPagesSingleColor 
-                + PrepareNumber(s[55]) + "," //FaxesSentFaxesReceived 
-                + PrepareNumber(s[56]) + "," //ScansTotalScansTotalMono 
-                + PrepareNumber(s[57]) + "," //ScansTotalColor 
-                + PrepareNumber(s[58]) + "," //ScansUsageScansUsageMono 
-                + PrepareNumber(s[59]) + "," //ScansUsageColor 
-                + PrepareNumber(s[60]) + "," //ScansCopy 
-                + PrepareNumber(s[61]) + "," //ScansCopyMono 
-                + PrepareNumber(s[62]) + "," //ScansCopyColor 
-                + PrepareNumber(s[63]) + "," //ScansFax 
-                + PrepareNumber(s[64]) + "," //ScansFaxMono 
-                + PrepareNumber(s[65]) + "," //ScansFaxColor 
-                + PrepareNumber(s[66]) + "," //Scansemail 
-                + PrepareNumber(s[67]) + "," //ScansemailMono 
-                + PrepareNumber(s[68]) + "," //ScansemailColor 
-                + PrepareNumber(s[69]) + "," //ScansNet 
-                + PrepareNumber(s[70]) + "," //ScansNetMono 
-                + PrepareNumber(s[71]) + "," //ScansNetColor 
-                + PrepareNumber(s[72]) + "," //ListPages 
-                + PrepareNumber(s[73]) + "," //LargePages 
-                + PrepareNumber(s[74]) + "," //LargePagesMono 
-                + PrepareNumber(s[75]) + "," //LargePagesColor 
-                + PrepareNumber(s[76]) + "," //LargePagesFullColor 
-                + PrepareNumber(s[77]) + "," //LargePagesTwoColor 
-                + PrepareNumber(s[78]) + "," //LargePagesSingleColor 
-                + PrepareNumber(s[79]) + "," //TotalLargeSheets 
-                + PrepareNumber(s[80]) + "," //SquareFeetSquareMeters 
-                + PrepareNumber(s[81]) + "," //LinearFeetStapledSets 
-                + PrepareNumber(s[82]) + "," //Level1Pages 
-                + PrepareNumber(s[83]) + "," //Level2Pages 
-                + PrepareNumber(s[84]) + "," //Level3Pages 
-                + PrepareNumber(s[85]) + "," //ColorUsageOffice 
-                + PrepareNumber(s[86]) + "," //ColorUsageOfficeAccent 
-                + PrepareNumber(s[87]) + "," //ColorUsageProfessional 
-                + PrepareNumber(s[88]) + "," //ColorUsageProfessionalAccent
-                + PrepareNumber(s[89]) + "," //DoubleClickTotal 
-                + PrepareNumber(s[90]) + "," //DoubleClickMono 
-                + PrepareNumber(s[91]) + "," //DoubleClickColor 
-                + PrepareNumber(s[92]) + "," //DoubleClickFullColor 
-                + PrepareNumber(s[93]) + "," //DoubleClickTwoColor 
-                + PrepareNumber(s[94]) + "," //DoubleClickSingleColor 
-                + PrepareNumber(s[95]) + "," //DoubleClickDuplex 
-                + PrepareNumber(s[96]) + "," //DevelopmentTotal 
-                + PrepareNumber(s[97]) + "," //DevelopmentMono 
-                + PrepareNumber(s[98]) + "," //DevelopmentColor 
-                + PrepareNumber(s[99]) + "," //CoverageAverageBlack 
-                + PrepareNumber(s[100]) + "," //CoverageAverageCyan 
-                + PrepareNumber(s[101]) + "," //CoverageAverageMagenta 
-                + PrepareNumber(s[102]) + "," //CoverageAverageYellow 
-                + PrepareNumber(s[103]) + "," //CoverageSumBlack 
-                + PrepareNumber(s[104]) + "," //CoverageSumCyan 
-                + PrepareNumber(s[105]) + "," //CoverageSumMagenta 
-                + PrepareNumber(s[106]) + "," //CoverageSumYellow 
-                + PrepareNumber(s[107]) + "," //CoverageSum2Black 
-                + PrepareNumber(s[108]) + "," //CoverageSum2Cyan 
-                + PrepareNumber(s[109]) + "," //CoverageSum2Magenta 
-                + PrepareNumber(s[110]) + "," //CoverageSum2Yellow 
-                + "'" + s[111] + "'," //MeterGroup1 
-                + "'" + s[112] + "'," //MeterGroup2
-                + PrepareNumber(s[113]) + ","
-                + PrepareNumber(s[114]) + ","
-                + PrepareNumber(s[115]) + ","
-                + PrepareNumber(s[116]) + ","
-                + PrepareNumber(s[117]) + ","
-                + PrepareNumber(s[118]) + ","
-                + PrepareNumber(s[119]) + ","
-                + PrepareNumber(s[120])
-                + ");"
-            );
-        }
-
-        private static string PrepareNumber(string num)
-        {
-            return num.Length == 0 ? "0" : num;
+            return data;
         }
     }
 }

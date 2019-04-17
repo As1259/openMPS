@@ -255,8 +255,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\U
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\DeviceManagement.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\SettingsV2.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\Settings.g.cs
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\EinstellungenOid.g.cs
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\EinstellungenTechniker.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\BasicInformation.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\EditDevices.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\SearchForDevices.g.cs
@@ -269,8 +267,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\U
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\DeviceManagement.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\SettingsV2.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\Settings.baml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\EinstellungenOid.baml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\EinstellungenTechniker.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\BasicInformation.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\EditDevices.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\SearchForDevices.baml

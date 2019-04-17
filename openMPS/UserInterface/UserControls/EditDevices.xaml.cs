@@ -95,9 +95,9 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 tb_ip_block2.Text = ipAddress[1].ToString();
                 tb_ip_block3.Text = ipAddress[2].ToString();
                 tb_ip_block4.Text = ipAddress[3].ToString();
-                tb_SerialNumber.Text = drv["Seriennummer"].ToString();
+                tb_SerialNumber.Text = drv["SerialNumber"].ToString();
                 //tb_assetnumber.Text = drv["Assetnumber"].ToString();
-                if (drv["Aktiv"].ToString().Contains("True"))
+                if (drv["Active"].ToString().Contains("True"))
                     cb_aktiv.IsChecked = true;
                 else
                     cb_aktiv.IsChecked = false;
@@ -148,16 +148,16 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 tb_ip_block2.Text + "." +
                 tb_ip_block3.Text + "." +
                 tb_ip_block4.Text;
-            var aktiv = "1";
+            var active = "1";
             try
             {
                 ScanIP.ConvertStringToAddress(ipAddress);
-                if (!(bool)cb_aktiv.IsChecked) aktiv = "0";
+                if (!(bool)cb_aktiv.IsChecked) active = "0";
                 if (selected)
                 {
                     if (drv["IP"].ToString().CompareTo(ipAddress) == 0)
                     {
-                        Config.GetInstance().NonQuery("update Devices set Aktiv='" + aktiv + "' where IP='" + ipAddress +
+                        Config.GetInstance().NonQuery("update Devices set Active='" + active + "' where IP='" + ipAddress +
                                             "';");
                         loadGridData();
                         lockElements();
@@ -165,7 +165,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     else
                     {
                         var thread = new Thread(UpdateDevicesViaThread);
-                        thread.Start(new object[] { ipAddress, aktiv, drv["IP"].ToString() });
+                        thread.Start(new object[] { ipAddress, active, drv["IP"].ToString() });
                         lockElements();
                     }
                 }
@@ -181,7 +181,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     {
                         lockElements();
                         var thread = new Thread(InsertInDevicesViaThread);
-                        thread.Start(new object[] { ipAddress, aktiv });
+                        thread.Start(new object[] { ipAddress, active });
                     }
                 }
             }
@@ -212,7 +212,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             if (ident.Length > 0)
             {
-                var dt = Oid.GetInstance().GetOidRowByPrivateId(ident);
+                var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
@@ -260,7 +260,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             if (ident.Length > 0)
             {
-                var dt = Oid.GetInstance().GetOidRowByPrivateId(ident);
+                var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));

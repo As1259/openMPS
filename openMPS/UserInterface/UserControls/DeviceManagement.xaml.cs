@@ -74,10 +74,10 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             {
                 ListViewDevices.Items.Add(
                     new DeviceProps(row.Field<long>("id"),
-                        row.Field<bool>("Aktiv"),
-                        IPAddress.Parse( row.Field<string>("IP")),
-                        row.Field<string>("Modell"),
-                        row.Field<string>("Seriennummer"),
+                        row.Field<bool>("Active"),
+                        IPAddress.Parse( row.Field<string>("Ip")),
+                        row.Field<string>("Model"),
+                        row.Field<string>("SerialNumber"),
                         row.Field<string>("AssetNumber")));
             }
         }

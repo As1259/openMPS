@@ -7,7 +7,7 @@
              d:DesignHeight="28" d:DesignWidth="1140"
              Background="Wheat">
     <Grid>
-        <CheckBox Name="CheckBoxAktiv" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="CheckBoxActive" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top"/>
         <Label Content="IP" Name="LabelIp" HorizontalAlignment="Left" Height="23" Margin="117,3,0,0" VerticalAlignment="Top"/>
         <Label Content="Model" Name="LabelModel" HorizontalAlignment="Left" Height="23" Margin="262,3,0,0" VerticalAlignment="Top"/>
         <Label Content="SerialNumber" Name="LabelSerialNumber" HorizontalAlignment="Left" Height="23" Margin="409,3,0,0" VerticalAlignment="Top"/>

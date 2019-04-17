@@ -149,6 +149,9 @@
     <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.13\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SnmpSharpNet, Version=0.9.5.0, Culture=neutral, PublicKeyToken=b2181aa3b9571feb, processorArchitecture=MSIL">
       <HintPath>..\packages\SnmpSharpNet.0.9.5\lib\SnmpSharpNet.dll</HintPath>
     </Reference>
@@ -214,7 +217,10 @@
     <Compile Include="Database\InitialisationFile.cs" />
     <Compile Include="Database\Exceptions\OidUpdateFileException.cs" />
     <Compile Include="Database\OidUpdateFileHandler.cs" />
-    <Compile Include="Datatypes\DataScanWrap.cs" />
+    <Compile Include="DataTypes\DataScanWrap.cs" />
+    <Compile Include="DataTypes\OidData.cs" />
+    <Compile Include="DataTypes\Oid.cs" />
+    <Compile Include="SocketIo\OpenMPSClient.cs" />
     <Compile Include="UserInterface\SimpleWindow.xaml.cs">
       <DependentUpon>SimpleWindow.xaml</DependentUpon>
     </Compile>
@@ -269,12 +275,6 @@
     <Compile Include="UserInterface\UserControls\Settings\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserInterface\UserControls\Settings\EinstellungenOid.xaml.cs">
-      <DependentUpon>EinstellungenOid.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\UserControls\Settings\EinstellungenTechniker.xaml.cs">
-      <DependentUpon>EinstellungenTechniker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserInterface\UserControls\Settings\BasicInformation.xaml.cs">
       <DependentUpon>BasicInformation.xaml</DependentUpon>
     </Compile>
@@ -328,14 +328,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\UserControls\Settings\Settings.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\UserControls\Settings\EinstellungenOid.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\UserControls\Settings\EinstellungenTechniker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

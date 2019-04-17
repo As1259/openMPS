@@ -50,7 +50,6 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
             trv_einstellungen.Items.Clear();
             loadTreeview();
             _ucontrols[0] = new BasicInformation();
-            _ucontrols[1] = new EinstellungenOid();
       //      _ucontrols[2] = new EinstellungenTechniker();
 
             grid_setting.Children.Add(_ucontrols[0]);

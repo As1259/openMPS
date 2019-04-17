@@ -56,10 +56,10 @@ namespace de.fearvel.openMPS.Database
 
         private void UpdateOid()
         {
-            _connection.Query("Select val from Directory Where Identifier = 'OID-Version'", out DataTable fileOidDt);
+            _connection.Query("Select val from Directory Where Identifier = 'OidVersion'", out DataTable fileOidDt);
             var fileOid = fileOidDt.Rows[0].Field<string>("val");
             ;
-            var version = Config.GetInstance().Query("Select val from Directory Where Identifier = 'OID-Version'").Rows[0].Field<string>("val");
+            var version = Config.GetInstance().Query("Select val from Directory Where Identifier = 'OidVersion'").Rows[0].Field<string>("val");
             if (version.CompareTo(fileOid) < 0)
 
             {
@@ -336,15 +336,15 @@ namespace de.fearvel.openMPS.Database
                             + "'" + dt.Rows[i].Field<string>("YellowLevel") + "'"
                             + ");"
                         );
-                    Config.GetInstance().NonQuery("Update Directory set val = '" + fileOid + "' Where Identifier = 'OID-Version';");
+                    Config.GetInstance().NonQuery("Update Directory set val = '" + fileOid + "' Where Identifier = 'OidVersion';");
                     Config.GetInstance().UpdateDirectory();
-                    MessageBox.Show("OID's erfolgreich Eingelesen\nSie haben nun die OID-Version: " + fileOid, "Infomation", MessageBoxButton.OK,
+                    MessageBox.Show("OID's erfolgreich Eingelesen\nSie haben nun die OidVersion: " + fileOid, "Infomation", MessageBoxButton.OK,
                         MessageBoxImage.Information);
                 }
             }
             else
             {
-                MessageBox.Show("Sie verwenden bereits die neuste OID-Version", "Infomation", MessageBoxButton.OK,
+                MessageBox.Show("Sie verwenden bereits die neuste OidVersion", "Infomation", MessageBoxButton.OK,
                     MessageBoxImage.Information);
             }
         }

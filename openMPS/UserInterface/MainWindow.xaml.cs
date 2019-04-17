@@ -15,13 +15,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.net.DataTypes;
+using de.fearvel.net.DataTypes.Exceptions;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.Database.Exceptions;
+using de.fearvel.openMPS.SocketIo;
 using de.fearvel.openMPS.UserInterface.UserControls.Settings;
 using de.fearvel.openMPS.UserInterface.UserControls;
 using Fluent;
-using Oid = de.fearvel.openMPS.Database.Oid;
 
 namespace de.fearvel.openMPS.UserInterface
 {
@@ -30,22 +31,20 @@ namespace de.fearvel.openMPS.UserInterface
     /// </summary>
     public partial class MainWindow : IRibbonWindow
     {
-        private Thread _dbConnectionLoader;
 
         public static int Programid = 10001;
 
         /// <summary>
         ///     The ucontrol
         /// </summary>
-
         private Dictionary<Type, UserControl> _userControls;
+
         /// <summary>
         ///     Initializes a new instance of the <see cref="RibbonWindow" /> class.
         /// </summary>
         public MainWindow()
         {
-            _dbConnectionLoader = new Thread(new ThreadStart(LoadDatabases));
-            _dbConnectionLoader.Start();
+            Init();
             InitializeComponent();
             Loaded += RibbonWindow_Load;
             //FnLog.SetInstance(new FnLogInitPackage(
@@ -55,15 +54,29 @@ namespace de.fearvel.openMPS.UserInterface
             //    FnLog.TelemetryType.LogLocalSendAll,
             //    "fnlog.db", "")
             //);
-            FnLog.SetInstance(new FnLog.FnLogInitPackage(
-                "https://localhost:9024",
-                System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-                Version.Parse(GetFileVersion()),
-                FnLog.TelemetryType.LogLocalSendAll,
-                "fnlog.db", "")
-            );
+           
+         //   RetrieveDeviceInformation v = new RetrieveDeviceInformation();
+         //   var a = v.GainData();
+        //    OpenMPSClient.SendOidData("https://localhost:9051", a);
+
+
             FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "Program Started");
         }
+
+        private void Init()
+        {
+            Config.GetInstance().Open();
+            FnLog.SetInstance(new FnLog.FnLogInitPackage(
+                    "https://localhost:9024",
+                    System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+                    Version.Parse(GetFileVersion()),
+                    FnLog.TelemetryType.LogLocalSendAll,
+                    "", ""), Config.GetInstance().GetConnector()
+            );
+            OpenMPSClient.SetInstance("https://localhost:9051");
+            OpenMPSClient.GetInstance().UpdateOidTable();
+        }
+
 
         private void LoadUserControls()
         {
@@ -89,11 +102,6 @@ namespace de.fearvel.openMPS.UserInterface
 
         }
 
-        private void LoadDatabases()
-        {
-            Config.GetInstance().Open();
-            Oid.GetInstance().Open();
-        }
 
         private void DisplayUserControl(UserControl uc, string text = "")
         {
@@ -142,7 +150,6 @@ namespace de.fearvel.openMPS.UserInterface
             //zurueck.IsEnabled = false;
             try
             {
-                while (_dbConnectionLoader.IsAlive) { }           // Überprüfung auf vollständiges Laden/ Erzeugen der Internen Datenbank  
                 LoadUserControls();
                 OpenSuchen();
                 //var a = new openRegistration();
@@ -213,5 +220,7 @@ namespace de.fearvel.openMPS.UserInterface
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             return fvi.FileVersion;
         }
+
+
     }
 }

@@ -10,29 +10,25 @@
     <Grid>
         <Label Content="Kundennummer:" HorizontalAlignment="Left" Margin="11,48,0,0" VerticalAlignment="Top" />
         <Label Content="Programmversion:" HorizontalAlignment="Left" Margin="373,48,0,0" VerticalAlignment="Top" />
-        <Label Content="OIDVersion:" HorizontalAlignment="Left" Margin="373,110,0,0" VerticalAlignment="Top" />
-
-        <Button Content="OID Online Update " HorizontalAlignment="Left"
-                Margin="670,51,0,0" VerticalAlignment="Top" Width="170" Height="23"
-                x:Name="bt_updoid_online"  />
-        <Button Content="OID Datei Einlesen " HorizontalAlignment="Left"
-                Margin="670,79,0,0" VerticalAlignment="Top" Width="170" Height="23"
-                x:Name="bt_updoid_file" Click="bt_updoid_file_Click" />
+        <Label Content="OID Version:" HorizontalAlignment="Left" Margin="373,110,0,0" VerticalAlignment="Top" />
         <Label Content="[Kundennummer]" HorizontalAlignment="Left" Margin="113,48,0,0" VerticalAlignment="Top"
-               x:Name="lbl_val_kundennummer" FontWeight="DemiBold" />
-        <Label Content="[PV]" HorizontalAlignment="Left" Margin="488,49,0,0" VerticalAlignment="Top"
-               x:Name="lbl_val_PV" FontWeight="DemiBold" />
-        <Label Content="[DBV]" HorizontalAlignment="Left" Margin="488,79,0,0" VerticalAlignment="Top"
-               x:Name="lbl_val_DBV" FontWeight="DemiBold" />
-        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="488,110,0,0" VerticalAlignment="Top"
-               x:Name="lbl_val_OIDV" FontWeight="DemiBold" />
-        <Button Content="Nutzerdaten Löschen" HorizontalAlignment="Left"
-                Margin="658,219,0,0" VerticalAlignment="Top" Width="170" Height="23"
-                x:Name="bt_delUserdata" Click="bt_delUserdata_Click" />
+               x:Name="LabelKundennummer" FontWeight="DemiBold" />
+        <Label Content="[PV]" HorizontalAlignment="Left" Margin="505,48,0,0" VerticalAlignment="Top"
+               x:Name="LabelProgramVersion" FontWeight="DemiBold" />
+        <Label Content="[DBV]" HorizontalAlignment="Left" Margin="505,79,0,0" VerticalAlignment="Top"
+               x:Name="LableConfigVersion" FontWeight="DemiBold" />
+        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="505,110,0,0" VerticalAlignment="Top"
+               x:Name="LabelOidVersion" FontWeight="DemiBold" />
         <Label Content="config.db Version:" HorizontalAlignment="Left" Margin="373,79,0,0" VerticalAlignment="Top" />
         <Label Content="ID:" HorizontalAlignment="Left" Margin="11,79,0,0" VerticalAlignment="Top" />
         <Label Content="[UUID]" HorizontalAlignment="Left" Margin="113,79,0,0" VerticalAlignment="Top"
-            x:Name="lbl_val_UUID" FontWeight="DemiBold" />
+            x:Name="LabelUUID" FontWeight="DemiBold" />
+        <Label Content="FnLog Version:" HorizontalAlignment="Left" Margin="373,154,0,0" VerticalAlignment="Top" />
+        <Label Content="[FnLogV]" HorizontalAlignment="Left" Margin="505,154,0,0" VerticalAlignment="Top"
+            x:Name="LabelFnLogVersion" FontWeight="DemiBold" />
+        <Label Content="Manastone Version:" HorizontalAlignment="Left" Margin="373,185,0,0" VerticalAlignment="Top" />
+        <Label Content="[MSV]" HorizontalAlignment="Left" Margin="505,185,0,0" VerticalAlignment="Top"
+            x:Name="LabelManastoneVersion" FontWeight="DemiBold" />
 
     </Grid>
 </UserControl>

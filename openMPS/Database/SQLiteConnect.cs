@@ -18,8 +18,9 @@ namespace de.fearvel.openMPS.Database
         private Dictionary<string, string> _directory;
 
         protected abstract string FileName { get; }
-        protected string FilePath = Path.Combine(Environment.GetFolderPath(
-            Environment.SpecialFolder.ApplicationData), "oMPS");
+   //     protected string FilePath = Path.Combine(Environment.GetFolderPath(
+   //         Environment.SpecialFolder.ApplicationData), "oMPS");
+        protected string FilePath = "";
         public Dictionary<string, string> Directory
         {
             get
@@ -35,14 +36,20 @@ namespace de.fearvel.openMPS.Database
             private set => _directory = value;
         }
 
+        public void ReloadDirectory()
+        {
+            _directory.Clear();
+            ReadFromDirectory();
+        }
+
         private void ReadFromDirectory()
         {
             try
             {
                 _connection.Query("select * from Directory;", out DataTable dt);
                 foreach (DataRow ds in dt.Rows)
-                {
-                    _directory.Add(ds.Field<string>("Identifier"), ds.Field<string>("val"));
+                {                    
+                    _directory.Add(ds.Field<string>("Dkey"), ds.Field<string>("val"));
                 }
             }
             catch (Exception)
@@ -66,6 +73,11 @@ namespace de.fearvel.openMPS.Database
         ///     The connection
         /// </summary>
         private SqliteConnector _connection;
+
+        internal SqliteConnector GetConnector()
+        {
+            return _connection;
+        }
 
         /// <summary>
         ///     boolean that contains the information of the status of the Sqlite connection
@@ -123,14 +135,14 @@ namespace de.fearvel.openMPS.Database
 
         public void OpenEncrypted()
         {
-            CheckPath();
+            //CheckPath();
             OpenEncrypted(Path.Combine(FilePath, FileName));
             GenerateTables();
         }
 
         public void Open()
         {
-            CheckPath();
+            //CheckPath();
             SqliteConnector c = new SqliteConnector(Path.Combine(FilePath, FileName));
             _connection = c;
             _opened = true;
@@ -243,11 +255,11 @@ namespace de.fearvel.openMPS.Database
         {
             using (var command = new SQLiteCommand(
                 "Insert Into Directory"
-                + " (Identifier,val)"
-                + " Values (@Identifier,@val);"))
+                + " (DKey,DVal)"
+                + " Values (@DKey,@DVal);"))
             {
-                command.Parameters.AddWithValue("@Identifier", key);
-                command.Parameters.AddWithValue("@val", value);
+                command.Parameters.AddWithValue("@DKey", key);
+                command.Parameters.AddWithValue("@DVal", value);
                 command.Prepare();
                 NonQuery(command);
             }

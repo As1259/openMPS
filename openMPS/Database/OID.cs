@@ -37,7 +37,7 @@ namespace de.fearvel.openMPS.Database
                      " CONSTRAINT uq_Version_Identifier UNIQUE (Identifier));");
             if (Query("SELECT * FROM Directory").Rows.Count == 0)
             {
-                NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('OID-Version','0.0.0.0');");
+                NonQuery("INSERT INTO Directory (Identifier,val) VALUES ('OidVersion','0.0.0.0');");
             }
         }
 

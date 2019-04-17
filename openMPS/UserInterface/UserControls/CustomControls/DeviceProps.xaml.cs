@@ -9,7 +9,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.CustomControls
     public partial class DeviceProps : UserControl
     {
         public long Id { get; private set; }
-        public bool Activ { get; private set; }
+        public bool Active { get; private set; }
         public IPAddress IpAddress { get; private set; }
         public string Model { get; private set; }
         public string SerialNumber { get; private set; }
@@ -19,7 +19,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.CustomControls
         public DeviceProps(long id, bool activ, IPAddress ipAddress, string model, string serialNumber, string assetNumber)
         {
             Id = id;
-            Activ = activ;
+            Active = activ;
             IpAddress = ipAddress;
             Model = model;
             SerialNumber = serialNumber;
@@ -30,7 +30,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.CustomControls
 
         public void DisplayValues()
         {
-            CheckBoxAktiv.IsChecked = Activ;
+            CheckBoxActive.IsChecked = Active;
             LabelIp.Content = IpAddress;
             LabelModel.Content = Model;
             LabelSerialNumber.Content = SerialNumber;
