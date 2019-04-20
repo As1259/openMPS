@@ -4,14 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:de.fearvel.openMPS.UserInterface.UserControls"
+
              mc:Ignorable="d"
              d:DesignHeight="500" d:DesignWidth="1200"
              Background="White">
     <Grid>
-        <ListView x:Name="ListViewData" Margin="0,67,0,0">
-
-        </ListView>
-        <Button x:Name="bt_retrieveData" Click="bt_retrieveData_Click" Content="Werte abfragen" HorizontalAlignment="Left"
+        <DataGrid x:Name="DataGridItemViewer" Margin="0,85,0,0"/>
+        <Button x:Name="ButtonRetrieveData" Click="ButtonRetrieveData_Click" Content="Werte abfragen" HorizontalAlignment="Left"
                 Margin="25,25,0,0" VerticalAlignment="Top" Width="135" Height="25" />
         <Button x:Name="bt_senden" Content="Senden" HorizontalAlignment="Left" Margin="265,27,0,0"
                 VerticalAlignment="Top" Width="135" Click="button_send_Click" Height="26"

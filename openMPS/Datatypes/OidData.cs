@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Windows.Documents;
 using de.fearvel.net.DataTypes.AbstractDataTypes;
+using de.fearvel.net.Manastone;
 
 namespace de.fearvel.openMPS.DataTypes
 {
@@ -8,7 +12,7 @@ namespace de.fearvel.openMPS.DataTypes
     /// </summary>
     public class OidData : JsonSerializable<OidData>
     {
-        public string CustomerRef;
+        public string CustomerReference = ManastoneClient.GetInstance().CustomerReference;
         public string VendorName;
         public string Model;
         public string SerialNumber;
@@ -65,7 +69,8 @@ namespace de.fearvel.openMPS.DataTypes
 
         public OidData(string vendorName, string model, string serialNumber, string macAddress, string ipAddress,
             string hostName, string descriptionLocation, string assetNumber, string firmwareVersion, string powerSleep1,
-            string powerSleep2, string profileName, string deviceName, string deviceType, string manufacturer, long totalPages,
+            string powerSleep2, string profileName, string deviceName, string deviceType, string manufacturer,
+            long totalPages,
             long totalPagesMono, long totalPagesColor, long totalPagesDuplex, long printerPages, long printerPagesMono,
             long printerPagesColor, long printerPagesFullColor, long printerPagesTwoColor, long copyPagesMono,
             long copyPagesColor, long copyPagesFullColor, long copyPagesTwoColor, long copyPagesSingleColor,
@@ -131,11 +136,147 @@ namespace de.fearvel.openMPS.DataTypes
             YellowLevel = yellowLevel;
         }
 
+
+        /// <summary>
+        /// Transforms a List of OidData to a DataTable
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static DataTable ToDataTable(List<OidData> list)
+        {
+            var dt = CrateEmptyTable();
+            foreach (var data in list)
+            {
+                var dr = dt.NewRow();
+                dr["CustomerReference"] = data.CustomerReference;
+                dr["VendorName"] = data.VendorName;
+                dr["Model"] = data.Model;
+                dr["SerialNumber"] = data.SerialNumber;
+                dr["MacAddress"] = data.MacAddress;
+                dr["IpAddress"] = data.IpAddress;
+                dr["HostName"] = data.HostName;
+                dr["DescriptionLocation"] = data.DescriptionLocation;
+                dr["AssetNumber"] = data.AssetNumber;
+                dr["FirmwareVersion"] = data.FirmwareVersion;
+                dr["PowerSleep1"] = data.PowerSleep1;
+                dr["PowerSleep2"] = data.PowerSleep2;
+                dr["ProfileName"] = data.ProfileName;
+                dr["DeviceName"] = data.DeviceName;
+                dr["DeviceType"] = data.DeviceType;
+                dr["Manufacturer"] = data.Manufacturer;
+                dr["TotalPages"] = data.TotalPages;
+                dr["TotalPagesMono"] = data.TotalPagesMono;
+                dr["TotalPagesColor"] = data.TotalPagesColor;
+                dr["TotalPagesDuplex"] = data.TotalPagesDuplex;
+                dr["PrinterPages"] = data.PrinterPages;
+                dr["PrinterPagesMono"] = data.PrinterPagesMono;
+                dr["PrinterPagesColor"] = data.PrinterPagesColor;
+                dr["PrinterPagesFullColor"] = data.PrinterPagesFullColor;
+                dr["PrinterPagesTwoColor"] = data.PrinterPagesTwoColor;
+                dr["CopyPagesMono"] = data.CopyPagesMono;
+                dr["CopyPagesColor"] = data.CopyPagesColor;
+                dr["CopyPagesFullColor"] = data.CopyPagesFullColor;
+                dr["CopyPagesTwoColor"] = data.CopyPagesTwoColor;
+                dr["CopyPagesSingleColor"] = data.CopyPagesSingleColor;
+                dr["FaxesSentFaxesReceived"] = data.FaxesSentFaxesReceived;
+                dr["ScansTotalScansTotalMono"] = data.ScansTotalScansTotalMono;
+                dr["ScansTotalColor"] = data.ScansTotalColor;
+                dr["ScansCopyMono"] = data.ScansCopyMono;
+                dr["ScansCopyColor"] = data.ScansCopyColor;
+                dr["ScansEmail"] = data.ScansEmail;
+                dr["ScansEmailMono"] = data.ScansEmailMono;
+                dr["ScansNet"] = data.ScansNet;
+                dr["ScansNetMono"] = data.ScansNetMono;
+                dr["ScansNetColor"] = data.ScansNetColor;
+                dr["LargePagesMono"] = data.LargePagesMono;
+                dr["LargePagesFullColor"] = data.LargePagesFullColor;
+                dr["CoverageAverageBlack"] = data.CoverageAverageBlack;
+                dr["CoverageAverageCyan"] = data.CoverageAverageCyan;
+                dr["CoverageAverageMagenta"] = data.CoverageAverageMagenta;
+                dr["CoverageAverageYellow"] = data.CoverageAverageYellow;
+                dr["BlackLevelMax"] = data.BlackLevelMax;
+                dr["CyanLevelMax"] = data.CyanLevelMax;
+                dr["MagentaLevelMax"] = data.MagentaLevelMax;
+                dr["YellowLevelMax"] = data.YellowLevelMax;
+                dr["BlackLevel"] = data.BlackLevel;
+                dr["CyanLevel"] = data.CyanLevel;
+                dr["MagentaLevel"] = data.MagentaLevel;
+                dr["YellowLevel"] = data.YellowLevel;
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
+        }
+
+        /// <summary>
+        /// Creates an Empty Datatable and defines the Colums
+        /// </summary>
+        /// <returns></returns>
+        private static DataTable CrateEmptyTable()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("CustomerReference", typeof(string));
+            dt.Columns.Add("VendorName", typeof(string));
+            dt.Columns.Add("Model", typeof(string));
+            dt.Columns.Add("SerialNumber", typeof(string));
+            dt.Columns.Add("MacAddress", typeof(string));
+            dt.Columns.Add("IpAddress", typeof(string));
+            dt.Columns.Add("HostName", typeof(string));
+            dt.Columns.Add("DescriptionLocation", typeof(string));
+            dt.Columns.Add("AssetNumber", typeof(string));
+            dt.Columns.Add("FirmwareVersion", typeof(string));
+            dt.Columns.Add("PowerSleep1", typeof(string));
+            dt.Columns.Add("PowerSleep2", typeof(string));
+            dt.Columns.Add("ProfileName", typeof(string));
+            dt.Columns.Add("DeviceName", typeof(string));
+            dt.Columns.Add("DeviceType", typeof(string));
+            dt.Columns.Add("Manufacturer", typeof(string));
+            dt.Columns.Add("TotalPages", typeof(long));
+            dt.Columns.Add("TotalPagesMono", typeof(long));
+            dt.Columns.Add("TotalPagesColor", typeof(long));
+            dt.Columns.Add("TotalPagesDuplex", typeof(long));
+            dt.Columns.Add("PrinterPages", typeof(long));
+            dt.Columns.Add("PrinterPagesMono", typeof(long));
+            dt.Columns.Add("PrinterPagesColor", typeof(long));
+            dt.Columns.Add("PrinterPagesFullColor", typeof(long));
+            dt.Columns.Add("PrinterPagesTwoColor", typeof(long));
+            dt.Columns.Add("CopyPagesMono", typeof(long));
+            dt.Columns.Add("CopyPagesColor", typeof(long));
+            dt.Columns.Add("CopyPagesFullColor", typeof(long));
+            dt.Columns.Add("CopyPagesTwoColor", typeof(long));
+            dt.Columns.Add("CopyPagesSingleColor", typeof(long));
+            dt.Columns.Add("FaxesSentFaxesReceived", typeof(long));
+            dt.Columns.Add("ScansTotalScansTotalMono", typeof(long));
+            dt.Columns.Add("ScansTotalColor", typeof(long));
+            dt.Columns.Add("ScansCopyMono", typeof(long));
+            dt.Columns.Add("ScansCopyColor", typeof(long));
+            dt.Columns.Add("ScansEmail", typeof(long));
+            dt.Columns.Add("ScansEmailMono", typeof(long));
+            dt.Columns.Add("ScansNet", typeof(long));
+            dt.Columns.Add("ScansNetMono", typeof(long));
+            dt.Columns.Add("ScansNetColor", typeof(long));
+            dt.Columns.Add("LargePagesMono", typeof(long));
+            dt.Columns.Add("LargePagesFullColor", typeof(long));
+            dt.Columns.Add("CoverageAverageBlack", typeof(long));
+            dt.Columns.Add("CoverageAverageCyan", typeof(long));
+            dt.Columns.Add("CoverageAverageMagenta", typeof(long));
+            dt.Columns.Add("CoverageAverageYellow", typeof(long));
+            dt.Columns.Add("BlackLevelMax", typeof(long));
+            dt.Columns.Add("CyanLevelMax", typeof(long));
+            dt.Columns.Add("MagentaLevelMax", typeof(long));
+            dt.Columns.Add("YellowLevelMax", typeof(long));
+            dt.Columns.Add("BlackLevel", typeof(long));
+            dt.Columns.Add("CyanLevel", typeof(long));
+            dt.Columns.Add("MagentaLevel", typeof(long));
+            dt.Columns.Add("YellowLevel", typeof(long));
+            return dt;
+        }
+
         public OidData()
         {
         }
 
-        public override string ToString()//TESTING
+        public override string ToString() //TESTING
         {
             return DeviceType;
         }

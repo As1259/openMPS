@@ -16,12 +16,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
-using de.fearvel.manastone.serialManagement;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
-using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.SocketIo;
-using de.fearvel.openMPS.Tools;
+using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
@@ -62,23 +59,23 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_retrieveData_Click(object sender, RoutedEventArgs e)
+        private void ButtonRetrieveData_Click(object sender, RoutedEventArgs e)
         {
             progress.Value = 0;
             progress.Visibility = Visibility.Visible;
             ThreadPool.QueueUserWorkItem(UpdateDataGrid);
-            ThreadPool.QueueUserWorkItem(adaptProgressLoad);
+            ThreadPool.QueueUserWorkItem(AdaptProgressLoad);
         }
 
         /// <summary>
         ///     Updates the grid.
         /// </summary>
-        private void updateGrid()
+        private void UpdateGrid()
         {
-            ListViewData.ItemsSource = _oidData;
+            DataGridItemViewer.ItemsSource = OidData.ToDataTable( _oidData).DefaultView;
             progressPercent.Content = 100;
             progressPercent.Visibility = Visibility.Hidden;
-            bt_retrieveData.Visibility = Visibility.Visible;
+            ButtonRetrieveData.Visibility = Visibility.Visible;
             bt_senden.IsEnabled = true;
 
 
@@ -88,11 +85,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         ///     Adapts the progress load.
         /// </summary>
         /// <param name="state">The state.</param>
-        private void adaptProgressLoad(object state)
+        private void AdaptProgressLoad(object state)
         {
             for (var i = 0; i < 99; i++)
             {
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adaptProgress));
+                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(AdaptProgress));
                 Thread.Sleep(5000);
             }
         }
@@ -100,22 +97,22 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <summary>
         ///     Adapts the progress.
         /// </summary>
-        private void adaptProgress()
+        private void AdaptProgress()
         {
             if (progress.Value < 99) progress.Value += 1;
         }
 
         public List<OidData> GainData()
         {
-            var dt = Config.GetInstance().Query("select * from Devices where aktiv='1' or aktiv='True'");
+            var dt = Config.GetInstance().Query("select * from Devices where active='1' or active='True'");
            // DataTable resultTable = null;
             var data = new List<OidData>();
             for (var i = 0; i < dt.Rows.Count; i++)
-                if (DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")).Length > 0)
-                    if (ScanIP.PingIp(new IPAddress(ScanIP.ConvertStringToAddress(dt.Rows[i].Field<string>("ip")))))
+                if (DeviceTools.IdentDevice(dt.Rows[i].Field<string>("Ip")).Length > 0)
+                    if (ScanIp.PingIp(new IPAddress(ScanIp.ConvertStringToAddress(dt.Rows[i].Field<string>("Ip")))))
                     {
-                        if( SNMPget.ReadDeviceOiDs(dt.Rows[i].Field<string>("ip"),
-                            DeviceTools.identDevice(dt.Rows[i].Field<string>("ip")),out OidData oidData))
+                        if( SnmpClient.ReadDeviceOiDs(dt.Rows[i].Field<string>("Ip"),
+                            DeviceTools.IdentDevice(dt.Rows[i].Field<string>("Ip")),out OidData oidData))
                         {
 
                             if (oidData!= null)
@@ -141,7 +138,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                _oidData = oidData;
             //     dt = Collector.shellDT("Select * from Collector");
             // this.dt = dt;
-            ListViewData.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(updateGrid));
+            DataGridItemViewer.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(UpdateGrid));
                               
 
 
@@ -176,23 +173,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             }
         }
 
-        private string prepareOpenMPSFile()
-        {
-            Collector.shellDT("update INFO set version=" + Config.GetInstance().Query(
-                                  "Select version from INFO").Rows[0].Field<long>("version") + ";");
-            Collector.shellDT("update INFO set OIDversion=" + Config.GetInstance().Query(
-                                  "Select OIDversion from INFO").Rows[0].Field<long>("OIDversion") + ";");
-
-            var filename =
-                "DateiZumSenden-" + SerialManager.GetSerialContainer(MainWindow.Programid).CustomerIdentificationNumber
-                                  + "_" + DateTime.Now.ToString("yyyy-MM-dd_hh-mm-ss") + ".oMPS";
-            File.Copy("CollectionData.oData", filename);
-            var fInfo = new FileInfo(filename)
-            {
-                IsReadOnly = true
-            };
-            return filename;
-        }
+       
 
         /// <summary>
         ///     Handles the ValueChanged event of the progress control.

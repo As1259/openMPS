@@ -12,8 +12,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using de.fearvel.net.SQL.Connector;
-using de.fearvel.openMPS.Database.Exceptions;
 using de.fearvel.openMPS.DataTypes;
+using de.fearvel.openMPS.DataTypes.Exceptions;
 
 namespace de.fearvel.openMPS.Database
 {

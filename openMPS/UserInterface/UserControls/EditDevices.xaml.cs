@@ -12,8 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.openMPS.Database;
-using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.Tools;
+using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
@@ -88,7 +87,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             try
             {
                 drv = (DataRowView)geraeteGrid.SelectedItem;
-                var ipAddress = ScanIP.ConvertStringToAddress(drv["IP"].ToString());
+                var ipAddress = ScanIp.ConvertStringToAddress(drv["IP"].ToString());
                 unlockElements();
                 bt_del.IsEnabled = true;
                 tb_ip_block1.Text = ipAddress[0].ToString();
@@ -151,7 +150,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var active = "1";
             try
             {
-                ScanIP.ConvertStringToAddress(ipAddress);
+                ScanIp.ConvertStringToAddress(ipAddress);
                 if (!(bool)cb_aktiv.IsChecked) active = "0";
                 if (selected)
                 {
@@ -202,23 +201,23 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var ipAddress = (string)obj[0];
             var aktiv = (string)obj[1];
             var altIP = (string)obj[2];
-            var ident = DeviceTools.identDevice(ipAddress);
+            var ident = DeviceTools.IdentDevice(ipAddress);
             var modell = "";
             var serial = "";
             var asset = "";
 
-            var ip = ScanIP.ConvertStringToAddress(ipAddress);
+            var ip = ScanIp.ConvertStringToAddress(ipAddress);
             progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
             if (ident.Length > 0)
             {
                 var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
+                modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                serial = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
+                serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                asset = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
+                asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
             else
@@ -229,7 +228,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
 
-            var ipAlt = ScanIP.ConvertStringToAddress(altIP);
+            var ipAlt = ScanIp.ConvertStringToAddress(altIP);
             Config.GetInstance().UpdateDeviceTable(
                 aktiv,
                 ip,
@@ -251,22 +250,22 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var obj = (object[])param;
             var ipAddress = (string)obj[0];
             var aktiv = (string)obj[1];
-            var ident = DeviceTools.identDevice(ipAddress);
+            var ident = DeviceTools.IdentDevice(ipAddress);
             var modell = "";
             var serial = "";
             var asset = "";
-            var ip = ScanIP.ConvertStringToAddress(ipAddress);
+            var ip = ScanIp.ConvertStringToAddress(ipAddress);
             progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
             if (ident.Length > 0)
             {
                 var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                modell = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
+                modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                serial = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
+                serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                asset = SNMPget.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
+                asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
                 progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
             else

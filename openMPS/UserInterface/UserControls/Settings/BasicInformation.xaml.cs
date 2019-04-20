@@ -9,7 +9,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using de.fearvel.manastone.serialManagement;
 using de.fearvel.net.DataTypes.Interfaces;
 using de.fearvel.net.FnLog;
 using de.fearvel.net.Manastone;
@@ -46,7 +45,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
 
         private void LoadFields()
         {
-            // lbl_val_kundennummer.Content = FillNumberStrings(sc.CustomerIdentificationNumber.ToString(), 5);
+            LabelKundennummer.Content = ManastoneClient.GetInstance().CustomerReference;
             LableConfigVersion.Content = $"{Config.GetInstance().Directory["MPSVersion"]}";
             LabelProgramVersion.Content = FileVersionInfo
                 .GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;

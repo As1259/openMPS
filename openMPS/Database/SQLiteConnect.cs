@@ -5,7 +5,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Management;
 using de.fearvel.net.SQL.Connector;
-using de.fearvel.openMPS.Database.Exceptions;
+using de.fearvel.openMPS.DataTypes.Exceptions;
 
 namespace de.fearvel.openMPS.Database
 {
@@ -49,7 +49,7 @@ namespace de.fearvel.openMPS.Database
                 _connection.Query("select * from Directory;", out DataTable dt);
                 foreach (DataRow ds in dt.Rows)
                 {                    
-                    _directory.Add(ds.Field<string>("Dkey"), ds.Field<string>("val"));
+                    _directory.Add(ds.Field<string>("Dkey"), ds.Field<string>("DVal"));
                 }
             }
             catch (Exception)

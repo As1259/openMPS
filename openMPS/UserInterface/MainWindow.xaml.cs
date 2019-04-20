@@ -17,11 +17,13 @@ using System.Windows.Threading;
 using de.fearvel.net.DataTypes;
 using de.fearvel.net.DataTypes.Exceptions;
 using de.fearvel.net.FnLog;
+using de.fearvel.net.Manastone;
 using de.fearvel.openMPS.Database;
-using de.fearvel.openMPS.Database.Exceptions;
-using de.fearvel.openMPS.SocketIo;
+using de.fearvel.openMPS.DataTypes.Exceptions;
+using de.fearvel.openMPS.Net;
 using de.fearvel.openMPS.UserInterface.UserControls.Settings;
 using de.fearvel.openMPS.UserInterface.UserControls;
+using de.fearvel.openMPS.UserInterface.Windows;
 using Fluent;
 
 namespace de.fearvel.openMPS.UserInterface
@@ -65,16 +67,41 @@ namespace de.fearvel.openMPS.UserInterface
 
         private void Init()
         {
-            Config.GetInstance().Open();
-            FnLog.SetInstance(new FnLog.FnLogInitPackage(
-                    "https://localhost:9024",
-                    System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-                    Version.Parse(GetFileVersion()),
-                    FnLog.TelemetryType.LogLocalSendAll,
-                    "", ""), Config.GetInstance().GetConnector()
-            );
-            OpenMPSClient.SetInstance("https://localhost:9051");
-            OpenMPSClient.GetInstance().UpdateOidTable();
+           
+            try
+            {
+                Config.GetInstance().Open();
+                FnLog.SetInstance(new FnLog.FnLogInitPackage(
+                        "https://log.fearvel.de",
+                        System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
+                        Version.Parse(GetFileVersion()),
+                        FnLog.TelemetryType.LogLocalSendAll,
+                        "", ""), Config.GetInstance().GetConnector()
+                );
+                ManastoneClient.SetInstance("https://manastonedev.fearvel.de", "5d1ae2a2-6ef3-4abd-86b8-905686dc6567");
+                OpenMPSClient.SetInstance("https://openmpsdev.fearvel.de");
+                OpenMPSClient.GetInstance().UpdateOidTable();
+                if (!ManastoneClient.GetInstance().CheckActivation())
+                {
+                    ActivateProgram();
+                }
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Failed to connect to the Server. Check your internet connection and try again Later!");
+                Environment.Exit(0);
+            }
+            }
+
+        private void ActivateProgram()
+        {
+            var licCheck = new LicenseDialog();
+            licCheck.ShowDialog();
+            if (!licCheck.Result)
+            {
+                Environment.Exit(1);
+            }
         }
 
 
@@ -88,9 +115,9 @@ namespace de.fearvel.openMPS.UserInterface
         public void LoadBackstageUserControls()
         {
             _userControls.Add(typeof(InfoPage), new InfoPage());
-            _userControls.Add(typeof(SettingsV2), new SettingsV2());
+            _userControls.Add(typeof(Settings), new Settings());
             grid_help.Children.Add(_userControls[typeof(InfoPage)]);
-            grid_settings.Children.Add(_userControls[typeof(SettingsV2)]);
+            grid_settings.Children.Add(_userControls[typeof(Settings)]);
         }
         private void LoadDelayableUserControl()
         {

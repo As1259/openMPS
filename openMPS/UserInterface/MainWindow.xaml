@@ -3,7 +3,7 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:Fluent="urn:fluent-ribbon"
                      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                     Title="openMPS"
+                     Title="openMPS REVIEW"
                      Width="1200"
                      Height="600"
                      ResizeMode="NoResize"
@@ -78,7 +78,7 @@
                         <Fluent:Button Header="Geräte bearbeiten" x:Name="bt_geraetEdit"
                                        Click="bt_geraetBearbeiten"
                                        Width="70" />
-                        <Fluent:Button Header="Geräte Verwaltung" x:Name="ButtonDeviceManagement"
+                        <Fluent:Button Header="DEV DONT TOUCH Geräte Verwaltung " x:Name="ButtonDeviceManagement"
                                        Click="ButtonDeviceManagement_OnClick"
                                        Width="70" />
                         <Fluent:Button Header="Werte abfragen und senden" x:Name="bt_abfrage"

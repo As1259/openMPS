@@ -14,8 +14,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.net;
 using de.fearvel.openMPS.Database;
-using de.fearvel.openMPS.SNMP;
-using de.fearvel.openMPS.Tools;
+using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
@@ -63,8 +62,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
             geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
 
-            var ip = ScanIP.GetIpMask();
-            var ipaddr = ScanIP.FindIpRange(ScanIP.GetIpMask());
+            var ip = ScanIp.GetIpMask();
+            var ipaddr = ScanIp.FindIpRange(ScanIp.GetIpMask());
             var start = ipaddr[0].GetAddressBytes();
             var stop = ipaddr[1].GetAddressBytes();
 
@@ -88,10 +87,10 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             ButtonSuchen.Visibility = Visibility.Hidden;
             progress.Value = 0;
 
-            StartIpAddress = new IPAddress(ScanIP.ConvertStringToAddress(TextBoxIpRangeStart1.Text + "." + TextBoxIpRangeStart2.Text +
+            StartIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpRangeStart1.Text + "." + TextBoxIpRangeStart2.Text +
                                                         "." + TextBoxIpRangeStart3.Text + "." +
                                                         TextBoxIpRangeStart4.Text));
-            EndIpAddress = new IPAddress(ScanIP.ConvertStringToAddress(TextBoxIpRangeStop1.Text + "." + TextBoxIpRangeStop2.Text + "." +
+            EndIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpRangeStop1.Text + "." + TextBoxIpRangeStop2.Text + "." +
                                                             TextBoxIpRangeStop3.Text + "." + TextBoxIpRangeStop4.Text));
 
             ThreadPool.QueueUserWorkItem(SearchForPrinter);
@@ -145,7 +144,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             foreach (var ipAddress in pingResultsIps.SuccessIpAddresses)
             {
-                var ident = DeviceTools.identDevice(ipAddress.ToString());
+                var ident = DeviceTools.IdentDevice(ipAddress.ToString());
                 var modell = "";
                 var serial = "";
                 var asset = "";
@@ -155,30 +154,30 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                         0)
                     {
                         var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
-                        modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                        serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                        asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                        modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                        serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                        asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
                         Config.GetInstance().UpdateDeviceTable(
                             "1",
-                            ScanIP.ConvertStringToAddress(ipAddress.ToString()),
+                            ScanIp.ConvertStringToAddress(ipAddress.ToString()),
                             modell,
                             serial,
                             asset,
-                            ScanIP.ConvertStringToAddress(ipAddress.ToString())
+                            ScanIp.ConvertStringToAddress(ipAddress.ToString())
                         );
                     }
                     else
                     {
                         var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
 
-                        modell = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                        serial = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                        asset = SNMPget.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                        modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                        serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                        asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
                         Config.GetInstance().Query("Delete from Devices where IP = '" +
                                                ipAddress.ToString() + "'; ");
                         Config.GetInstance().InsertInDeviceTable(
                             "1",
-                            ScanIP.ConvertStringToAddress(ipAddress.ToString()),
+                            ScanIp.ConvertStringToAddress(ipAddress.ToString()),
                             modell,
                             serial,
                             asset
@@ -209,7 +208,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             var dt = Config.GetInstance().Query("Select * from OID");
             for (var i = 0; i < dt.Rows.Count; i++)
-                if (SNMPget.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
+                if (SnmpClient.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
                     return dt.Rows[i].Field<string>("OidPrivateId");
             return "Generic";
         }

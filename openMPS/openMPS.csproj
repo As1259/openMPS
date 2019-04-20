@@ -28,7 +28,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <PublisherName>Andreas Schreiner</PublisherName>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>2.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -137,17 +137,8 @@
     <Reference Include="Fluent, Version=6.1.0.326, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.6.1.0.326\lib\net45\Fluent.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Authenticator, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GoogleAuthenticator.1.2.1\lib\net45\Google.Authenticator.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
-    </Reference>
     <Reference Include="MahApps.Metro, Version=1.6.5.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.6.5\lib\net46\MahApps.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.13\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -167,14 +158,8 @@
     <Reference Include="System.Data.HashFunction.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.HashFunction.Core.2.0.0\lib\net45\System.Data.HashFunction.Core.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.HashFunction.CRC, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.HashFunction.CRC.2.0.0\lib\net45\System.Data.HashFunction.CRC.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data.HashFunction.Interfaces, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.HashFunction.Interfaces.2.0.0\lib\net45\System.Data.HashFunction.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.HashFunction.SpookyHash, Version=2.0.0.0, Culture=neutral, PublicKeyToken=80c9288e394c1322, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Data.HashFunction.SpookyHash.2.0.0\lib\net45\System.Data.HashFunction.SpookyHash.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.109.2\lib\net46\System.Data.SQLite.dll</HintPath>
@@ -190,9 +175,6 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -214,27 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Database\InitialisationFile.cs" />
-    <Compile Include="Database\Exceptions\OidUpdateFileException.cs" />
-    <Compile Include="Database\OidUpdateFileHandler.cs" />
-    <Compile Include="DataTypes\DataScanWrap.cs" />
     <Compile Include="DataTypes\OidData.cs" />
     <Compile Include="DataTypes\Oid.cs" />
-    <Compile Include="SocketIo\OpenMPSClient.cs" />
-    <Compile Include="UserInterface\SimpleWindow.xaml.cs">
-      <DependentUpon>SimpleWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\Windows\erstStart2GEN.xaml.cs">
-      <DependentUpon>erstStart2GEN.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Manastone\I01.cs" />
-    <Compile Include="Manastone\Serial.cs" />
-    <Compile Include="Manastone\SerialContainer.cs" />
-    <Compile Include="Manastone\SerialManager.cs" />
-    <Compile Include="Manastone\SerialStorage.cs" />
-    <Compile Include="Manastone\SQLConnector.cs" />
-    <Compile Include="Manastone\SQLITEConnector.cs" />
-    <Compile Include="MYSQLConnectionTools\CollectionToMysql.cs" />
+    <Compile Include="DataTypes\OidRequest.cs" />
+    <Compile Include="Net\OpenMPSClient.cs" />
     <Compile Include="openRegistration.xaml.cs">
       <DependentUpon>openRegistration.xaml</DependentUpon>
     </Compile>
@@ -246,20 +211,12 @@
     <Compile Include="UserInterface\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SNMP\SNMPget.cs" />
-    <Compile Include="Database\CollectedInformationPackage.cs" />
-    <Compile Include="Database\Oid.cs" />
-    <Compile Include="Database\Collector.cs" />
-    <Compile Include="Database\Exceptions\MPSSQLiteException.cs" />
+    <Compile Include="Net\SnmpClient.cs" />
+    <Compile Include="DataTypes\Exceptions\MPSSQLiteException.cs" />
     <Compile Include="Database\Config.cs" />
-    <Compile Include="Database\Exceptions\SQLiteCollectedInformationPackageException.cs" />
     <Compile Include="Database\SqliteConnect.cs" />
-    <Compile Include="Tools\CircularProgressBar.xaml.cs">
-      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\DeviceTools.cs" />
-    <Compile Include="Tools\mapi.cs" />
-    <Compile Include="Tools\ScanIP.cs" />
+    <Compile Include="Net\DeviceTools.cs" />
+    <Compile Include="Net\ScanIp.cs" />
     <Compile Include="UserInterface\UserControls\RetrieveDeviceInformation.xaml.cs">
       <DependentUpon>RetrieveDeviceInformation.xaml</DependentUpon>
     </Compile>
@@ -268,9 +225,6 @@
     </Compile>
     <Compile Include="UserInterface\UserControls\DeviceManagement.xaml.cs">
       <DependentUpon>DeviceManagement.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserInterface\UserControls\Settings\SettingsV2.xaml.cs">
-      <DependentUpon>SettingsV2.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserInterface\UserControls\Settings\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -291,14 +245,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UserInterface\SimpleWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserInterface\Windows\erstStart2GEN.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="UserInterface\Windows\LicenseDialog.xaml.cs">
+      <DependentUpon>LicenseDialog.xaml</DependentUpon>
+    </Compile>
     <Page Include="openRegistration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -306,10 +255,6 @@
     <Page Include="UserInterface\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Tools\CircularProgressBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\UserControls\RetrieveDeviceInformation.xaml">
       <SubType>Designer</SubType>
@@ -323,13 +268,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserInterface\UserControls\Settings\SettingsV2.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UserInterface\UserControls\Settings\Settings.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserInterface\UserControls\Settings\BasicInformation.xaml">
       <SubType>Designer</SubType>
@@ -344,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\UserControls\InfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\Windows\LicenseDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
