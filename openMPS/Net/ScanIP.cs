@@ -10,6 +10,7 @@ using System.Management;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
+using de.fearvel.net.FnLog;
 
 namespace de.fearvel.openMPS.Net
 {
@@ -18,14 +19,7 @@ namespace de.fearvel.openMPS.Net
     /// </summary>
     internal static class ScanIp
     {
-        /// <summary>
-        ///     Finds the ip range of local machine.
-        /// </summary>
-        /// <returns></returns>
-        public static IPAddress[] FindIpRangeOfLocalMachine()
-        {
-            return FindIpRange(GetIpMask());
-        }
+
 
         /// <summary>
         ///     Finds the ip range.
@@ -34,6 +28,8 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static IPAddress[] FindIpRange(string[] ipMask)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "FindIpRange");
+
             var ip = new IPAddress(ConvertStringToAddress(ipMask[0]));
             var bits = NetmaskToBit(ipMask[1]);
             var mask = ~(uint.MaxValue >> bits);
@@ -50,6 +46,11 @@ namespace de.fearvel.openMPS.Net
                 endIpBytes[i] = (byte) (ipBytes[i] | ~maskBytes[i]);
             }
 
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, 
+                "ScanIp", "FindIpRange NETMASK FROM " +
+                          new IPAddress(startIpBytes).ToString() +
+                          " TO " + new IPAddress(endIpBytes).ToString());
+
             // Convert the bytes to IP addresses.
             return new[] {new IPAddress(startIpBytes), new IPAddress(endIpBytes)};
         }
@@ -61,6 +62,7 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static int NetmaskToBit(string mask)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "NetmaskToBit");
             var totalBits = 0;
             foreach (var octet in mask.Split('.'))
             {
@@ -71,7 +73,7 @@ namespace de.fearvel.openMPS.Net
                     octetByte >>= 1; // do a bitwise shift to the right to create a new LSB
                 }
             }
-
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "NetmaskToBit - " + totalBits);
             return totalBits;
         }
 
@@ -82,6 +84,7 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static byte[] ConvertStringToAddress(string s)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "ConvertStringToAddress");
             var ba = new byte[4];
             ba[0] = Convert.ToByte(s.Substring(0, s.IndexOf(".")));
             s = s.Substring(s.IndexOf(".") + 1, s.Length - s.IndexOf(".") - 1);
@@ -99,6 +102,7 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static string[] GetIpMask()
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "GetIpMask");
             string[] address = null;
             string[] subnetMask = null;
             var NetworkInfo =
@@ -110,6 +114,8 @@ namespace de.fearvel.openMPS.Net
                 address = (string[]) mo["IPAddress"];
                 subnetMask = (string[]) mo["IPSubnet"];
             }
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", 
+                "GetIpMask - " + address[0] + " - "+ subnetMask[0]);
 
             return new[] {address[0], subnetMask[0]};
         }      
@@ -121,6 +127,7 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static bool PingIp(IPAddress ip)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "PingIp");
             var pingSender = new Ping();
             var options = new PingOptions
             {
@@ -133,8 +140,15 @@ namespace de.fearvel.openMPS.Net
             var buffer = Encoding.ASCII.GetBytes(data);
             var timeout = 4;
             var reply = pingSender.Send(ip, timeout, buffer, options);
-            if (reply.Status == IPStatus.Success) return true;
-            return false;
+            switch (reply.Status)
+            {
+                case IPStatus.Success:
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "PingIp - SUCCESS - " + ip.ToString());
+                    return true;
+                default:
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "PingIp - FAILED - " + ip.ToString());
+                    return false;
+            }
         }
     }
 }

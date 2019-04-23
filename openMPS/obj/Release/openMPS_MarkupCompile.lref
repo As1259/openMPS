@@ -3,6 +3,8 @@ FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\App.xaml;;
 FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\openRegistration.xaml;;
 FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\RetrieveDeviceInformation.xaml;;
 FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\DeviceManagement.xaml;;
+FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\Settings\DisplayManastoneFnLog.xaml;;
+FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\Settings\DisplayFnLog.xaml;;
 FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\Settings\Settings.xaml;;
 FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\Settings\BasicInformation.xaml;;
 FC:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\UserInterface\UserControls\EditDevices.xaml;;

@@ -261,3 +261,8 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.cspro
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.csproj.CopyComplete
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.exe
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.pdb
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.csprojAssemblyReference.cache
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayManastoneFnLog.g.cs
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayFnLog.g.cs
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayManastoneFnLog.baml
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayFnLog.baml

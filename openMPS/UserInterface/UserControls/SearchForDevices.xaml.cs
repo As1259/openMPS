@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.net;
+using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes.Exceptions;
 using de.fearvel.openMPS.Net;
@@ -29,6 +30,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
 
         public IPAddress StartIpAddress { get; private set; }
+
         public IPAddress EndIpAddress { get; private set; }
 
         /// <inheritdoc />
@@ -47,10 +49,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         public void LoadGridData()
         {
             Config.GetInstance().UpdateDevices();
-            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            var dt = Config.GetInstance().Devices;
+            geraeteGrid.ItemsSource = dt.DefaultView;
             geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
 
             geraeteGrid.IsReadOnly = true;
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices",
+                "Search Complete Count: " + dt.Rows.Count);
         }
 
         /// <summary>
@@ -85,14 +90,20 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void Button_Suchen_Click(object sender, RoutedEventArgs e)
         {
+            FnLog.GetInstance()
+                .AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices", "Search Button pressed");
+
             ButtonSuchen.Visibility = Visibility.Hidden;
             progress.Value = 0;
 
-            StartIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpRangeStart1.Text + "." + TextBoxIpRangeStart2.Text +
-                                                        "." + TextBoxIpRangeStart3.Text + "." +
-                                                        TextBoxIpRangeStart4.Text));
-            EndIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpRangeStop1.Text + "." + TextBoxIpRangeStop2.Text + "." +
-                                                            TextBoxIpRangeStop3.Text + "." + TextBoxIpRangeStop4.Text));
+            StartIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(
+                TextBoxIpRangeStart1.Text + "." + TextBoxIpRangeStart2.Text +
+                "." + TextBoxIpRangeStart3.Text + "." +
+                TextBoxIpRangeStart4.Text));
+            EndIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpRangeStop1.Text + "." +
+                                                                       TextBoxIpRangeStop2.Text + "." +
+                                                                       TextBoxIpRangeStop3.Text + "." +
+                                                                       TextBoxIpRangeStop4.Text));
 
             ThreadPool.QueueUserWorkItem(SearchForPrinter);
             ThreadPool.QueueUserWorkItem(AdaptProgressLoad);
@@ -138,9 +149,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="state">The state.</param>
         private void SearchForPrinter(object state)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices", "SearchForPrinter");
+
             var fp = new FnPing(StartIpAddress, EndIpAddress);
 
             var pingResultsIps = fp.RangePing();
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices",
+                "SearchForPrinter - pingResultsIps Success Count:" + pingResultsIps.SuccessIpAddresses.Count);
 
 
             foreach (var ipAddress in pingResultsIps.SuccessIpAddresses)
@@ -158,8 +173,10 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                         {
                             var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
                             modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                            serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                            asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                            serial = SnmpClient.GetOidValue(ipAddress.ToString(),
+                                dts.Rows[0].Field<string>("SerialNumber"));
+                            asset = SnmpClient.GetOidValue(ipAddress.ToString(),
+                                dts.Rows[0].Field<string>("AssetNumber"));
                             Config.GetInstance().UpdateDeviceTable(
                                 "1",
                                 ScanIp.ConvertStringToAddress(ipAddress.ToString()),
@@ -168,16 +185,20 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                                 asset,
                                 ScanIp.ConvertStringToAddress(ipAddress.ToString())
                             );
+                            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices",
+                                "SearchForPrinter Found: " + ipAddress.ToString() + " Type: " + ident);
                         }
                         else
                         {
                             var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
 
                             modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                            serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                            asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                            serial = SnmpClient.GetOidValue(ipAddress.ToString(),
+                                dts.Rows[0].Field<string>("SerialNumber"));
+                            asset = SnmpClient.GetOidValue(ipAddress.ToString(),
+                                dts.Rows[0].Field<string>("AssetNumber"));
                             Config.GetInstance().Query("Delete from Devices where IP = '" +
-                                                   ipAddress.ToString() + "'; ");
+                                                       ipAddress.ToString() + "'; ");
                             Config.GetInstance().InsertInDeviceTable(
                                 "1",
                                 ScanIp.ConvertStringToAddress(ipAddress.ToString()),
@@ -185,8 +206,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                                 serial,
                                 asset
                             );
-
                         }
+
                     geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
 
                     ButtonSuchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
@@ -194,15 +215,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 catch (SnmpIdentNotFoundException)
                 {
                 }
-
             }
         }
 
 
         /// <summary>
-            ///     Shows the start button.
-            /// </summary>
-            private void ShowStartButton()
+        ///     Shows the start button.
+        /// </summary>
+        private void ShowStartButton()
         {
             ButtonSuchen.Visibility = Visibility.Visible;
         }
@@ -224,7 +244,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -245,7 +265,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -266,7 +286,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -287,7 +307,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -308,7 +328,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -329,7 +349,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
     }

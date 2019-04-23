@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.Net;
 
@@ -58,8 +59,10 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <summary>
         ///     Loads the grid data.
         /// </summary>
-        public void loadGridData()
+        public void LoadGridData()
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "LoadGridData");
+
             Config.GetInstance().UpdateDevices();
             geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
             //   geraeteGrid.IsReadOnly = true;
@@ -69,6 +72,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             geraeteGrid.Columns[2].IsReadOnly = true;
             geraeteGrid.Columns[3].IsReadOnly = true;
             geraeteGrid.Columns[4].IsReadOnly = true;
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "LoadGridData Complete");
 
             //geraeteGrid.Columns[1].Width = 120;
             //geraeteGrid.Columns[4].Width = 300;
@@ -142,6 +146,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void bt_save_Click(object sender, RoutedEventArgs e)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Save clicked");
+
             var ipAddress =
                 tb_ip_block1.Text + "." +
                 tb_ip_block2.Text + "." +
@@ -158,7 +164,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     {
                         Config.GetInstance().NonQuery("update Devices set Active='" + active + "' where IP='" + ipAddress +
                                             "';");
-                        loadGridData();
+                        LoadGridData();
                         lockElements();
                     }
                     else
@@ -186,6 +192,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             }
             catch (Exception)
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Save Error");
                 MessageBox.Show("Fehlerhafte Eingabe der IP", "IPEingabeError", MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
@@ -197,10 +204,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="param">The parameter.</param>
         private void UpdateDevicesViaThread(object param)
         {
+
             var obj = (object[])param;
             var ipAddress = (string)obj[0];
             var aktiv = (string)obj[1];
             var altIP = (string)obj[2];
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", 
+                "UpdateDevicesViaThread " + altIP + " -> " + ipAddress);
+
             var ident = DeviceTools.IdentDevice(ipAddress);
             var modell = "";
             var serial = "";
@@ -238,7 +249,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 ipAlt
             );
 
-            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(loadGridData));
+            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
         }
 
         /// <summary>
@@ -247,6 +258,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="param">The parameter.</param>
         private void InsertInDevicesViaThread(object param)
         {
+
             var obj = (object[])param;
             var ipAddress = (string)obj[0];
             var aktiv = (string)obj[1];
@@ -254,6 +266,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var modell = "";
             var serial = "";
             var asset = "";
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "InsertDevicesViaThread " + ipAddress);
+
             var ip = ScanIp.ConvertStringToAddress(ipAddress);
             progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
@@ -283,7 +297,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                  serial,
                  asset
              );
-            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(loadGridData));
+            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
         }
 
         /// <summary>
@@ -309,6 +323,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void bt_anlegen_Click(object sender, RoutedEventArgs e)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Create click ");
+
             selected = false;
             bt_save.IsEnabled = true;
             unlockElements();
@@ -390,6 +406,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void bt_del_Click(object sender, RoutedEventArgs e)
         {
+
             bt_del.IsEnabled = false;
             bt_save.IsEnabled = false;
             var ipAddress =
@@ -397,11 +414,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 tb_ip_block2.Text + "." +
                 tb_ip_block3.Text + "." +
                 tb_ip_block4.Text;
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Delete click " + ipAddress);
+
             if (selected)
                 try
                 {
                     Config.GetInstance().NonQuery("delete from Devices where IP='" + ipAddress + "';");
-                    loadGridData();
+                    LoadGridData();
                 }
                 catch (Exception)
                 {
@@ -415,6 +434,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void bt_anleitung_Click(object sender, RoutedEventArgs e)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button help click");
+
             MessageBox.Show("Gerät neu anlegen"
                             + "Klicken Sie auf den Button „Gerät neu anlegen“ und erfassen anschließend"
                             + "die IPv4 - Adresse in den vorgesehenen Feldern"

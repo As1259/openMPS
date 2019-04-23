@@ -547,3 +547,7 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.exe
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.csprojAssemblyReference.cache
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\de.fearvel.net.dll
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\DisplayManastoneFnLog.g.cs
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\DisplayFnLog.g.cs
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\DisplayManastoneFnLog.baml
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\DisplayFnLog.baml

@@ -39,8 +39,12 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
           //  AddItem("RTE-Manager", new UserControl(){Content =  new RestrictableTableEditorManager(Config.GetInstance().GetConnector()) });//FEHLER der null exception bei children.clear auslöst existent
 
         //    AddItem("LogViewer", new UserControl() { Content = FnLog.GetInstance().GetViewer().FnLogTable });
+
+        AddItem("FnLog DEV", new DisplayFnLog());
+        AddItem("ManastoneFnLog DEV", new DisplayManastoneFnLog());
+
         }
-        
+
         public void AddItem(string key, UserControl uc)
         {
             Options.Add(key,uc);

@@ -5,6 +5,7 @@
 #endregion
 
 using System.Windows.Controls;
+using de.fearvel.net.FnLog;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
@@ -19,6 +20,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         public InfoPage()
         {
             InitializeComponent();
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "InfoPage", "Opened");
+
         }
     }
 }

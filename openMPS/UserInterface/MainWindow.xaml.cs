@@ -65,7 +65,7 @@ namespace de.fearvel.openMPS.UserInterface
             //    OpenMPSClient.SendOidData("https://localhost:9051", a);
 
 
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Program Started");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "Program Started");
         }
 
         private void Init()
@@ -80,24 +80,24 @@ namespace de.fearvel.openMPS.UserInterface
                         FnLog.TelemetryType.LogLocalSendAll,
                         "", ""), Config.GetInstance().GetConnector()
                 );
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "FnLog INIT Complete");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "FnLog INIT Complete");
                 OpenMPSClient.SetInstance("https://openmpsdev.fearvel.de");
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "OpenMPSClient set");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "OpenMPSClient set");
                 ManastoneClient.SetInstance("https://manastonedev.fearvel.de", "5d1ae2a2-6ef3-4abd-86b8-905686dc6567");
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Manastone set");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "Manastone set");
                 OpenMPSClient.GetInstance().CheckForCompatibleVersion();
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Compatible VersionChecked");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "Compatible VersionChecked");
                 if (!ManastoneClient.GetInstance().CheckActivation())
                 {
-                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Activation process Started");
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "Activation process Started");
                     ActivateProgram();
                 }
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Activation Update OID Starting");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "Activation Update OID Starting");
                 OpenMPSClient.GetInstance().UpdateOidTable();
             }
             catch (Exception e)
             {
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "Error on Init of openMPS", e.Message);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupError, "Error on Init of openMPS", e.Message);
                 FnLog.GetInstance().ProcessLogList();
                 if (e is ManastoneException || e is ResultNullOrNotReceivedException)
                 {
@@ -126,14 +126,14 @@ namespace de.fearvel.openMPS.UserInterface
 
             var licCheck = new LicenseDialog();
             licCheck.ShowDialog();
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "ActivateProgram Dialog Opened");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "ActivateProgram Dialog Opened");
             if (!licCheck.Result)
             {
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "ActivateProgram Result false: " + licCheck.Result);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "ActivateProgram Result false: " + licCheck.Result);
                 FnLog.GetInstance().ProcessLogList();
                 Environment.Exit(1);
             }
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "ActivateProgram Dialog finished successfully");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "ActivateProgram Dialog finished successfully");
         }
 
 
@@ -210,20 +210,20 @@ namespace de.fearvel.openMPS.UserInterface
             //zurueck.IsEnabled = false;
             try
             {
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "RibbonWindow_Load Start");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "RibbonWindow_Load Start");
 
                 LoadUserControls();
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "RibbonWindow_Load LoadUserControls done");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "RibbonWindow_Load LoadUserControls done");
 
                 OpenSuchen();
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "RibbonWindow_Load OpenSuchen done");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "RibbonWindow_Load OpenSuchen done");
 
                 //var a = new openRegistration();
                 //a.ShowDialog();
             }
             catch (MPSSQLiteException)
             {
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "openMPS Main Window INIT", "RibbonWindow_Load Config File Error");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupError, "openMPS Main Window INIT", "RibbonWindow_Load Config File Error");
 
                 MessageBox.Show("Fehler!!\nKonfigurationsdatei Fehlerhaft",
                     "!!!Kritischer Fehler!!!\n"

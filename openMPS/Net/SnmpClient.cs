@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
+using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
 using SnmpSharpNet;
@@ -192,36 +193,22 @@ namespace de.fearvel.openMPS.Net
 
         public static bool ReadDeviceOiDs(string ip, string ident, out OidData oidData)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient", "ReadDeviceOiDs");
             var dt = Config.GetInstance().SelectFromOidTable(ident);
             try
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient",
+                    "ReadDeviceOiDs - IP " + ip + " OIDDATA " + GetOidValues(ip, dt));
+
                 oidData = GetOidValues(ip, dt);
                 return true;
             }
             catch (SnmpException)
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient", "ReadDeviceOiDs - SnmpException");
                 oidData = null;
                 return false;
             }
-        }
-
-        /// <summary>
-        ///     Finds the alive printer.
-        /// </summary>
-        /// <param name="ip">The ip.</param>
-        /// <returns></returns>
-        public static bool FindAlivePrinter(string ip)
-        {
-            try
-            {
-                if (GetOidValue(ip, "1.3.6.1.2.1.43.5.1.1.2.1").Length > 0) return true;
-            }
-            catch (SnmpException)
-            {
-// ignored
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -236,6 +223,7 @@ namespace de.fearvel.openMPS.Net
             var oidValue = "";
             try
             {
+
                 if (oid.Length > 0)
                 {
                     var community = new OctetString("public");
@@ -255,9 +243,9 @@ namespace de.fearvel.openMPS.Net
             }
             catch (Exception)
             {
-// ignored
-            }
 
+                // ignored
+            }
             return oidValue;
         }
 
@@ -265,6 +253,8 @@ namespace de.fearvel.openMPS.Net
 
         public static OidData GetOidValues(string ip, DataTable oid)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient", "GetOidValues ip " + ip);
+
             var data = new OidData();
             var strDict = new Dictionary<string, string>();
             var longDict = new Dictionary<string, long>();
@@ -349,9 +339,12 @@ namespace de.fearvel.openMPS.Net
             }
             catch (Exception)
             {
-// ignored
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "SnmpClient", "GetOidValues ERROR ip " + ip);
+
+                // ignored
             }
 
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "SnmpClient", "GetOidValues COMPLETE ip " + ip);
             return data;
         }
     }

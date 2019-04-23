@@ -237,6 +237,12 @@
     <Compile Include="UserInterface\UserControls\DeviceManagement.xaml.cs">
       <DependentUpon>DeviceManagement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInterface\UserControls\Settings\DisplayManastoneFnLog.xaml.cs">
+      <DependentUpon>DisplayManastoneFnLog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\UserControls\Settings\DisplayFnLog.xaml.cs">
+      <DependentUpon>DisplayFnLog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\UserControls\Settings\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -276,6 +282,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserInterface\UserControls\DeviceManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserInterface\UserControls\Settings\DisplayManastoneFnLog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInterface\UserControls\Settings\DisplayFnLog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

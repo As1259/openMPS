@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
+using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
 using de.fearvel.openMPS.Net;
@@ -61,6 +62,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ButtonRetrieveData_Click(object sender, RoutedEventArgs e)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button ButtonRetrieveData Clicked");
+
             progress.Value = 0;
             progress.Visibility = Visibility.Visible;
             ThreadPool.QueueUserWorkItem(UpdateDataGrid);
@@ -75,8 +78,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             DataGridItemViewer.ItemsSource = OidData.ToDataTable( _oidData).DefaultView;
             ButtonRetrieveData.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(GetNormalView));
             bt_senden.IsEnabled = true;
-
-
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button ButtonRetrieveData Complete");
         }
 
         /// <summary>
@@ -102,6 +104,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
         public List<OidData> GainData()
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "GainData");
+
             var dt = Config.GetInstance().Query("select * from Devices where active='1' or active='True'");
            // DataTable resultTable = null;
             var data = new List<OidData>();
@@ -130,8 +134,9 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="state">The state.</param>
         private void UpdateDataGrid(object state)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "UpdateDataGrid");
 
-                var oidData = GainData();
+            var oidData = GainData();
 
                _oidData = oidData;
             //     dt = Collector.shellDT("Select * from Collector");
@@ -143,17 +148,6 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             }
 
-        private ObservableCollection<T>  ListToObservableCollection<T>(List<T> oid)
-        {
-            var oc = new ObservableCollection<T>();
-            foreach (var item in oid)
-            {
-                oc.Add(item);
-            }
-            return oc;
-        }
-
-
         /// <summary>
         ///     Handles the Click event of the button_send control.
         /// </summary>
@@ -163,12 +157,18 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             try
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button Send Clicked");
                 OpenMPSClient.GetInstance().SendOidData(_oidData);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button Send SUCCESS");
+
                 MessageBox.Show("Daten wurden versandt");
+
 
             }
             catch (Exception)
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button Send FAILED");
+
                 MessageBox.Show("Fehler beim Senden");
             }
             bt_senden.IsEnabled = false;
