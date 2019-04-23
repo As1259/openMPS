@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.net;
 using de.fearvel.openMPS.Database;
+using de.fearvel.openMPS.DataTypes.Exceptions;
 using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
@@ -37,7 +38,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         public SearchForDevices()
         {
             InitializeComponent();
-            Loaded += GeraeteSuchen_Load;
+            Loaded += SearchForDevices_Load;
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        public void GeraeteSuchen_Load(object sender, RoutedEventArgs e)
+        public void SearchForDevices_Load(object sender, RoutedEventArgs e)
         {
             geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
             geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
@@ -144,73 +145,66 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             foreach (var ipAddress in pingResultsIps.SuccessIpAddresses)
             {
-                var ident = DeviceTools.IdentDevice(ipAddress.ToString());
-                var modell = "";
-                var serial = "";
-                var asset = "";
-                if (ident.Length > 0)
-                    if (Config.GetInstance().Query(
-                            "Select * from Devices where IP='" + ipAddress.ToString() + "';").Rows.Count >
-                        0)
-                    {
-                        var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
-                        modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                        serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                        asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
-                        Config.GetInstance().UpdateDeviceTable(
-                            "1",
-                            ScanIp.ConvertStringToAddress(ipAddress.ToString()),
-                            modell,
-                            serial,
-                            asset,
-                            ScanIp.ConvertStringToAddress(ipAddress.ToString())
-                        );
-                    }
-                    else
-                    {
-                        var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
+                try
+                {
+                    var ident = DeviceTools.IdentDevice(ipAddress.ToString());
+                    var modell = "";
+                    var serial = "";
+                    var asset = "";
+                    if (ident.Length > 0)
+                        if (Config.GetInstance().Query(
+                                "Select * from Devices where IP='" + ipAddress.ToString() + "';").Rows.Count >
+                            0)
+                        {
+                            var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
+                            modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                            serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                            asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                            Config.GetInstance().UpdateDeviceTable(
+                                "1",
+                                ScanIp.ConvertStringToAddress(ipAddress.ToString()),
+                                modell,
+                                serial,
+                                asset,
+                                ScanIp.ConvertStringToAddress(ipAddress.ToString())
+                            );
+                        }
+                        else
+                        {
+                            var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
 
-                        modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                        serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
-                        asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
-                        Config.GetInstance().Query("Delete from Devices where IP = '" +
-                                               ipAddress.ToString() + "'; ");
-                        Config.GetInstance().InsertInDeviceTable(
-                            "1",
-                            ScanIp.ConvertStringToAddress(ipAddress.ToString()),
-                            modell,
-                            serial,
-                            asset
-                        );
+                            modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                            serial = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("SerialNumber"));
+                            asset = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("AssetNumber"));
+                            Config.GetInstance().Query("Delete from Devices where IP = '" +
+                                                   ipAddress.ToString() + "'; ");
+                            Config.GetInstance().InsertInDeviceTable(
+                                "1",
+                                ScanIp.ConvertStringToAddress(ipAddress.ToString()),
+                                modell,
+                                serial,
+                                asset
+                            );
 
-                    }
-                geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+                        }
+                    geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
 
-                ButtonSuchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
+                    ButtonSuchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
+                }
+                catch (SnmpIdentNotFoundException)
+                {
+                }
 
             }
         }
 
-        /// <summary>
-        ///     Shows the start button.
-        /// </summary>
-        private void ShowStartButton()
-        {
-            ButtonSuchen.Visibility = Visibility.Visible;
-        }
 
         /// <summary>
-        ///     Idents the device.
-        /// </summary>
-        /// <param name="ip">The ip.</param>
-        /// <returns></returns>
-        private string identDevice(string ip)
+            ///     Shows the start button.
+            /// </summary>
+            private void ShowStartButton()
         {
-            var dt = Config.GetInstance().Query("Select * from OID");
-            for (var i = 0; i < dt.Rows.Count; i++)
-                if (SnmpClient.GetOidValue(ip, dt.Rows[i].Field<string>("TotalPages")).Length > 0)
-                    return dt.Rows[i].Field<string>("OidPrivateId");
-            return "Generic";
+            ButtonSuchen.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -337,21 +331,6 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 };
                 ((TextBox)sender).MoveFocus(request);
             }
-        }
-
-        /// <summary>
-        ///     Handles the TextChanged event of the tb_ip_rangeStop4 control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStop4_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBoxIpRangeStop3.Text = TextBoxIpRangeStop3.Text.Replace(".", "");
-            TextBoxIpRangeStop3.Text = TextBoxIpRangeStop3.Text.Replace(" ", "");
-            var request = new TraversalRequest(0)
-            {
-                Wrapped = true
-            };
         }
     }
 }

@@ -73,9 +73,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         private void UpdateGrid()
         {
             DataGridItemViewer.ItemsSource = OidData.ToDataTable( _oidData).DefaultView;
-            progressPercent.Content = 100;
-            progressPercent.Visibility = Visibility.Hidden;
-            ButtonRetrieveData.Visibility = Visibility.Visible;
+            ButtonRetrieveData.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(GetNormalView));
             bt_senden.IsEnabled = true;
 
 
@@ -157,7 +155,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
 
         /// <summary>
-        ///     Handles the Click event of the bt_senden control.
+        ///     Handles the Click event of the button_send control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
@@ -166,14 +164,18 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             try
             {
                 OpenMPSClient.GetInstance().SendOidData(_oidData);
+                MessageBox.Show("Daten wurden versandt");
+
             }
             catch (Exception)
             {
                 MessageBox.Show("Fehler beim Senden");
             }
+            bt_senden.IsEnabled = false;
+
         }
 
-       
+
 
         /// <summary>
         ///     Handles the ValueChanged event of the progress control.

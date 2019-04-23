@@ -379,8 +379,6 @@ D:\code\openMPS\openMPS\obj\Debug\openMPS.csproj.CopyComplete
 D:\code\openMPS\openMPS\obj\Debug\openMPS.exe
 D:\code\openMPS\openMPS\obj\Debug\openMPS.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\openMPS.exe.config
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\openMPS.exe.manifest
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\openMPS.application
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\openMPS.exe
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\openMPS.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\Microsoft.Win32.Primitives.dll
@@ -480,7 +478,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Xml.XmlS
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Xml.XPath.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Xml.XPath.XDocument.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\ControlzEx.dll
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\de.fearvel.net.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\EntityFramework.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\Fluent.dll
@@ -488,8 +485,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\MahApps.Metro.d
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\Newtonsoft.Json.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\SnmpSharpNet.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Collections.Immutable.dll
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.HashFunction.Core.dll
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.HashFunction.Interfaces.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.SQLite.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.SQLite.EF6.dll
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.SQLite.Linq.dll
@@ -512,8 +507,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\MahApps.Metro.x
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\Newtonsoft.Json.xml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Collections.Immutable.xml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.HashFunction.Core.xml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.HashFunction.Interfaces.xml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.SQLite.xml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\System.Data.SQLite.dll.config
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\MySql.Data.xml
@@ -549,10 +542,8 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.g.resou
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\de.fearvel.openMPS.Properties.Resources.resources
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.csproj.GenerateResource.cache
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.csproj.CoreCompileInputs.cache
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.TrustInfo.xml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.exe.manifest
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.application
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.csproj.CopyComplete
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.exe
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.csprojAssemblyReference.cache
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\de.fearvel.net.dll

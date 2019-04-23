@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Management;
+using de.fearvel.net.Security;
 using de.fearvel.net.SQL.Connector;
 using de.fearvel.openMPS.DataTypes.Exceptions;
 
@@ -84,110 +85,18 @@ namespace de.fearvel.openMPS.Database
         /// </summary>
         private bool _opened;
 
-        /// <summary>
-        ///     Opens the connection
-        /// </summary>
-        /// <param name="name">The name.</param>
-        public virtual void Open(string name)
-        {
-            try
-            {
-                _connection = new SqliteConnector(name);
-                ReadFromDirectory();
-                _opened = true;
-            }
-            catch (Exception)
-            {
-                throw new MPSSQLiteException();
-            }
-        }
-
-        public virtual void OpenEncrypted(string name)
-        {
-            try
-            {
-                _connection = new SqliteConnector(name, GetCPUUID());
-                ReadFromDirectory();
-                _opened = true;
-            }
-            catch (Exception)
-            {
-                Open(name);
-                EnableEncryption();
-            }
-        }
-        protected virtual void OpenWithCustomEncrypted(string name, string key)
-        {
-            try
-            {
-                _connection = new SqliteConnector(name, key);
-                ReadFromDirectory();
-                _opened = true;
-            }
-            catch (Exception)
-            {
-                Open(name);
-                EnableEncryption();
-            }
-        }
-
-        public abstract void GenerateTables();
-
-        public void OpenEncrypted()
-        {
-            //CheckPath();
-            OpenEncrypted(Path.Combine(FilePath, FileName));
-            GenerateTables();
-        }
-
-        public void Open()
-        {
-            //CheckPath();
-            SqliteConnector c = new SqliteConnector(Path.Combine(FilePath, FileName));
-            _connection = c;
-            _opened = true;
-            //  Open(Path.Combine(FilePath, FileName));
-            GenerateTables();
-        }
+     public abstract void GenerateTables();
 
 
-        private string GetCPUUID()
-        {
-            string cpuInfo = string.Empty;
-            ManagementClass mc = new ManagementClass("win32_processor");
-            ManagementObjectCollection moc = mc.GetInstances();
-
-            foreach (var o in moc)
-            {
-                var mo = (ManagementObject)o;
-                if (cpuInfo == "")
-                {
-                    //Get only the first CPU's ID
-                    cpuInfo = mo.Properties["processorID"].Value.ToString();
-                    break;
-                }
-            }
-
-            return cpuInfo;
-        }
+      public void Open()
+      {
+          SqliteConnector c = new SqliteConnector(Path.Combine(FilePath, FileName), Ident.GetCPUId());
+          _connection = c;
+          _opened = true;
+          GenerateTables();
+      }
 
 
-
-        public void EnableEncryption()
-        {
-            _connection.SetPassword(GetCPUUID());
-        }
-
-        public void DisableEncryption()
-        {
-            _connection.SetPassword("");
-        }
-
-        private void CheckPath()
-        {
-            if (System.IO.Directory.Exists(FilePath)) return;
-            System.IO.Directory.CreateDirectory(FilePath);
-        }
         /// <summary>
         ///     Closes this connection.
         /// </summary>

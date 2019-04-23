@@ -41,17 +41,17 @@ namespace de.fearvel.openMPS.Net
             var ipBytes = ip.GetAddressBytes();
             // BitConverter gives bytes in opposite order to GetAddressBytes().
             var maskBytes = BitConverter.GetBytes(mask).Reverse().ToArray();
-            var startIPBytes = new byte[ipBytes.Length];
-            var endIPBytes = new byte[ipBytes.Length];
+            var startIpBytes = new byte[ipBytes.Length];
+            var endIpBytes = new byte[ipBytes.Length];
             // Calculate the bytes of the start and end IP addresses.
             for (var i = 0; i < ipBytes.Length; i++)
             {
-                startIPBytes[i] = (byte) (ipBytes[i] & maskBytes[i]);
-                endIPBytes[i] = (byte) (ipBytes[i] | ~maskBytes[i]);
+                startIpBytes[i] = (byte) (ipBytes[i] & maskBytes[i]);
+                endIpBytes[i] = (byte) (ipBytes[i] | ~maskBytes[i]);
             }
 
             // Convert the bytes to IP addresses.
-            return new[] {new IPAddress(startIPBytes), new IPAddress(endIPBytes)};
+            return new[] {new IPAddress(startIpBytes), new IPAddress(endIpBytes)};
         }
 
         /// <summary>
@@ -99,19 +99,19 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static string[] GetIpMask()
         {
-            string[] Adressen = null;
-            string[] SubnetMasken = null;
+            string[] address = null;
+            string[] subnetMask = null;
             var NetworkInfo =
                 new ManagementObjectSearcher(
                     "SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = 'TRUE'");
-            var MOC = NetworkInfo.Get();
-            foreach (ManagementObject mo in MOC)
+            var moc = NetworkInfo.Get();
+            foreach (var mo in moc)
             {
-                Adressen = (string[]) mo["IPAddress"];
-                SubnetMasken = (string[]) mo["IPSubnet"];
+                address = (string[]) mo["IPAddress"];
+                subnetMask = (string[]) mo["IPSubnet"];
             }
 
-            return new[] {Adressen[0], SubnetMasken[0]};
+            return new[] {address[0], subnetMask[0]};
         }      
 
         /// <summary>

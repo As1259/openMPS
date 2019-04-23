@@ -7,6 +7,7 @@
 using System.Data;
 using System.Diagnostics;
 using de.fearvel.openMPS.Database;
+using de.fearvel.openMPS.DataTypes.Exceptions;
 
 namespace de.fearvel.openMPS.Net
 {
@@ -23,8 +24,12 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public static string IdentDevice(string ip)
         {
-            var dt = Config.GetInstance().Query("Select * from OID");
+            var dt = Config.GetInstance().SelectFromOidTable();
             var profile = SnmpClient.GetOidValue(ip, "1.3.6.1.2.1.1.2.0");
+            if (profile.Length == 0)
+            {
+                throw  new SnmpIdentNotFoundException();
+            }
             for (var i = 0; i < dt.Rows.Count; i++)
             {
                 Debug.Write("\n\n " + SnmpClient.GetOidValue(ip, "1.3.6.1.2.1.1.2.0"));

@@ -52,7 +52,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
             LabelOidVersion.Content = $"{Config.GetInstance().Directory["OidVersion"]}";
             LabelUUID.Content = $"{Config.GetInstance().Directory["UUID"]}";
             LabelFnLogVersion.Content = FnLog.FnLogClientVersion;
-            LabelManastoneVersion.Content = ManastoneClient.GetInstance().ClientVersion;
+            LabelManastoneVersion.Content = ManastoneClient.ClientVersion;
 
         }
 

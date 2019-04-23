@@ -7,6 +7,7 @@
 using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
@@ -16,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.net.DataTypes;
 using de.fearvel.net.DataTypes.Exceptions;
+using de.fearvel.net.DataTypes.Exceptions.Manastone;
 using de.fearvel.net.FnLog;
 using de.fearvel.net.Manastone;
 using de.fearvel.openMPS.Database;
@@ -33,7 +35,6 @@ namespace de.fearvel.openMPS.UserInterface
     /// </summary>
     public partial class MainWindow : IRibbonWindow
     {
-
         public static int Programid = 10001;
 
         /// <summary>
@@ -48,6 +49,8 @@ namespace de.fearvel.openMPS.UserInterface
         {
             Init();
             InitializeComponent();
+            MetroWindowMain.Title +=
+                " " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             Loaded += RibbonWindow_Load;
             //FnLog.SetInstance(new FnLogInitPackage(
             //    "https://log.fearvel.de:9024",
@@ -56,18 +59,17 @@ namespace de.fearvel.openMPS.UserInterface
             //    FnLog.TelemetryType.LogLocalSendAll,
             //    "fnlog.db", "")
             //);
-           
-         //   RetrieveDeviceInformation v = new RetrieveDeviceInformation();
-         //   var a = v.GainData();
-        //    OpenMPSClient.SendOidData("https://localhost:9051", a);
+
+            //   RetrieveDeviceInformation v = new RetrieveDeviceInformation();
+            //   var a = v.GainData();
+            //    OpenMPSClient.SendOidData("https://localhost:9051", a);
 
 
-            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "Program Started");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Program Started");
         }
 
         private void Init()
         {
-           
             try
             {
                 Config.GetInstance().Open();
@@ -78,30 +80,60 @@ namespace de.fearvel.openMPS.UserInterface
                         FnLog.TelemetryType.LogLocalSendAll,
                         "", ""), Config.GetInstance().GetConnector()
                 );
-                ManastoneClient.SetInstance("https://manastonedev.fearvel.de", "5d1ae2a2-6ef3-4abd-86b8-905686dc6567");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "FnLog INIT Complete");
                 OpenMPSClient.SetInstance("https://openmpsdev.fearvel.de");
-                OpenMPSClient.GetInstance().UpdateOidTable();
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "OpenMPSClient set");
+                ManastoneClient.SetInstance("https://manastonedev.fearvel.de", "5d1ae2a2-6ef3-4abd-86b8-905686dc6567");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Manastone set");
+                OpenMPSClient.GetInstance().CheckForCompatibleVersion();
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Compatible VersionChecked");
                 if (!ManastoneClient.GetInstance().CheckActivation())
                 {
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Activation process Started");
                     ActivateProgram();
                 }
-
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "Activation Update OID Starting");
+                OpenMPSClient.GetInstance().UpdateOidTable();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                MessageBox.Show("Failed to connect to the Server. Check your internet connection and try again Later!");
-                Environment.Exit(0);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "Error on Init of openMPS", e.Message);
+                FnLog.GetInstance().ProcessLogList();
+                if (e is ManastoneException || e is ResultNullOrNotReceivedException)
+                {
+                    MessageBox.Show(
+                        "Failed to connect to the Server. Check your internet connection and try again Later!");
+                    Environment.Exit(0);
+                }
+                else if (e is SQLiteException)
+                {
+                    MessageBox.Show(
+                        "SQLite Error\n Falls das Produkt noch nicht Aktiviert wurde löschen sie bitte alle *.db dateien\n" +
+                        "Falls es bereits aktiviert wurde wenden Sie sich bitte an den Entwickeler");
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    MessageBox.Show("Ein unbekannter Fehler ist aufgetreten!!");
+                    Environment.Exit(0);
+                }
             }
-            }
+        }
 
         private void ActivateProgram()
         {
+
+
             var licCheck = new LicenseDialog();
             licCheck.ShowDialog();
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "ActivateProgram Dialog Opened");
             if (!licCheck.Result)
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "ActivateProgram Result false: " + licCheck.Result);
+                FnLog.GetInstance().ProcessLogList();
                 Environment.Exit(1);
             }
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "ActivateProgram Dialog finished successfully");
         }
 
 
@@ -119,6 +151,7 @@ namespace de.fearvel.openMPS.UserInterface
             grid_help.Children.Add(_userControls[typeof(InfoPage)]);
             grid_settings.Children.Add(_userControls[typeof(Settings)]);
         }
+
         private void LoadDelayableUserControl()
         {
             _userControls.Add(typeof(SearchForDevices), new SearchForDevices());
@@ -126,7 +159,6 @@ namespace de.fearvel.openMPS.UserInterface
 
             _userControls.Add(typeof(EditDevices), new EditDevices());
             _userControls.Add(typeof(RetrieveDeviceInformation), new RetrieveDeviceInformation());
-
         }
 
 
@@ -139,22 +171,23 @@ namespace de.fearvel.openMPS.UserInterface
 
         private void OpenSuchen()
         {
-            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening SearchForDevices");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening SearchForDevices");
             DisplayUserControl(_userControls[typeof(SearchForDevices)],
-                "Die automatische Suche nach Druckern wird im Schnitt ca. 0.03 Sekunden pro IP-Adresse benötigen,");
+                "Die automatische Suche nach Druckern kann einige Minuten in Anspruch nehmen");
         }
 
         private void OpenBearbeiten()
         {
-            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening EditDevices");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening EditDevices");
             DisplayUserControl(_userControls[typeof(EditDevices)],
                 "Hier können Sie neue Geräte hinzufügen, oder die IP-Adressen bereits erfasster Geräte anpassen." +
                 " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
                 "werden, oder nicht.");
         }
+
         private void OpenDeviceManagement()
         {
-            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening DeviceManagement");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening DeviceManagement");
             DisplayUserControl(_userControls[typeof(DeviceManagement)],
                 "Hier können Sie neue Geräte suchen, bearbeiten, oder die IP-Adressen neuer Geräte manuell hinzufügen." +
                 " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
@@ -163,7 +196,7 @@ namespace de.fearvel.openMPS.UserInterface
 
         private void OpenAbfrage()
         {
-            FnLog.GetInstance().Log(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening RetrieveDeviceInformation");
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening RetrieveDeviceInformation");
             DisplayUserControl(_userControls[typeof(RetrieveDeviceInformation)]);
         }
 
@@ -177,13 +210,21 @@ namespace de.fearvel.openMPS.UserInterface
             //zurueck.IsEnabled = false;
             try
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "RibbonWindow_Load Start");
+
                 LoadUserControls();
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "RibbonWindow_Load LoadUserControls done");
+
                 OpenSuchen();
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window INIT", "RibbonWindow_Load OpenSuchen done");
+
                 //var a = new openRegistration();
                 //a.ShowDialog();
             }
             catch (MPSSQLiteException)
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "openMPS Main Window INIT", "RibbonWindow_Load Config File Error");
+
                 MessageBox.Show("Fehler!!\nKonfigurationsdatei Fehlerhaft",
                     "!!!Kritischer Fehler!!!\n"
                     , MessageBoxButton.OK, MessageBoxImage.Error);
@@ -219,6 +260,7 @@ namespace de.fearvel.openMPS.UserInterface
         {
             OpenBearbeiten();
         }
+
         /// <summary>
         ///     Handles the abfrageStarten event of the bt control.
         /// </summary>
@@ -231,6 +273,8 @@ namespace de.fearvel.openMPS.UserInterface
 
         private void bsi_close_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "openMPS Main Window BS", "Exit Click");
+
             Environment.Exit(0);
         }
 
@@ -239,8 +283,8 @@ namespace de.fearvel.openMPS.UserInterface
         private void ButtonDeviceManagement_OnClick(object sender, RoutedEventArgs e)
         {
             OpenDeviceManagement();
-
         }
+
         private string GetFileVersion()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -248,6 +292,9 @@ namespace de.fearvel.openMPS.UserInterface
             return fvi.FileVersion;
         }
 
-
+        private void MetroWindowMain_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            FnLog.GetInstance().ProcessLogList();
+        }
     }
 }

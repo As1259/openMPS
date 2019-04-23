@@ -3,15 +3,15 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:Fluent="urn:fluent-ribbon"
                      xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                     Title="openMPS REVIEW"
-                     Width="1200"
+                     Title="openMPS "
+                     Width="1200" x:Name="MetroWindowMain"
                      Height="600"
                      ResizeMode="NoResize"
                      GlowBrush="{DynamicResource AccentColorBrush}"
                      ShowIconOnTitleBar="False"
                      ShowTitleBar="True"
                      WindowStartupLocation="CenterScreen"
-                     TitleCharacterCasing="Normal"    
+                     TitleCharacterCasing="Normal" Closing="MetroWindowMain_Closing"    
                  >
     <mah:MetroWindow.Resources>
         <ResourceDictionary>

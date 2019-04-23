@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Net;
+using System.Net.Sockets;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
 using SnmpSharpNet;
@@ -189,51 +190,9 @@ namespace de.fearvel.openMPS.Net
             }
         };
 
-        /// <summary>
-        ///     Reads the device oids.
-        ///     and triggers writetotable
-        /// </summary>
-        /// <param name="ip">The ip.</param>
-        /// <param name="ident">The ident.</param>
-        //  public static void ReadDeviceOiDs(string ip, string ident)
-        //  {
-        //      string[] oidValues = null;
-        //      var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
-        //
-        //      var e = AbgefragteOids.Keys.ToArray();
-        //      var s = new string[AbgefragteOids.Keys.Count];
-        //      for (var i = 0;i < AbgefragteOids.Keys.Count; i++) { 
-        //          s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
-        //      }
-        //      try
-        //      {
-        //          oidValues = GetOidValues(ip, s);
-        //      }
-        //      catch (SnmpException)
-        //      {
-        //      }
-        //  }
-
-        // public static void ReadDeviceOidsBack(string ip, string ident)
-        // {
-        //     string[] oidValues = null;
-        //     var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
-        //
-        //     var s = new string[AbgefragteOids.Length];
-        //     for (var i = 0;
-        //         i < AbgefragteOids.Length;
-        //         i++) s[i] = dt.Rows[0].Field<string>(AbgefragteOids[i]);
-        //     try
-        //     {
-        //         oidValues = GetOidValues(ip, s);
-        //     }
-        //     catch (SnmpException)
-        //     {
-        //     }
-        // }
         public static bool ReadDeviceOiDs(string ip, string ident, out OidData oidData)
         {
-            var dt = Config.GetInstance().Query("Select * from OID where OidPrivateId='" + ident + "'");
+            var dt = Config.GetInstance().SelectFromOidTable(ident);
             try
             {
                 oidData = GetOidValues(ip, dt);
@@ -285,7 +244,7 @@ namespace de.fearvel.openMPS.Net
                         Version = SnmpVersion.Ver1
                     };
                     var agent = new IpAddress(ip);
-                    var target = new UdpTarget((IPAddress) agent, 161, 2000, 1);
+                    var target = new UdpTarget((IPAddress) agent, 161, 5000, 1);
                     var pdu = new Pdu(PduType.Get);
                     pdu.VbList.Add(oid);
                     var result = (SnmpV1Packet) target.Request(pdu, param);
@@ -302,68 +261,8 @@ namespace de.fearvel.openMPS.Net
             return oidValue;
         }
 
-  //      /// <summary>
-  //      ///     Gets the specific values of an OID Array.
-  //      ///     string[0,n] == OID
-  //      ///     string[1,n] == Values
-  //      /// </summary>
-  //      /// <param name="ip">The ip string.</param>
-  //      /// <param name="oid">The oid string[].</param>
-  //      /// <returns>string[2,n]</returns>
-//       public static string[] GetOidValuesDEPR(string ip, string[] oid)
-//       {
-//           var oidValues = new string[AbgefragteOids.Length];
-//           try
-//           {
-//               for (var i = 0; i < oidValues.Length; i++)
-//               {
-//                   oidValues[i] = "";
-//                   oidValues[i] = GetOidValue(ip, oid[i]);
-//               }
-//           }
-//           catch (Exception)
-//           {
-    //    /// ignored
-//           }
-//
-//           return oidValues;
-//       }
-        /// <summary>
-        ///     Gets the specific values of an OID Array.
-        ///     string[0,n] == OID
-        ///     string[1,n] == Values
-        /// </summary>
-        /// <param name="ip">The ip string.</param>
-        /// <param name="oid">The oid string[].</param>
-        /// <returns>string[2,n]</returns>
-        //    public static List<Oid> GetOidValues(string ip, string[] oid)
-        //    {
-        //        var oidValues = new string[AbgefragteOids.Keys.Count];
-        //        var val = new Dictionary<string,Type>();
-        //
-        //        try
-        //        {
-        //            for (var i = 0; i < AbgefragteOids.Keys.Count; i++)
-        //            {
-        //                oidValues[i] = "";
-        //                oidValues[i] = GetOidValue(ip, oid[i]);
-        //            }
-        //
-        //            foreach (var pair in AbgefragteOids)
-        //            {
-        //             val =   
-        //                oidValues[i] = GetOidValue(ip, oid[i]);
-        //            }
-        //
-        //
-        //        }
-        //        catch (Exception)
-        //        {
-        //            // ignored
-        //        }
-        //
-        //        return oidValues;
-        //    }
+    
+
         public static OidData GetOidValues(string ip, DataTable oid)
         {
             var data = new OidData();

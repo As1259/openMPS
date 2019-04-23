@@ -60,7 +60,7 @@ namespace de.fearvel.openMPS.Database
             }
             private set => _flags = value;
         }
-
+         
         private void ReadFromFlags()
         {
             try
@@ -87,7 +87,7 @@ namespace de.fearvel.openMPS.Database
 
         #region "INSERT / UPDATE"
 
-        public void InsertInDeviceTable(string aktiv, byte[] ipAddress, string modell, string serial,
+        public void InsertInDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
             string assetNumber)
         {
             using (var command = new SQLiteCommand(
@@ -98,7 +98,7 @@ namespace de.fearvel.openMPS.Database
                 command.Parameters.AddWithValue("@Active", aktiv);
                 command.Parameters.AddWithValue("@IPAddress",
                     ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3]);
-                command.Parameters.AddWithValue("@Model", modell);
+                command.Parameters.AddWithValue("@Model", model);
                 command.Parameters.AddWithValue("@SerialNumber", serial);
                 command.Parameters.AddWithValue("@AssetNumber", assetNumber);
                 command.Prepare();
@@ -106,7 +106,7 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-        public void UpdateDeviceTable(string aktiv, byte[] ipAddress, string modell, string serial,
+        public void UpdateDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
             string assetNumber, byte[] altIp)
         {
             using (var command = new SQLiteCommand(
@@ -116,7 +116,7 @@ namespace de.fearvel.openMPS.Database
                 command.Parameters.AddWithValue("@Active", aktiv);
                 command.Parameters.AddWithValue("@IPAddress",
                     ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3]);
-                command.Parameters.AddWithValue("@Model", modell);
+                command.Parameters.AddWithValue("@Model", model);
                 command.Parameters.AddWithValue("@SerialNumber", serial);
                 command.Parameters.AddWithValue("@AssetNumber", assetNumber);
                 command.Parameters.AddWithValue("@AltIPAddress",
@@ -352,6 +352,15 @@ namespace de.fearvel.openMPS.Database
                 command.Parameters.AddWithValue("@ver", ver);
                 NonQuery(command);
             }
+        }
+
+        public DataTable SelectFromOidTable()
+        {
+            return Query("Select * from `Oid`;");
+        }
+        public DataTable SelectFromOidTable(string ident)
+        {
+            return Query("Select * from `Oid` where `OidPrivateId`='" + ident + "'");
         }
 
         #endregion

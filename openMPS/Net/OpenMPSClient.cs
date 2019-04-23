@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows;
 using de.fearvel.net.DataTypes;
 using de.fearvel.net.DataTypes.Exceptions;
 using de.fearvel.net.DataTypes.SocketIo;
+using de.fearvel.net.FnLog;
+using de.fearvel.net.Manastone;
 using de.fearvel.net.SocketIo;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
 using Newtonsoft.Json;
+
 using Formatting = Newtonsoft.Json.Formatting;
 
 namespace de.fearvel.openMPS.Net
@@ -19,7 +23,7 @@ namespace de.fearvel.openMPS.Net
         /// <summary>
         /// The Server Url
         /// </summary>
-        private string _url;
+        private readonly string _url;
 
 
         /// <summary>
@@ -66,32 +70,89 @@ namespace de.fearvel.openMPS.Net
         /// <returns></returns>
         public bool CheckOidVersion(out string oidServerVersion)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "CheckOidVersion");
             if (Config.GetInstance().Directory.TryGetValue("OidVersion", out string instVer))
             {
-                var ver = SocketIoClient.RetrieveSingleValue<VersionWrapper>("https://localhost:9051",
-                    "OidVersionOffer", "OidVersionRequest", null);
+                var ver = SocketIoClient.RetrieveSingleValue<VersionWrapper>(_url,
+                    "OidVersionOffer", "OidVersionRequest", null, timeout: 30000);
 
                 if (System.Version.TryParse(instVer, out Version instVersion) &&
                     System.Version.TryParse(ver.Version, out Version version))
                 {
                     oidServerVersion = ver.Version;
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "CheckOidVersion Complete");
                     return (instVersion.CompareTo(version) >= 0);
                 }
             }
-
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.CriticalError, "OpenMPSClient", "Missing Directory OidVersion Value");
             throw new QueryFailedException();
         }
 
+        private bool CheckMinClientVersion()
+        {
+            try
+            {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "CheckMinClientVersion");
+               var ver = SocketIoClient.RetrieveSingleValue<VersionWrapper>(_url,
+                    "MPSMinClientVersionOffer", "MPSMinClientVersionRequest", null, timeout: 30000);
+                var progVersion =  System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+                if (System.Version.TryParse(progVersion, out Version programVersion) &&
+                    System.Version.TryParse(ver.Version, out Version minversion))
+                {
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "CheckMinClientVersion Complete");
+                    return (programVersion.CompareTo(minversion) >= 0);
+                }
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "OpenMPSClient", "CheckMinClientVersion ResultNullOrNotReceivedException");
+                throw new ResultNullOrNotReceivedException();
+
+            }
+            catch (Exception e)
+            {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "OpenMPSClient", "CheckMinClientVersion" + e.Message);
+                MessageBox.Show("Could not reach the openMPS Server");
+                throw new ResultNullOrNotReceivedException();
+            }
+
+        }
+
+        public void CheckForCompatibleVersion()
+        {
+            try
+            {
+                if (!CheckMinClientVersion())
+                {
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "CheckForCompatibleVersion expired version found");
+                    FnLog.GetInstance().ProcessLogList();
+                    MessageBox.Show("openMPS Version veraltet!!\nBitte laden Sie die neuste Version herunter");
+                    Environment.Exit(1);
+                }
+            }
+            catch (Exception e)
+            {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "OpenMPSClient", "CheckMinClientVersion" + e.Message);
+                MessageBox.Show("Could not reach the openMPS Server");
+                Environment.Exit(1);
+            }
+        }
+
+
         private void DownloadAndUpdateOidTable(string oidVersion)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable");
+            ManastoneClient.GetInstance().CheckToken();
             var oid = SocketIoClient.RetrieveSingleValue<List<Oid>>(_url,
-                "OidOffer", "OidRequest", new OidRequest("924d4233-622d-11e9-b74a-000c2910963e").Serialize());
+                "OidOffer", "OidRequest", new OidRequest(ManastoneClient.GetInstance().Token).Serialize(), timeout: 30000);
             Config.GetInstance().UpdateOids(oidVersion, oid);
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable Complete");
+
         }
 
         public void UpdateOidTable()
         {
-            var thread = new Thread(UpdateOidTableThreaded);
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "UpdateOidTable");
+
+           var thread = new Thread(UpdateOidTableThreaded);
             thread.Start();
          
         }
@@ -100,8 +161,11 @@ namespace de.fearvel.openMPS.Net
         {
             try
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "UpdateOidTableThreaded");
+
                 if (!CheckOidVersion(out string oidServerVersion))
                 {
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "UpdateOidTableThreaded newer version detected");
                     DownloadAndUpdateOidTable(oidServerVersion);
                 }
             }
@@ -112,10 +176,13 @@ namespace de.fearvel.openMPS.Net
 
         public void SendOidData(List<OidData> data)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "SendOidData");
             var dataStr = JsonConvert.SerializeObject(data, Formatting.Indented).Trim()
                 .Replace(System.Environment.NewLine, "");
             var res = SocketIoClient.RetrieveSingleValue<SimpleResult>(_url,
-                "closer", "SendData", dataStr);
+                "closer", "SendData", dataStr, timeout: 30000);
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "OpenMPSClient", "SendOidData sent");
+
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using de.fearvel.net.FnLog;
 using de.fearvel.net.Manastone;
 
 namespace de.fearvel.openMPS.UserInterface.Windows
@@ -26,10 +27,13 @@ namespace de.fearvel.openMPS.UserInterface.Windows
         {
             Result = false;
             InitializeComponent();
+            WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
         }
 
         private void ButtonExit_OnClick(object sender, RoutedEventArgs e)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "LicenseDialog", "Exit Click");
+            FnLog.GetInstance().ProcessLogList();
             Environment.Exit(1);
         }
 
@@ -40,6 +44,7 @@ namespace de.fearvel.openMPS.UserInterface.Windows
                 if (ManastoneClient.GetInstance().Activate(SpliceSegments()))
                 {
                     Result = true;
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "LicenseDialog", "true close");
                     this.Close();
                 }
                 else
