@@ -64,12 +64,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
         {
             try
             {
+                FnLog.GetInstance().ProcessLogList();
+
                 grid_setting.Children.Clear();
                 var item = Options[ListBoxEinstellungen.SelectedItem.ToString()];
                 grid_setting.Children.Add(item);
 
                     ((IReloadable) item).Reload(); //unclean but works
-                
+
             }
             catch (Exception)
             {

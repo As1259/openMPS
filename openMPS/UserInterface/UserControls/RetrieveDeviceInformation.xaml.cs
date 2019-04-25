@@ -52,7 +52,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         public void AbfrageStarten_Load(object sender, RoutedEventArgs e)
         {
-            bt_senden.IsEnabled = false;
+            ButtonSend.IsEnabled = false;
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button ButtonRetrieveData Clicked");
 
-            progress.Value = 0;
-            progress.Visibility = Visibility.Visible;
+            ProgressBarRetrieveData.Value = 0;
+            ProgressBarRetrieveData.Visibility = Visibility.Visible;
             ThreadPool.QueueUserWorkItem(UpdateDataGrid);
             ThreadPool.QueueUserWorkItem(AdaptProgressLoad);
         }
@@ -77,29 +77,29 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             DataGridItemViewer.ItemsSource = OidData.ToDataTable( _oidData).DefaultView;
             ButtonRetrieveData.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(GetNormalView));
-            bt_senden.IsEnabled = true;
+            ButtonSend.IsEnabled = true;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "RetrieveDeviceInformation", "Button ButtonRetrieveData Complete");
         }
 
         /// <summary>
-        ///     Adapts the progress load.
+        ///     Adapts the ProgressBarSearchProgress load.
         /// </summary>
         /// <param name="state">The state.</param>
         private void AdaptProgressLoad(object state)
         {
             for (var i = 0; i < 99; i++)
             {
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(AdaptProgress));
+                ProgressBarRetrieveData.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(AdaptProgress));
                 Thread.Sleep(5000);
             }
         }
 
         /// <summary>
-        ///     Adapts the progress.
+        ///     Adapts the ProgressBarSearchProgress.
         /// </summary>
         private void AdaptProgress()
         {
-            if (progress.Value < 99) progress.Value += 1;
+            if (ProgressBarRetrieveData.Value < 99) ProgressBarRetrieveData.Value += 1;
         }
 
         public List<OidData> GainData()
@@ -153,7 +153,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void button_send_Click(object sender, RoutedEventArgs e)
+        private void ButtonSend_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -171,23 +171,23 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
                 MessageBox.Show("Fehler beim Senden");
             }
-            bt_senden.IsEnabled = false;
+            ButtonSend.IsEnabled = false;
 
         }
 
 
 
         /// <summary>
-        ///     Handles the ValueChanged event of the progress control.
+        ///     Handles the ValueChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
         ///     The <see cref="double" /> instance containing the
         ///     event data.
         /// </param>
-        private void progress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ProgressBarRetrieveData_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            progressPercent.Content = progress.Value + " %";
+            LabelPercent.Content = ProgressBarRetrieveData.Value + " %";
         }
 
         /// <summary>
@@ -195,21 +195,21 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         private void GetNormalView()
         {
-            progress.Value = 100;
-            progress.Visibility = Visibility.Hidden;
+            ProgressBarRetrieveData.Value = 100;
+            ProgressBarRetrieveData.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
-        ///     Handles the IsVisibleChanged event of the progress control.
+        ///     Handles the IsVisibleChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
         ///     The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event
         ///     data.
         /// </param>
-        private void progress_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void ProgressBarRetrieveData_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            progressPercent.Visibility = progress.Visibility;
+            LabelPercent.Visibility = ProgressBarRetrieveData.Visibility;
         }
 
         #region "enable function for buttons for threading"
@@ -219,7 +219,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         private void bt_sendenEnable()
         {
-            bt_senden.IsEnabled = true;
+            ButtonSend.IsEnabled = true;
         }
 
 
@@ -228,7 +228,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         private void bt_sendenDisable()
         {
-            bt_senden.IsEnabled = false;
+            ButtonSend.IsEnabled = false;
         }
 
 

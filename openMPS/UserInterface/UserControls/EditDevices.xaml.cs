@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
+using de.fearvel.openMPS.DataTypes.Exceptions;
 using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
@@ -52,8 +53,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         public void geraeteSuchen_Load(object sender, RoutedEventArgs e)
         {
-            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
+            DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -64,22 +65,22 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "LoadGridData");
 
             Config.GetInstance().UpdateDevices();
-            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            //   geraeteGrid.IsReadOnly = true;
-            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
-            geraeteGrid.Columns[0].IsReadOnly = true;
-            geraeteGrid.Columns[1].IsReadOnly = true;
-            geraeteGrid.Columns[2].IsReadOnly = true;
-            geraeteGrid.Columns[3].IsReadOnly = true;
-            geraeteGrid.Columns[4].IsReadOnly = true;
+            DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            //   DataGridDevices.IsReadOnly = true;
+            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
+            DataGridDevices.Columns[0].IsReadOnly = true;
+            DataGridDevices.Columns[1].IsReadOnly = true;
+            DataGridDevices.Columns[2].IsReadOnly = true;
+            DataGridDevices.Columns[3].IsReadOnly = true;
+            DataGridDevices.Columns[4].IsReadOnly = true;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "LoadGridData Complete");
 
-            //geraeteGrid.Columns[1].Width = 120;
-            //geraeteGrid.Columns[4].Width = 300;
+            //DataGridDevices.Columns[1].Width = 120;
+            //DataGridDevices.Columns[4].Width = 300;
         }
 
         /// <summary>
-        ///     Handles the SelectedCellsChanged event of the geraeteGrid control.
+        ///     Handles the SelectedCellsChanged event of the DataGridDevices control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
@@ -90,20 +91,20 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             try
             {
-                drv = (DataRowView)geraeteGrid.SelectedItem;
+                drv = (DataRowView)DataGridDevices.SelectedItem;
                 var ipAddress = ScanIp.ConvertStringToAddress(drv["IP"].ToString());
                 unlockElements();
-                bt_del.IsEnabled = true;
-                tb_ip_block1.Text = ipAddress[0].ToString();
-                tb_ip_block2.Text = ipAddress[1].ToString();
-                tb_ip_block3.Text = ipAddress[2].ToString();
-                tb_ip_block4.Text = ipAddress[3].ToString();
-                tb_SerialNumber.Text = drv["SerialNumber"].ToString();
+                ButtonDeleteEntry.IsEnabled = true;
+                TextBoxIpSegmentOne.Text = ipAddress[0].ToString();
+                TextBoxIpSegmentTwo.Text = ipAddress[1].ToString();
+                TextBoxIpSegmentThree.Text = ipAddress[2].ToString();
+                TextBoxIpSegmentFour.Text = ipAddress[3].ToString();
+                TextBoxSerialNumber.Text = drv["SerialNumber"].ToString();
                 //tb_assetnumber.Text = drv["Assetnumber"].ToString();
                 if (drv["Active"].ToString().Contains("True"))
-                    cb_aktiv.IsChecked = true;
+                    CheckBoxActive.IsChecked = true;
                 else
-                    cb_aktiv.IsChecked = false;
+                    CheckBoxActive.IsChecked = false;
 
                 selected = true;
             }
@@ -117,13 +118,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         private void lockElements()
         {
-            bt_save.IsEnabled = false;
-            tb_ip_block1.IsEnabled = false;
-            tb_ip_block2.IsEnabled = false;
-            tb_ip_block3.IsEnabled = false;
-            tb_ip_block4.IsEnabled = false;
-            cb_aktiv.IsEnabled = false;
-            bt_del.IsEnabled = false;
+            ButtonSaveEntry.IsEnabled = false;
+            TextBoxIpSegmentOne.IsEnabled = false;
+            TextBoxIpSegmentTwo.IsEnabled = false;
+            TextBoxIpSegmentThree.IsEnabled = false;
+            TextBoxIpSegmentFour.IsEnabled = false;
+            CheckBoxActive.IsEnabled = false;
+            ButtonDeleteEntry.IsEnabled = false;
         }
 
         /// <summary>
@@ -131,33 +132,33 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         private void unlockElements()
         {
-            bt_save.IsEnabled = true;
-            tb_ip_block1.IsEnabled = true;
-            tb_ip_block2.IsEnabled = true;
-            tb_ip_block3.IsEnabled = true;
-            tb_ip_block4.IsEnabled = true;
-            cb_aktiv.IsEnabled = true;
+            ButtonSaveEntry.IsEnabled = true;
+            TextBoxIpSegmentOne.IsEnabled = true;
+            TextBoxIpSegmentTwo.IsEnabled = true;
+            TextBoxIpSegmentThree.IsEnabled = true;
+            TextBoxIpSegmentFour.IsEnabled = true;
+            CheckBoxActive.IsEnabled = true;
         }
 
         /// <summary>
-        ///     Handles the Click event of the bt_save control.
+        ///     Handles the Click event of the ButtonSaveEntry control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_save_Click(object sender, RoutedEventArgs e)
+        private void ButtonSaveEntry_Click(object sender, RoutedEventArgs e)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Save clicked");
 
             var ipAddress =
-                tb_ip_block1.Text + "." +
-                tb_ip_block2.Text + "." +
-                tb_ip_block3.Text + "." +
-                tb_ip_block4.Text;
+                TextBoxIpSegmentOne.Text + "." +
+                TextBoxIpSegmentTwo.Text + "." +
+                TextBoxIpSegmentThree.Text + "." +
+                TextBoxIpSegmentFour.Text;
             var active = "1";
             try
             {
                 ScanIp.ConvertStringToAddress(ipAddress);
-                if (!(bool)cb_aktiv.IsChecked) active = "0";
+                if (!(bool)CheckBoxActive.IsChecked) active = "0";
                 if (selected)
                 {
                     if (drv["IP"].ToString().CompareTo(ipAddress) == 0)
@@ -212,44 +213,50 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", 
                 "UpdateDevicesViaThread " + altIP + " -> " + ipAddress);
 
-            var ident = DeviceTools.IdentDevice(ipAddress);
-            var modell = "";
-            var serial = "";
-            var asset = "";
-
-            var ip = ScanIp.ConvertStringToAddress(ipAddress);
-            progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-
-            if (ident.Length > 0)
+            try
             {
-                var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                var ident = DeviceTools.IdentDevice(ipAddress);
+                var modell = "";
+                var serial = "";
+                var asset = "";
+
+                var ip = ScanIp.ConvertStringToAddress(ipAddress);
+                ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+
+                if (ident.Length > 0)
+                {
+                    var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                }
+                else
+                {
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                }
+
+                var ipAlt = ScanIp.ConvertStringToAddress(altIP);
+                Config.GetInstance().UpdateDeviceTable(
+                    aktiv,
+                    ip,
+                    modell,
+                    serial,
+                    asset,
+                    ipAlt
+                );
+
             }
-            else
+            catch (SnmpIdentNotFoundException)
             {
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
             }
-
-            var ipAlt = ScanIp.ConvertStringToAddress(altIP);
-            Config.GetInstance().UpdateDeviceTable(
-                aktiv,
-                ip,
-                modell,
-                serial,
-                asset,
-                ipAlt
-            );
-
-            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+            DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
         }
 
         /// <summary>
@@ -262,81 +269,90 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var obj = (object[])param;
             var ipAddress = (string)obj[0];
             var aktiv = (string)obj[1];
-            var ident = DeviceTools.IdentDevice(ipAddress);
-            var modell = "";
-            var serial = "";
-            var asset = "";
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "InsertDevicesViaThread " + ipAddress);
-
-            var ip = ScanIp.ConvertStringToAddress(ipAddress);
-            progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-
-            if (ident.Length > 0)
+            try
             {
-                var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-            }
-            else
-            {
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-            }
+                var ident = DeviceTools.IdentDevice(ipAddress);
+                var modell = "";
+                var serial = "";
+                var asset = "";
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "InsertDevicesViaThread " + ipAddress);
 
-            Config.GetInstance().InsertInDeviceTable(
-                 aktiv,
-                 ip,
-                 modell,
-                 serial,
-                 asset
-             );
-            geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+                var ip = ScanIp.ConvertStringToAddress(ipAddress);
+                ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+
+                if (ident.Length > 0)
+                {
+                    var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                }
+                else
+                {
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                }
+
+                Config.GetInstance().InsertInDeviceTable(
+                     aktiv,
+                     ip,
+                     modell,
+                     serial,
+                     asset
+                 );
+            }
+            catch (SnmpIdentNotFoundException)
+            {
+
+                
+            }
+            DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+
         }
 
         /// <summary>
-        ///     Adjusts the progress.
+        ///     Adjusts the ProgressBarSearchProgress.
         /// </summary>
         private void adjustProgress()
         {
-            if (progress.Value >= 80)
+            if (ProgressBarProgress.Value >= 80)
             {
-                progress.Visibility = Visibility.Hidden;
+                ProgressBarProgress.Visibility = Visibility.Hidden;
             }
             else
             {
-                progress.Visibility = Visibility.Visible;
-                progress.Value += 20;
+                ProgressBarProgress.Visibility = Visibility.Visible;
+                ProgressBarProgress.Value += 20;
             }
         }
 
         /// <summary>
-        ///     Handles the Click event of the bt_anlegen control.
+        ///     Handles the Click event of the ButtonCreateEntry control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_anlegen_Click(object sender, RoutedEventArgs e)
+        private void ButtonCreateEntry_Click(object sender, RoutedEventArgs e)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Create click ");
 
             selected = false;
-            bt_save.IsEnabled = true;
+            ButtonSaveEntry.IsEnabled = true;
             unlockElements();
-            geraeteGrid.UnselectAll();
+            DataGridDevices.UnselectAll();
 
-            tb_ip_block1.Clear();
-            tb_ip_block2.Clear();
-            tb_ip_block3.Clear();
-            tb_ip_block4.Clear();
-            tb_SerialNumber.Clear();
+            TextBoxIpSegmentOne.Clear();
+            TextBoxIpSegmentTwo.Clear();
+            TextBoxIpSegmentThree.Clear();
+            TextBoxIpSegmentFour.Clear();
+            TextBoxSerialNumber.Clear();
             // tb_assetnumber.Clear();
-            cb_aktiv.IsChecked = true;
+            CheckBoxActive.IsChecked = true;
         }
 
         /// <summary>
@@ -344,13 +360,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void tb_switch(object sender, TextChangedEventArgs e)
+        private void TextBoxIpSegmentOne_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (tb_ip_block1.Text.Length == 3 || (tb_ip_block1.Text.Contains(".") || tb_ip_block1.Text.Contains(" ")) &&
-                tb_ip_block1.Text.Length > 1)
+            if (TextBoxIpSegmentOne.Text.Length == 3 || (TextBoxIpSegmentOne.Text.Contains(".") || TextBoxIpSegmentOne.Text.Contains(" ")) &&
+                TextBoxIpSegmentOne.Text.Length > 1)
             {
-                tb_ip_block1.Text = tb_ip_block1.Text.Replace(".", "");
-                tb_ip_block1.Text = tb_ip_block1.Text.Replace(" ", "");
+                TextBoxIpSegmentOne.Text = TextBoxIpSegmentOne.Text.Replace(".", "");
+                TextBoxIpSegmentOne.Text = TextBoxIpSegmentOne.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -364,13 +380,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void tb_switch2(object sender, TextChangedEventArgs e)
+        private void TextBoxIpSegmentTwo_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (tb_ip_block2.Text.Length == 3 || (tb_ip_block2.Text.Contains(".") || tb_ip_block2.Text.Contains(" ")) &&
-                tb_ip_block2.Text.Length > 1)
+            if (TextBoxIpSegmentTwo.Text.Length == 3 || (TextBoxIpSegmentTwo.Text.Contains(".") || TextBoxIpSegmentTwo.Text.Contains(" ")) &&
+                TextBoxIpSegmentTwo.Text.Length > 1)
             {
-                tb_ip_block2.Text = tb_ip_block2.Text.Replace(".", "");
-                tb_ip_block2.Text = tb_ip_block2.Text.Replace(" ", "");
+                TextBoxIpSegmentTwo.Text = TextBoxIpSegmentTwo.Text.Replace(".", "");
+                TextBoxIpSegmentTwo.Text = TextBoxIpSegmentTwo.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -384,13 +400,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void tb_switch3(object sender, TextChangedEventArgs e)
+        private void TextBoxIpSegmentThree_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (tb_ip_block3.Text.Length == 3 || (tb_ip_block3.Text.Contains(".") || tb_ip_block3.Text.Contains(" ")) &&
-                tb_ip_block3.Text.Length > 1)
+            if (TextBoxIpSegmentThree.Text.Length == 3 || (TextBoxIpSegmentThree.Text.Contains(".") || TextBoxIpSegmentThree.Text.Contains(" ")) &&
+                TextBoxIpSegmentThree.Text.Length > 1)
             {
-                tb_ip_block3.Text = tb_ip_block3.Text.Replace(".", "");
-                tb_ip_block3.Text = tb_ip_block3.Text.Replace(" ", "");
+                TextBoxIpSegmentThree.Text = TextBoxIpSegmentThree.Text.Replace(".", "");
+                TextBoxIpSegmentThree.Text = TextBoxIpSegmentThree.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -400,20 +416,20 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Click event of the bt_del control.
+        ///     Handles the Click event of the ButtonDeleteEntry control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_del_Click(object sender, RoutedEventArgs e)
+        private void ButtonDeleteEntry_Click(object sender, RoutedEventArgs e)
         {
 
-            bt_del.IsEnabled = false;
-            bt_save.IsEnabled = false;
+            ButtonDeleteEntry.IsEnabled = false;
+            ButtonSaveEntry.IsEnabled = false;
             var ipAddress =
-                tb_ip_block1.Text + "." +
-                tb_ip_block2.Text + "." +
-                tb_ip_block3.Text + "." +
-                tb_ip_block4.Text;
+                TextBoxIpSegmentOne.Text + "." +
+                TextBoxIpSegmentTwo.Text + "." +
+                TextBoxIpSegmentThree.Text + "." +
+                TextBoxIpSegmentFour.Text;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Delete click " + ipAddress);
 
             if (selected)
@@ -428,11 +444,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Click event of the bt_anleitung control.
+        ///     Handles the Click event of the ButtonHelp control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void bt_anleitung_Click(object sender, RoutedEventArgs e)
+        private void ButtonHelp_Click(object sender, RoutedEventArgs e)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button help click");
 
@@ -443,29 +459,29 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the IsVisibleChanged event of the progress control.
+        ///     Handles the IsVisibleChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
         ///     The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event
         ///     data.
         /// </param>
-        private void progress_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void ProgressBarProgress_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            progresslabel.Visibility = progress.Visibility;
+            LabelProgress.Visibility = ProgressBarProgress.Visibility;
         }
 
         /// <summary>
-        ///     Handles the ValueChanged event of the progress control.
+        ///     Handles the ValueChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
         ///     The <see cref="System.Windows.RoutedPropertyChangedEventArgs{System.Double}" /> instance containing the
         ///     event data.
         /// </param>
-        private void progress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ProgressBarProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            progresslabel.Content = progress.Value + " %";
+            LabelProgress.Content = ProgressBarProgress.Value + " %";
         }
 
 

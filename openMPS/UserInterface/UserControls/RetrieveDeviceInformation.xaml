@@ -12,16 +12,16 @@
         <DataGrid x:Name="DataGridItemViewer" Margin="0,85,0,0" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True"/>
         <Button x:Name="ButtonRetrieveData" Click="ButtonRetrieveData_Click" Content="Werte abfragen" HorizontalAlignment="Left"
                 Margin="25,25,0,0" VerticalAlignment="Top" Width="135" Height="25" />
-        <Button x:Name="bt_senden" Content="Senden" HorizontalAlignment="Left" Margin="265,27,0,0"
-                VerticalAlignment="Top" Width="135" Click="button_send_Click" Height="26"
+        <Button x:Name="ButtonSend" Content="Senden" HorizontalAlignment="Left" Margin="265,27,0,0"
+                VerticalAlignment="Top" Width="135" Click="ButtonSend_Click" Height="26"
                 RenderTransformOrigin="-0.532,0.208" />
 
         <Grid HorizontalAlignment="Left" Height="25" Margin="25,25,0,0" VerticalAlignment="Top" Width="135"
               Panel.ZIndex="0">
-            <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="135"
-                         Visibility="Hidden" ValueChanged="progress_ValueChanged"
-                         IsVisibleChanged="progress_IsVisibleChanged" Foreground="Yellow" Panel.ZIndex="2" />
-            <Label x:Name="progressPercent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+            <ProgressBar x:Name="ProgressBarRetrieveData" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="135"
+                         Visibility="Hidden" ValueChanged="ProgressBarRetrieveData_ValueChanged"
+                         IsVisibleChanged="ProgressBarRetrieveData_IsVisibleChanged" Foreground="Yellow" Panel.ZIndex="2" />
+            <Label x:Name="LabelPercent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                    Visibility="Hidden" BorderThickness="1" BorderBrush="DarkGray" Panel.ZIndex="3" />
 
         </Grid>

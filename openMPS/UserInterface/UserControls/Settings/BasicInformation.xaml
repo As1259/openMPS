@@ -12,22 +12,22 @@
         <Label Content="Programmversion:" HorizontalAlignment="Left" Margin="373,48,0,0" VerticalAlignment="Top" />
         <Label Content="OID Version:" HorizontalAlignment="Left" Margin="373,110,0,0" VerticalAlignment="Top" />
         <Label Content="[Kundennummer]" HorizontalAlignment="Left" Margin="113,48,0,0" VerticalAlignment="Top"
-               x:Name="LabelKundennummer" FontWeight="DemiBold" />
-        <Label Content="[PV]" HorizontalAlignment="Left" Margin="505,48,0,0" VerticalAlignment="Top"
+               x:Name="LabelCustomerReference" FontWeight="DemiBold" />
+        <Label Content="[PV]" HorizontalAlignment="Left" Margin="532,48,0,0" VerticalAlignment="Top"
                x:Name="LabelProgramVersion" FontWeight="DemiBold" />
-        <Label Content="[DBV]" HorizontalAlignment="Left" Margin="505,79,0,0" VerticalAlignment="Top"
-               x:Name="LableConfigVersion" FontWeight="DemiBold" />
-        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="505,110,0,0" VerticalAlignment="Top"
+        <Label Content="[DBV]" HorizontalAlignment="Left" Margin="532,79,0,0" VerticalAlignment="Top"
+               x:Name="LabelConfigVersion" FontWeight="DemiBold" />
+        <Label Content="[OIDV]" HorizontalAlignment="Left" Margin="532,110,0,0" VerticalAlignment="Top"
                x:Name="LabelOidVersion" FontWeight="DemiBold" />
         <Label Content="config.db Version:" HorizontalAlignment="Left" Margin="373,79,0,0" VerticalAlignment="Top" />
         <Label Content="ID:" HorizontalAlignment="Left" Margin="11,79,0,0" VerticalAlignment="Top" />
         <Label Content="[UUID]" HorizontalAlignment="Left" Margin="113,79,0,0" VerticalAlignment="Top"
-            x:Name="LabelUUID" FontWeight="DemiBold" />
-        <Label Content="FnLog Version:" HorizontalAlignment="Left" Margin="373,154,0,0" VerticalAlignment="Top" />
-        <Label Content="[FnLogV]" HorizontalAlignment="Left" Margin="505,154,0,0" VerticalAlignment="Top"
+            x:Name="LabelUuid" FontWeight="DemiBold" />
+        <Label Content="FnLog Client Version:" HorizontalAlignment="Left" Margin="373,154,0,0" VerticalAlignment="Top" />
+        <Label Content="[FnLogV]" HorizontalAlignment="Left" Margin="532,154,0,0" VerticalAlignment="Top"
             x:Name="LabelFnLogVersion" FontWeight="DemiBold" />
-        <Label Content="Manastone Version:" HorizontalAlignment="Left" Margin="373,185,0,0" VerticalAlignment="Top" />
-        <Label Content="[MSV]" HorizontalAlignment="Left" Margin="505,185,0,0" VerticalAlignment="Top"
+        <Label Content="Manastone Client Version:" HorizontalAlignment="Left" Margin="373,185,0,0" VerticalAlignment="Top" />
+        <Label Content="[MSV]" HorizontalAlignment="Left" Margin="532,185,0,0" VerticalAlignment="Top"
             x:Name="LabelManastoneVersion" FontWeight="DemiBold" />
 
     </Grid>

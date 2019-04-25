@@ -50,10 +50,10 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             Config.GetInstance().UpdateDevices();
             var dt = Config.GetInstance().Devices;
-            geraeteGrid.ItemsSource = dt.DefaultView;
-            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
+            DataGridDevices.ItemsSource = dt.DefaultView;
+            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
 
-            geraeteGrid.IsReadOnly = true;
+            DataGridDevices.IsReadOnly = true;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices",
                 "Search Complete Count: " + dt.Rows.Count);
         }
@@ -65,22 +65,22 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         public void SearchForDevices_Load(object sender, RoutedEventArgs e)
         {
-            geraeteGrid.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            geraeteGrid.Columns[5].Visibility = Visibility.Hidden;
+            DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
+            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
 
             var ip = ScanIp.GetIpMask();
             var ipaddr = ScanIp.FindIpRange(ScanIp.GetIpMask());
             var start = ipaddr[0].GetAddressBytes();
             var stop = ipaddr[1].GetAddressBytes();
 
-            TextBoxIpRangeStart1.Text = Convert.ToString(start[0]);
-            TextBoxIpRangeStart2.Text = Convert.ToString(start[1]);
-            TextBoxIpRangeStart3.Text = Convert.ToString(start[2]);
-            TextBoxIpRangeStart4.Text = Convert.ToString(start[3]);
-            TextBoxIpRangeStop1.Text = Convert.ToString(stop[0]);
-            TextBoxIpRangeStop2.Text = Convert.ToString(stop[1]);
-            TextBoxIpRangeStop3.Text = Convert.ToString(stop[2]);
-            TextBoxIpRangeStop4.Text = Convert.ToString(stop[3]);
+            TextBoxIpFirstSegmentOne.Text = Convert.ToString(start[0]);
+            TextBoxIpFirstSegmentTwo.Text = Convert.ToString(start[1]);
+            TextBoxIpFirstSegmentThree.Text = Convert.ToString(start[2]);
+            TextBoxIpFirstSegmentFour.Text = Convert.ToString(start[3]);
+            TextBoxIpSecondSegmentOne.Text = Convert.ToString(stop[0]);
+            TextBoxIpSecondSegmentTwo.Text = Convert.ToString(stop[1]);
+            TextBoxIpSecondSegmentThree.Text = Convert.ToString(stop[2]);
+            TextBoxIpSecondSegmentFour.Text = Convert.ToString(stop[3]);
         }
 
         /// <summary>
@@ -88,42 +88,42 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void Button_Suchen_Click(object sender, RoutedEventArgs e)
+        private void ButtonSearch_Click(object sender, RoutedEventArgs e)
         {
             FnLog.GetInstance()
                 .AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices", "Search Button pressed");
 
-            ButtonSuchen.Visibility = Visibility.Hidden;
-            progress.Value = 0;
+            ButtonSearch.Visibility = Visibility.Hidden;
+            ProgressBarSearchProgress.Value = 0;
 
             StartIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(
-                TextBoxIpRangeStart1.Text + "." + TextBoxIpRangeStart2.Text +
-                "." + TextBoxIpRangeStart3.Text + "." +
-                TextBoxIpRangeStart4.Text));
-            EndIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpRangeStop1.Text + "." +
-                                                                       TextBoxIpRangeStop2.Text + "." +
-                                                                       TextBoxIpRangeStop3.Text + "." +
-                                                                       TextBoxIpRangeStop4.Text));
+                TextBoxIpFirstSegmentOne.Text + "." + TextBoxIpFirstSegmentTwo.Text +
+                "." + TextBoxIpFirstSegmentThree.Text + "." +
+                TextBoxIpFirstSegmentFour.Text));
+            EndIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpSecondSegmentOne.Text + "." +
+                                                                       TextBoxIpSecondSegmentTwo.Text + "." +
+                                                                       TextBoxIpSecondSegmentThree.Text + "." +
+                                                                       TextBoxIpSecondSegmentFour.Text));
 
             ThreadPool.QueueUserWorkItem(SearchForPrinter);
             ThreadPool.QueueUserWorkItem(AdaptProgressLoad);
         }
 
         /// <summary>
-        ///     Adapts the progress load.
+        ///     Adapts the ProgressBarSearchProgress load.
         /// </summary>
         /// <param name="state">The state.</param>
         private void AdaptProgressLoad(object state)
         {
             for (var i = 0; i < 99; i++)
             {
-                progress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(AdaptProgress));
+                ProgressBarSearchProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(AdaptProgress));
                 Thread.Sleep(5000);
             }
         }
 
         /// <summary>
-        ///     Handles the ValueChanged event of the progress control.
+        ///     Handles the ValueChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
@@ -132,15 +132,15 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </param>
         private void progress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            progressPercent.Content = progress.Value + " %";
+            LabelPercent.Content = ProgressBarSearchProgress.Value + " %";
         }
 
         /// <summary>
-        ///     Adapts the progress.
+        ///     Adapts the ProgressBarSearchProgress.
         /// </summary>
         private void AdaptProgress()
         {
-            if (progress.Value < 99) progress.Value += 1;
+            if (ProgressBarSearchProgress.Value < 99) ProgressBarSearchProgress.Value += 1;
         }
 
         /// <summary>
@@ -192,25 +192,28 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                         {
                             var dts = Config.GetInstance().GetOidRowByPrivateId(ident);
 
-                            modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
-                            serial = SnmpClient.GetOidValue(ipAddress.ToString(),
-                                dts.Rows[0].Field<string>("SerialNumber"));
-                            asset = SnmpClient.GetOidValue(ipAddress.ToString(),
-                                dts.Rows[0].Field<string>("AssetNumber"));
-                            Config.GetInstance().Query("Delete from Devices where IP = '" +
-                                                       ipAddress.ToString() + "'; ");
-                            Config.GetInstance().InsertInDeviceTable(
-                                "1",
-                                ScanIp.ConvertStringToAddress(ipAddress.ToString()),
-                                modell,
-                                serial,
-                                asset
-                            );
+                            if (dts.Rows.Count >0)
+                            {
+                                modell = SnmpClient.GetOidValue(ipAddress.ToString(), dts.Rows[0].Field<string>("Model"));
+                                serial = SnmpClient.GetOidValue(ipAddress.ToString(),
+                                    dts.Rows[0].Field<string>("SerialNumber"));
+                                asset = SnmpClient.GetOidValue(ipAddress.ToString(),
+                                    dts.Rows[0].Field<string>("AssetNumber"));
+                                Config.GetInstance().Query("Delete from Devices where IP = '" +
+                                                           ipAddress.ToString() + "'; ");
+                                Config.GetInstance().InsertInDeviceTable(
+                                    "1",
+                                    ScanIp.ConvertStringToAddress(ipAddress.ToString()),
+                                    modell,
+                                    serial,
+                                    asset
+                                ); 
+                            }
                         }
 
-                    geraeteGrid.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+                    DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
 
-                    ButtonSuchen.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
+                    ButtonSearch.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
                 }
                 catch (SnmpIdentNotFoundException)
                 {
@@ -224,7 +227,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         private void ShowStartButton()
         {
-            ButtonSuchen.Visibility = Visibility.Visible;
+            ButtonSearch.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -232,14 +235,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStart1_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxIpFirstSegmentOne_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpRangeStart1.Text.Length == 3 ||
-                (TextBoxIpRangeStart1.Text.Contains(".") || TextBoxIpRangeStart1.Text.Contains(" ")) &&
-                TextBoxIpRangeStart1.Text.Length > 1)
+            if (TextBoxIpFirstSegmentOne.Text.Length == 3 ||
+                (TextBoxIpFirstSegmentOne.Text.Contains(".") || TextBoxIpFirstSegmentOne.Text.Contains(" ")) &&
+                TextBoxIpFirstSegmentOne.Text.Length > 1)
             {
-                TextBoxIpRangeStart1.Text = TextBoxIpRangeStart1.Text.Replace(".", "");
-                TextBoxIpRangeStart1.Text = TextBoxIpRangeStart1.Text.Replace(" ", "");
+                TextBoxIpFirstSegmentOne.Text = TextBoxIpFirstSegmentOne.Text.Replace(".", "");
+                TextBoxIpFirstSegmentOne.Text = TextBoxIpFirstSegmentOne.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -253,14 +256,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStart2_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxIpFirstSegmentTwo_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpRangeStart2.Text.Length == 3 ||
-                (TextBoxIpRangeStart2.Text.Contains(".") || TextBoxIpRangeStart2.Text.Contains(" ")) &&
-                TextBoxIpRangeStart2.Text.Length > 1)
+            if (TextBoxIpFirstSegmentTwo.Text.Length == 3 ||
+                (TextBoxIpFirstSegmentTwo.Text.Contains(".") || TextBoxIpFirstSegmentTwo.Text.Contains(" ")) &&
+                TextBoxIpFirstSegmentTwo.Text.Length > 1)
             {
-                TextBoxIpRangeStart2.Text = TextBoxIpRangeStart2.Text.Replace(".", "");
-                TextBoxIpRangeStart2.Text = TextBoxIpRangeStart2.Text.Replace(" ", "");
+                TextBoxIpFirstSegmentTwo.Text = TextBoxIpFirstSegmentTwo.Text.Replace(".", "");
+                TextBoxIpFirstSegmentTwo.Text = TextBoxIpFirstSegmentTwo.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -274,14 +277,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStart3_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxIpFirstSegmentThree_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpRangeStart3.Text.Length == 3 ||
-                (TextBoxIpRangeStart3.Text.Contains(".") || TextBoxIpRangeStart3.Text.Contains(" ")) &&
-                TextBoxIpRangeStart3.Text.Length > 1)
+            if (TextBoxIpFirstSegmentThree.Text.Length == 3 ||
+                (TextBoxIpFirstSegmentThree.Text.Contains(".") || TextBoxIpFirstSegmentThree.Text.Contains(" ")) &&
+                TextBoxIpFirstSegmentThree.Text.Length > 1)
             {
-                TextBoxIpRangeStart3.Text = TextBoxIpRangeStart3.Text.Replace(".", "");
-                TextBoxIpRangeStart3.Text = TextBoxIpRangeStart3.Text.Replace(" ", "");
+                TextBoxIpFirstSegmentThree.Text = TextBoxIpFirstSegmentThree.Text.Replace(".", "");
+                TextBoxIpFirstSegmentThree.Text = TextBoxIpFirstSegmentThree.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -295,14 +298,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStop1_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxIpSecondSegmentOne_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpRangeStop1.Text.Length == 3 ||
-                (TextBoxIpRangeStop1.Text.Contains(".") || TextBoxIpRangeStop1.Text.Contains(" ")) &&
-                TextBoxIpRangeStop1.Text.Length > 1)
+            if (TextBoxIpSecondSegmentOne.Text.Length == 3 ||
+                (TextBoxIpSecondSegmentOne.Text.Contains(".") || TextBoxIpSecondSegmentOne.Text.Contains(" ")) &&
+                TextBoxIpSecondSegmentOne.Text.Length > 1)
             {
-                TextBoxIpRangeStop1.Text = TextBoxIpRangeStop1.Text.Replace(".", "");
-                TextBoxIpRangeStop1.Text = TextBoxIpRangeStop1.Text.Replace(" ", "");
+                TextBoxIpSecondSegmentOne.Text = TextBoxIpSecondSegmentOne.Text.Replace(".", "");
+                TextBoxIpSecondSegmentOne.Text = TextBoxIpSecondSegmentOne.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -316,14 +319,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStop2_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxIpSecondSegmentTwo_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpRangeStop2.Text.Length == 3 ||
-                (TextBoxIpRangeStop2.Text.Contains(".") || TextBoxIpRangeStop2.Text.Contains(" ")) &&
-                TextBoxIpRangeStop2.Text.Length > 1)
+            if (TextBoxIpSecondSegmentTwo.Text.Length == 3 ||
+                (TextBoxIpSecondSegmentTwo.Text.Contains(".") || TextBoxIpSecondSegmentTwo.Text.Contains(" ")) &&
+                TextBoxIpSecondSegmentTwo.Text.Length > 1)
             {
-                TextBoxIpRangeStop2.Text = TextBoxIpRangeStop2.Text.Replace(".", "");
-                TextBoxIpRangeStop2.Text = TextBoxIpRangeStop2.Text.Replace(" ", "");
+                TextBoxIpSecondSegmentTwo.Text = TextBoxIpSecondSegmentTwo.Text.Replace(".", "");
+                TextBoxIpSecondSegmentTwo.Text = TextBoxIpSecondSegmentTwo.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true
@@ -337,14 +340,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
-        private void TextBox_ip_rangeStop3_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxIpSecondSegmentThree_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpRangeStop3.Text.Length == 3 ||
-                (TextBoxIpRangeStop3.Text.Contains(".") || TextBoxIpRangeStop3.Text.Contains(" ")) &&
-                TextBoxIpRangeStop3.Text.Length > 1)
+            if (TextBoxIpSecondSegmentThree.Text.Length == 3 ||
+                (TextBoxIpSecondSegmentThree.Text.Contains(".") || TextBoxIpSecondSegmentThree.Text.Contains(" ")) &&
+                TextBoxIpSecondSegmentThree.Text.Length > 1)
             {
-                TextBoxIpRangeStop3.Text = TextBoxIpRangeStop3.Text.Replace(".", "");
-                TextBoxIpRangeStop3.Text = TextBoxIpRangeStop3.Text.Replace(" ", "");
+                TextBoxIpSecondSegmentThree.Text = TextBoxIpSecondSegmentThree.Text.Replace(".", "");
+                TextBoxIpSecondSegmentThree.Text = TextBoxIpSecondSegmentThree.Text.Replace(" ", "");
                 var request = new TraversalRequest(FocusNavigationDirection.Next)
                 {
                     Wrapped = true

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using System.Management;
+using System.Runtime.CompilerServices;
 using de.fearvel.net.Security;
 using de.fearvel.net.SQL.Connector;
 using de.fearvel.openMPS.DataTypes.Exceptions;
@@ -112,7 +113,9 @@ namespace de.fearvel.openMPS.Database
         ///     Execute sql quarry
         /// </summary>
         /// <param name="cmd">The command.</param>
-        public void NonQuery(string cmd)
+        [MethodImpl(MethodImplOptions.Synchronized)]
+
+       public void NonQuery(string cmd)
         {
             if (_opened)
                 _connection.NonQuery(cmd);
@@ -124,6 +127,7 @@ namespace de.fearvel.openMPS.Database
         ///     Execute sql quarry
         /// </summary>
         /// <param name="cmd">The command.</param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void NonQuery(SQLiteCommand cmd)
         {
             if (_opened)
@@ -138,6 +142,7 @@ namespace de.fearvel.openMPS.Database
         /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DataTable Query(string cmd)
         {
             if (!_opened)
@@ -152,6 +157,7 @@ namespace de.fearvel.openMPS.Database
         /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DataTable Query(SQLiteCommand cmd)
         {
             if (!_opened)

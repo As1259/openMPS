@@ -73,12 +73,17 @@ namespace de.fearvel.openMPS.Net
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "CheckOidVersion");
             if (Config.GetInstance().Directory.TryGetValue("OidVersion", out string instVer))
             {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", " CheckOidVersion TryGetValue done");
+
                 var ver = SocketIoClient.RetrieveSingleValue<VersionWrapper>(_url,
                     "OidVersionOffer", "OidVersionRequest", null, timeout: 30000);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "OidVersionOffer received");
 
                 if (System.Version.TryParse(instVer, out Version instVersion) &&
                     System.Version.TryParse(ver.Version, out Version version))
                 {
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "before assigning out");
+
                     oidServerVersion = ver.Version;
                     FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "CheckOidVersion Complete");
                     return (instVersion.CompareTo(version) >= 0);
@@ -139,12 +144,16 @@ namespace de.fearvel.openMPS.Net
 
         private void DownloadAndUpdateOidTable(string oidVersion)
         {
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable");
             ManastoneClient.GetInstance().CheckToken();
-            var oid = SocketIoClient.RetrieveSingleValue<List<Oid>>(_url,
-                "OidOffer", "OidRequest", new OidRequest(ManastoneClient.GetInstance().Token).Serialize(), timeout: 30000);
+
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable - " +ManastoneClient.GetInstance().Token);
+                var oid = SocketIoClient.RetrieveSingleValue<List<Oid>>(_url,
+                    "OidOffer", "OidRequest", new OidRequest(ManastoneClient.GetInstance().Token).Serialize(), timeout: 30000);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable received" + oid.Count);
             Config.GetInstance().UpdateOids(oidVersion, oid);
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable Complete");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "OpenMPSClient", "DownloadAndUpdateOidTable Complete");
+
+            
 
         }
 
@@ -169,8 +178,9 @@ namespace de.fearvel.openMPS.Net
                     DownloadAndUpdateOidTable(oidServerVersion);
                 }
             }
-            catch (Exception) { 
-                // ignored
+            catch (Exception e) {
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.Error, "OpenMPSClient", "UpdateOidTableThreaded " + e.Message);
+
             }
         }
 

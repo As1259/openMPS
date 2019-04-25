@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
+using de.fearvel.net.FnLog;
 using de.fearvel.net.SQL.Connector;
 using de.fearvel.openMPS.DataTypes;
 using de.fearvel.openMPS.DataTypes.Exceptions;
@@ -90,6 +91,8 @@ namespace de.fearvel.openMPS.Database
         public void InsertInDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
             string assetNumber)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertInDeviceTable");
+
             using (var command = new SQLiteCommand(
                 "Insert into `Devices`" +
                 " (`Active`, `Ip`, `Model`, `SerialNumber`, `AssetNumber`)" +
@@ -109,6 +112,8 @@ namespace de.fearvel.openMPS.Database
         public void UpdateDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
             string assetNumber, byte[] altIp)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateDeviceTable");
+
             using (var command = new SQLiteCommand(
                 "Update Devices set `Active`=@Active, `Ip`=@IPAddress, `Model`=@Model, `SerialNumber`=@SerialNumber, `AssetNumber`=@AssetNumber" +
                 " where `Ip`=@AltIPAddress;"))
@@ -128,6 +133,8 @@ namespace de.fearvel.openMPS.Database
 
         public void UpdateDevices()
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateDevices");
+
             _devices = Query("Select * from `Devices`");
         }
 
@@ -147,6 +154,8 @@ namespace de.fearvel.openMPS.Database
 
         public void UpdateOids(string ver, List<Oid> oids)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateOids");
+
             if (oids.Count > 0)
             {
                 DeleteFromOidTable();
@@ -157,6 +166,8 @@ namespace de.fearvel.openMPS.Database
 
         private void DeleteFromOidTable()
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "DeleteFromOidTable");
+
             NonQuery("Delete from `Oid`");
             NonQuery("delete from `sqlite_sequence` where `name` = 'Oid';");
         }
@@ -164,6 +175,8 @@ namespace de.fearvel.openMPS.Database
 
         private void InsertOidListToTable(List<Oid> oids)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertOidListToTable");
+
             foreach (var oid in oids)
             {
                 InsertOidToTable(oid);
@@ -343,23 +356,33 @@ namespace de.fearvel.openMPS.Database
                 command.Prepare();
                 NonQuery(command);
             }
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertOidToTable done");
+
         }
 
         private void UpdateOidVersion(string ver)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateOidVersion");
+
             using (var command = new SQLiteCommand("Update `Directory` set `DVal` = @ver where `DKey` = 'OidVersion'"))
             {
                 command.Parameters.AddWithValue("@ver", ver);
                 NonQuery(command);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateOidVersion done");
+
             }
         }
 
         public DataTable SelectFromOidTable()
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable");
+
             return Query("Select * from `Oid`;");
         }
         public DataTable SelectFromOidTable(string ident)
         {
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable "+ ident);
+
             return Query("Select * from `Oid` where `OidPrivateId`='" + ident + "'");
         }
 

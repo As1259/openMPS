@@ -220,7 +220,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\Fluent.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\Fluent.xml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\MahApps.Metro.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\MahApps.Metro.xml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\Newtonsoft.Json.pdb
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\Newtonsoft.Json.xml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\System.Collections.Immutable.xml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Release\System.Data.SQLite.xml
@@ -261,8 +260,8 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.cspro
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.csproj.CopyComplete
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.exe
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.pdb
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.csprojAssemblyReference.cache
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayManastoneFnLog.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayFnLog.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayManastoneFnLog.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\UserInterface\UserControls\Settings\DisplayFnLog.baml
+C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Release\openMPS.csprojAssemblyReference.cache
