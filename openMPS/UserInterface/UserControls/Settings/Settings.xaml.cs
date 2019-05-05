@@ -1,8 +1,4 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
 
 using System;
 using System.Collections.Generic;
@@ -20,8 +16,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
     /// </summary>
     public partial class Settings : UserControl
     {
+        /// <summary>
+        /// Dictionary containing the loaded user controls
+        /// </summary>
+        private Dictionary<string, UserControl> _options;
 
-        private Dictionary<string, UserControl> Options;
         /// <summary>
         ///     Initializes a new instance of the <see cref="Settings" /> class.
         /// </summary>
@@ -30,57 +29,69 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Adds the default items
+        /// </summary>
         private void AddDefaultItems()
         {
-            Options.Clear();
+            _options.Clear();
             AddItem("BasicInformation", new BasicInformation());
             RestrictableTableEditor.SetInstance(Config.GetInstance().GetConnector());
-          //  AddItem("RTE", new UserControl(){Content = RestrictableTableEditor.GetInstance().TableEditor});
-          //  AddItem("RTE-Manager", new UserControl(){Content =  new RestrictableTableEditorManager(Config.GetInstance().GetConnector()) });//FEHLER der null exception bei children.clear auslöst existent
-
-        //    AddItem("LogViewer", new UserControl() { Content = FnLog.GetInstance().GetViewer().FnLogTable });
-
-        AddItem("FnLog DEV", new DisplayFnLog());
-        AddItem("ManastoneFnLog DEV", new DisplayManastoneFnLog());
-
+            AddItem("FnLog DEV", new DisplayFnLog());
+            AddItem("ManastoneFnLog DEV", new DisplayManastoneFnLog());
         }
 
+        /// <summary>
+        /// adds an item
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="uc"></param>
         public void AddItem(string key, UserControl uc)
         {
-            Options.Add(key,uc);
+            _options.Add(key, uc);
         }
 
+        /// <summary>
+        /// loaded event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Options = new Dictionary<string, UserControl>();
+            _options = new Dictionary<string, UserControl>();
             AddDefaultItems();
-            grid_setting.Children.Clear();
-            ListBoxEinstellungen.ItemsSource = Options.Keys;
-            ListBoxEinstellungen.SelectedIndex = 0;
+            GridSetting.Children.Clear();
+            ListBoxSettings.ItemsSource = _options.Keys;
+            ListBoxSettings.SelectedIndex = 0;
             LoadSettingsUserControl();
         }
 
+        /// <summary>
+        /// Loads the remaining part of the Settings UserControl
+        /// </summary>
         private void LoadSettingsUserControl()
         {
             try
             {
                 FnLog.GetInstance().ProcessLogList();
 
-                grid_setting.Children.Clear();
-                var item = Options[ListBoxEinstellungen.SelectedItem.ToString()];
-                grid_setting.Children.Add(item);
+                GridSetting.Children.Clear();
+                var item = _options[ListBoxSettings.SelectedItem.ToString()];
+                GridSetting.Children.Add(item);
 
-                    ((IReloadable) item).Reload(); //unclean but works
-
+                ((IReloadable) item).Reload(); //unclean but works
             }
             catch (Exception)
             {
-
             }
-            
-
         }
-        private void ListBoxEinstellungen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        /// <summary>
+        /// ListBoxSettings SelectionChanged event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListBoxSettings_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadSettingsUserControl();
         }

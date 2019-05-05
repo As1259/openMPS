@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
 using de.fearvel.net.DataTypes.AbstractDataTypes;
 
 namespace de.fearvel.openMPS.DataTypes

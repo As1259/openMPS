@@ -1,17 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
+using System;
 using System.Data;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using de.fearvel.openMPS.Database;
+using de.fearvel.openMPS.Interfaces;
 using de.fearvel.openMPS.UserInterface.UserControls.CustomControls;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
     /// <summary>
     /// Interaktionslogik für DeviceManagement.xaml
+    /// EXPERIMENTAL
     /// </summary>
-    public partial class DeviceManagement : UserControl
+    public partial class DeviceManagement : UserControl, IRibbonAdvisoryText
     {
         public DeviceManagement()
         {
@@ -81,5 +85,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                         row.Field<string>("AssetNumber")));
             }
         }
+
+        /// <summary>
+        /// AdvisoryText displayed in the Ribbon bar
+        /// </summary>
+        public string AdvisoryText =>
+            "Hier können Sie neue Geräte suchen, bearbeiten, oder die IP-Adressen neuer Geräte manuell hinzufügen." +
+            " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
+            "werden, oder nicht.";
     }
 }

@@ -1,8 +1,4 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
 
 using System.Windows.Controls;
 using de.fearvel.net.FnLog;

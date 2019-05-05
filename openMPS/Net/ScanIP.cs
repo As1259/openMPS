@@ -1,8 +1,4 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
 
 using System;
 using System.Linq;
@@ -19,7 +15,6 @@ namespace de.fearvel.openMPS.Net
     /// </summary>
     internal static class ScanIp
     {
-
 
         /// <summary>
         ///     Finds the ip range.
@@ -45,8 +40,7 @@ namespace de.fearvel.openMPS.Net
                 startIpBytes[i] = (byte) (ipBytes[i] & maskBytes[i]);
                 endIpBytes[i] = (byte) (ipBytes[i] | ~maskBytes[i]);
             }
-
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, 
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo,
                 "ScanIp", "FindIpRange NETMASK FROM " +
                           new IPAddress(startIpBytes).ToString() +
                           " TO " + new IPAddress(endIpBytes).ToString());
@@ -73,6 +67,7 @@ namespace de.fearvel.openMPS.Net
                     octetByte >>= 1; // do a bitwise shift to the right to create a new LSB
                 }
             }
+
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "NetmaskToBit - " + totalBits);
             return totalBits;
         }
@@ -114,11 +109,11 @@ namespace de.fearvel.openMPS.Net
                 address = (string[]) mo["IPAddress"];
                 subnetMask = (string[]) mo["IPSubnet"];
             }
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", 
-                "GetIpMask - " + address[0] + " - "+ subnetMask[0]);
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp",
+                "GetIpMask - " + address[0] + " - " + subnetMask[0]);
 
             return new[] {address[0], subnetMask[0]};
-        }      
+        }
 
         /// <summary>
         ///     Pings the ip.
@@ -131,7 +126,6 @@ namespace de.fearvel.openMPS.Net
             var pingSender = new Ping();
             var options = new PingOptions
             {
-
                 // Use the default Ttl value which is 128,
                 // but change the fragmentation behavior.
                 DontFragment = true
@@ -143,10 +137,12 @@ namespace de.fearvel.openMPS.Net
             switch (reply.Status)
             {
                 case IPStatus.Success:
-                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "PingIp - SUCCESS - " + ip.ToString());
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp",
+                        "PingIp - SUCCESS - " + ip.ToString());
                     return true;
                 default:
-                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "PingIp - FAILED - " + ip.ToString());
+                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp",
+                        "PingIp - FAILED - " + ip.ToString());
                     return false;
             }
         }

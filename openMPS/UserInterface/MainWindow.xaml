@@ -1,4 +1,6 @@
-﻿<mah:MetroWindow x:Class="de.fearvel.openMPS.UserInterface.MainWindow"
+﻿<!--Copyright (c) 2018 / 2019, Andreas Schreiner-->
+
+<mah:MetroWindow x:Class="de.fearvel.openMPS.UserInterface.MainWindow"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:fluent="urn:fluent-ribbon"

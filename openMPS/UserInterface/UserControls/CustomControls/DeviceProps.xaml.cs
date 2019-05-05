@@ -5,6 +5,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.CustomControls
 {
     /// <summary>
     /// Interaktionslogik für UserControl1.xaml
+    /// TESTING
     /// </summary>
     public partial class DeviceProps : UserControl
     {

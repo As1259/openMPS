@@ -167,10 +167,8 @@
     <Compile Include="DataTypes\OidData.cs" />
     <Compile Include="DataTypes\Oid.cs" />
     <Compile Include="DataTypes\OidRequest.cs" />
+    <Compile Include="Interfaces\IRibbonAdvisioryText.cs" />
     <Compile Include="Net\OpenMPSClient.cs" />
-    <Compile Include="openRegistration.xaml.cs">
-      <DependentUpon>openRegistration.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -223,10 +221,6 @@
     <Compile Include="UserInterface\Windows\LicenseDialog.xaml.cs">
       <DependentUpon>LicenseDialog.xaml</DependentUpon>
     </Compile>
-    <Page Include="openRegistration.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserInterface\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

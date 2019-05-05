@@ -1,9 +1,10 @@
-﻿using System;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Management;
 using System.Runtime.CompilerServices;
 using de.fearvel.net.Security;
 using de.fearvel.net.SQL.Connector;
@@ -11,18 +12,29 @@ using de.fearvel.openMPS.DataTypes.Exceptions;
 
 namespace de.fearvel.openMPS.Database
 {
-    public abstract class SqliteConnect 
+    /// <summary>
+    /// abstract class for possible reuse purpose
+    /// </summary>
+    public abstract class SqliteConnect
     {
         /// <summary>
         ///     Contains the connection to the config SQLITE
         /// </summary>
-
         private Dictionary<string, string> _directory;
 
+        /// <summary>
+        /// file name
+        /// </summary>
         protected abstract string FileName { get; }
-   //     protected string FilePath = Path.Combine(Environment.GetFolderPath(
-   //         Environment.SpecialFolder.ApplicationData), "oMPS");
+
+        /// <summary>
+        /// standard file path
+        /// </summary>
         protected string FilePath = "";
+
+        /// <summary>
+        /// Dictionary containing the Directory table content
+        /// </summary>
         public Dictionary<string, string> Directory
         {
             get
@@ -33,24 +45,29 @@ namespace de.fearvel.openMPS.Database
                 }
 
                 return _directory;
-
             }
             private set => _directory = value;
         }
 
+        /// <summary>
+        /// reloads the directory Dictionary data
+        /// </summary>
         public void ReloadDirectory()
         {
             _directory.Clear();
             ReadFromDirectory();
         }
 
+        /// <summary>
+        /// reads the values from the directory into the dictionary
+        /// </summary>
         private void ReadFromDirectory()
         {
             try
             {
                 _connection.Query("select * from Directory;", out DataTable dt);
                 foreach (DataRow ds in dt.Rows)
-                {                    
+                {
                     _directory.Add(ds.Field<string>("Dkey"), ds.Field<string>("DVal"));
                 }
             }
@@ -60,11 +77,9 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-        public void UpdateDirectory()
-        {
-            _directory.Clear();
-            ReadFromDirectory();
-        }
+        /// <summary>
+        /// constructor
+        /// </summary>
         protected SqliteConnect()
         {
             Directory = new Dictionary<string, string>();
@@ -72,7 +87,7 @@ namespace de.fearvel.openMPS.Database
 
 
         /// <summary>
-        ///     The connection
+        /// The connection
         /// </summary>
         private SqliteConnector _connection;
 
@@ -82,24 +97,30 @@ namespace de.fearvel.openMPS.Database
         }
 
         /// <summary>
-        ///     boolean that contains the information of the status of the Sqlite connection
+        /// boolean that contains the information of the status of the Sqlite connection
         /// </summary>
         private bool _opened;
 
-     public abstract void GenerateTables();
+        /// <summary>
+        /// abstract generate table function
+        /// will be called on open
+        /// </summary>
+        public abstract void GenerateTables();
 
-
-      public void Open()
-      {
-          SqliteConnector c = new SqliteConnector(Path.Combine(FilePath, FileName), Ident.GetCPUId());
-          _connection = c;
-          _opened = true;
-          GenerateTables();
-      }
+        /// <summary>
+        /// opens the SqlLite database
+        /// </summary>
+        public void Open()
+        {
+            SqliteConnector c = new SqliteConnector(Path.Combine(FilePath, FileName), Ident.GetCPUId());
+            _connection = c;
+            _opened = true;
+            GenerateTables();
+        }
 
 
         /// <summary>
-        ///     Closes this connection.
+        /// Closes this connection.
         /// </summary>
         public void Close()
         {
@@ -110,12 +131,11 @@ namespace de.fearvel.openMPS.Database
         }
 
         /// <summary>
-        ///     Execute sql quarry
+        /// Execute sql quarry
         /// </summary>
         /// <param name="cmd">The command.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-
-       public void NonQuery(string cmd)
+        public void NonQuery(string cmd)
         {
             if (_opened)
                 _connection.NonQuery(cmd);
@@ -124,7 +144,7 @@ namespace de.fearvel.openMPS.Database
         }
 
         /// <summary>
-        ///     Execute sql quarry
+        /// Execute sql quarry
         /// </summary>
         /// <param name="cmd">The command.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -137,8 +157,8 @@ namespace de.fearvel.openMPS.Database
         }
 
         /// <summary>
-        ///     Execute sql quarry
-        ///     returns DataTable
+        /// Execute sql quarry
+        /// returns DataTable
         /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
@@ -148,12 +168,13 @@ namespace de.fearvel.openMPS.Database
             if (!_opened)
                 throw new MPSSQLiteException();
 
-             _connection.Query(cmd, out DataTable dt);
+            _connection.Query(cmd, out DataTable dt);
             return dt;
         }
+
         /// <summary>
-        ///     Execute sql quarry
-        ///     returns DataTable
+        /// Execute sql quarry
+        /// returns DataTable
         /// </summary>
         /// <param name="cmd">The command.</param>
         /// <returns></returns>
@@ -166,6 +187,12 @@ namespace de.fearvel.openMPS.Database
             _connection.Query(cmd, out DataTable dt);
             return dt;
         }
+
+        /// <summary>
+        /// Inserts a key value pair into the database
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         protected void InsertIntoDirectory(string key, string value)
         {
             using (var command = new SQLiteCommand(
@@ -181,4 +208,3 @@ namespace de.fearvel.openMPS.Database
         }
     }
 }
-

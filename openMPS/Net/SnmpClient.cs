@@ -1,14 +1,9 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
 
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Net;
-using System.Net.Sockets;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
@@ -16,14 +11,13 @@ using SnmpSharpNet;
 
 namespace de.fearvel.openMPS.Net
 {
-
     /// <summary>
-    ///     Aquireing data
+    /// Aquireing data
     /// </summary>
     public static class SnmpClient
     {
         /// <summary>
-        ///     The abgefragte oids
+        /// The abgefragte oids
         /// </summary>
         private static Dictionary<string, Type> AbgefragteOids = new Dictionary<string, Type>()
         {
@@ -205,15 +199,15 @@ namespace de.fearvel.openMPS.Net
             }
             catch (SnmpException)
             {
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient", "ReadDeviceOiDs - SnmpException");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient",
+                    "ReadDeviceOiDs - SnmpException");
                 oidData = null;
                 return false;
             }
         }
 
         /// <summary>
-        ///     Gets the specific values of an OID
-        ///     ///
+        /// Gets the specific values of an OID
         /// </summary>
         /// <param name="ip">The ip.</param>
         /// <param name="oid">The oid.</param>
@@ -223,7 +217,6 @@ namespace de.fearvel.openMPS.Net
             var oidValue = "";
             try
             {
-
                 if (oid.Length > 0)
                 {
                     var community = new OctetString("public");
@@ -243,22 +236,24 @@ namespace de.fearvel.openMPS.Net
             }
             catch (Exception)
             {
-
                 // ignored
             }
+
             return oidValue;
         }
 
-    
-
+        /// <summary>
+        /// uses snmp to get the values of an mps
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="oid"></param>
+        /// <returns></returns>
         public static OidData GetOidValues(string ip, DataTable oid)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SnmpClient", "GetOidValues ip " + ip);
-
             var data = new OidData();
             var strDict = new Dictionary<string, string>();
             var longDict = new Dictionary<string, long>();
-
             try
             {
                 foreach (var pair in AbgefragteOids)
@@ -273,16 +268,14 @@ namespace de.fearvel.openMPS.Net
                         if (dataStr.Length > 0)
                         {
                             longDict.Add(pair.Key, long.Parse(dataStr));
-
                         }
                         else
                         {
                             longDict.Add(pair.Key, 0);
-
                         }
-
                     }
                 }
+
                 data.VendorName = strDict["VendorName"];
                 data.Model = strDict["Model"];
                 data.SerialNumber = strDict["SerialNumber"];

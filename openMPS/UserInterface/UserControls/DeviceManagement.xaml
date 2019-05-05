@@ -1,5 +1,6 @@
-﻿<!--TESTING-->
+﻿<!--Copyright (c) 2018 / 2019, Andreas Schreiner-->
 
+<!--TESTING-->
 <UserControl x:Class="de.fearvel.openMPS.UserInterface.UserControls.DeviceManagement"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

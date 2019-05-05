@@ -1,18 +1,12 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
 
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
 using de.fearvel.net.FnLog;
-using de.fearvel.net.SQL.Connector;
 using de.fearvel.openMPS.DataTypes;
 using de.fearvel.openMPS.DataTypes.Exceptions;
 
@@ -38,8 +32,14 @@ namespace de.fearvel.openMPS.Database
         /// </summary>
         private Dictionary<string, bool> _flags;
 
+        /// <summary>
+        /// filename of the db
+        /// </summary>
         protected override string FileName => "config.db";
 
+        /// <summary>
+        /// returns the Device DataTable
+        /// </summary>
         public DataTable Devices
         {
             get => _devices ?? (_devices = Query("Select * from Devices"));
@@ -48,6 +48,9 @@ namespace de.fearvel.openMPS.Database
 
         #region "FLAGS"
 
+        /// <summary>
+        /// Flag dictionary for use in the futur
+        /// </summary>
         public Dictionary<string, bool> Flags
         {
             get
@@ -61,7 +64,10 @@ namespace de.fearvel.openMPS.Database
             }
             private set => _flags = value;
         }
-         
+
+        /// <summary>
+        /// reads the data of the Flags table and fills the _flags DataTable
+        /// </summary>
         private void ReadFromFlags()
         {
             try
@@ -80,6 +86,10 @@ namespace de.fearvel.openMPS.Database
         #endregion
 
 
+        /// <summary>
+        /// Gets the instance of this singleton class
+        /// </summary>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static Config GetInstance()
         {
@@ -88,11 +98,18 @@ namespace de.fearvel.openMPS.Database
 
         #region "INSERT / UPDATE"
 
+        /// <summary>
+        /// Inserts a device into the Devices table
+        /// </summary>
+        /// <param name="aktiv"></param>
+        /// <param name="ipAddress"></param>
+        /// <param name="model"></param>
+        /// <param name="serial"></param>
+        /// <param name="assetNumber"></param>
         public void InsertInDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
             string assetNumber)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertInDeviceTable");
-
             using (var command = new SQLiteCommand(
                 "Insert into `Devices`" +
                 " (`Active`, `Ip`, `Model`, `SerialNumber`, `AssetNumber`)" +
@@ -109,6 +126,15 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
+        /// <summary>
+        /// Updates an entry of the Devices table
+        /// </summary>
+        /// <param name="aktiv"></param>
+        /// <param name="ipAddress"></param>
+        /// <param name="model"></param>
+        /// <param name="serial"></param>
+        /// <param name="assetNumber"></param>
+        /// <param name="altIp"></param>
         public void UpdateDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
             string assetNumber, byte[] altIp)
         {
@@ -131,13 +157,20 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
+        /// <summary>
+        /// _devices the Devices DataTable
+        /// </summary>
         public void UpdateDevices()
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateDevices");
-
             _devices = Query("Select * from `Devices`");
         }
 
+        /// <summary>
+        /// Inserts a key value(bool) pair into the Flags table
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         private void InsertIntoFlags(string key, bool value)
         {
             using (var command = new SQLiteCommand(
@@ -152,10 +185,14 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
+        /// <summary>
+        /// clears and refills the oid table
+        /// </summary>
+        /// <param name="ver"></param>
+        /// <param name="oids"></param>
         public void UpdateOids(string ver, List<Oid> oids)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateOids");
-
             if (oids.Count > 0)
             {
                 DeleteFromOidTable();
@@ -164,15 +201,21 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
+        /// <summary>
+        /// Clears the oid table
+        /// resets the increment
+        /// </summary>
         private void DeleteFromOidTable()
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "DeleteFromOidTable");
-
             NonQuery("Delete from `Oid`");
             NonQuery("delete from `sqlite_sequence` where `name` = 'Oid';");
         }
 
-
+        /// <summary>
+        /// Inserts the OidList into the oid table via InsertOidToTable
+        /// </summary>
+        /// <param name="oids"></param>
         private void InsertOidListToTable(List<Oid> oids)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertOidListToTable");
@@ -183,7 +226,10 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-
+        /// <summary>
+        /// Inserts OidToTable
+        /// </summary>
+        /// <param name="oid"></param>
         private void InsertOidToTable(Oid oid)
         {
             using (var command = new SQLiteCommand(
@@ -356,10 +402,14 @@ namespace de.fearvel.openMPS.Database
                 command.Prepare();
                 NonQuery(command);
             }
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertOidToTable done");
 
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertOidToTable done");
         }
 
+        /// <summary>
+        /// Updates the OidVersion
+        /// </summary>
+        /// <param name="ver"></param>
         private void UpdateOidVersion(string ver)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateOidVersion");
@@ -369,19 +419,27 @@ namespace de.fearvel.openMPS.Database
                 command.Parameters.AddWithValue("@ver", ver);
                 NonQuery(command);
                 FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateOidVersion done");
-
             }
         }
 
+        /// <summary>
+        /// returns a DataTable with all oid values
+        /// </summary>
+        /// <returns></returns>
         public DataTable SelectFromOidTable()
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable");
 
             return Query("Select * from `Oid`;");
         }
+
+        /// <summary>
+        /// returns a DataTable with a specific oid value
+        /// </summary>
+        /// <returns></returns>
         public DataTable SelectFromOidTable(string ident)
         {
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable "+ ident);
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable " + ident);
 
             return Query("Select * from `Oid` where `OidPrivateId`='" + ident + "'");
         }
@@ -390,15 +448,21 @@ namespace de.fearvel.openMPS.Database
 
         #region "TABLE CREATION"
 
+        /// <summary>
+        /// Calls the generate table functions
+        /// </summary>
         public override void GenerateTables()
         {
-            CreateInformationTable();
+            CreateDirectory();
             CreateDevicesTable();
             CreateFlagTable();
-            GenerateOidTable();
+            CreateOidTable();
         }
 
-        public void CreateInformationTable()
+        /// <summary>
+        /// creates the Directory table
+        /// </summary>
+        public void CreateDirectory()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS Directory ( " +
                      " `DKey` varchar(200)," +
@@ -412,6 +476,10 @@ namespace de.fearvel.openMPS.Database
             NonQuery("INSERT INTO `Directory` (`DKey`,`DVal`) VALUES ('UUID','" + Guid.NewGuid().ToString() + "');");
         }
 
+        /// <summary>
+        /// returns a DataTable with a specific oid value
+        /// </summary>
+        /// <returns></returns>
         public DataTable GetOidRowByPrivateId(string ident)
         {
             using (var command = new SQLiteCommand(
@@ -423,8 +491,10 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-
-        public void GenerateOidTable()
+        /// <summary>
+        /// creates the OidTable
+        /// </summary>
+        public void CreateOidTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS `Oid` (" +
                      " `Id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -485,6 +555,9 @@ namespace de.fearvel.openMPS.Database
                      ");");
         }
 
+        /// <summary>
+        /// creates the Flags table
+        /// </summary>
         private void CreateFlagTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS `Flags` (" +
@@ -493,6 +566,9 @@ namespace de.fearvel.openMPS.Database
                      " CONSTRAINT uq_Version_Identifier UNIQUE (`DKey`));");
         }
 
+        /// <summary>
+        /// creates the Devices table
+        /// </summary>
         public void CreateDevicesTable()
         {
             NonQuery("CREATE TABLE IF NOT EXISTS `Devices` (" +

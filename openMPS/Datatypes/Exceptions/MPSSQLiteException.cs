@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
+using System;
 
 namespace de.fearvel.openMPS.DataTypes.Exceptions
 {

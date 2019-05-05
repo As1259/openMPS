@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
+using System;
 
 namespace de.fearvel.openMPS.DataTypes.Exceptions
 {

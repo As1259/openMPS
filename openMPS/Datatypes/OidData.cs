@@ -1,7 +1,7 @@
-﻿using System;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
 using System.Collections.Generic;
 using System.Data;
-using System.Windows.Documents;
 using de.fearvel.net.DataTypes.AbstractDataTypes;
 using de.fearvel.net.Manastone;
 

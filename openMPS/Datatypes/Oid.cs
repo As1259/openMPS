@@ -1,4 +1,6 @@
-﻿using de.fearvel.net.DataTypes.AbstractDataTypes;
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
+
+using de.fearvel.net.DataTypes.AbstractDataTypes;
 
 namespace de.fearvel.openMPS.DataTypes
 {

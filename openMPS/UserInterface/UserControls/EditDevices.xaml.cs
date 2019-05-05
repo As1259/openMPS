@@ -1,8 +1,4 @@
-﻿#region Copyright
-
-// Copyright (c) 2018, Andreas Schreiner
-
-#endregion
+﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
 
 using System;
 using System.Data;
@@ -14,6 +10,7 @@ using System.Windows.Threading;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes.Exceptions;
+using de.fearvel.openMPS.Interfaces;
 using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
@@ -21,7 +18,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
     /// <summary>
     ///     Interaktionslogik für geraeteBearbeiten.xaml
     /// </summary>
-    public partial class EditDevices : UserControl
+    public partial class EditDevices : UserControl, IRibbonAdvisoryText
     {
         /// <summary>
         ///     The DataRowView
@@ -308,9 +305,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                  );
             }
             catch (SnmpIdentNotFoundException)
-            {
-
-                
+            {                
             }
             DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
 
@@ -484,6 +479,12 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             LabelProgress.Content = ProgressBarProgress.Value + " %";
         }
 
-
+        /// <summary>
+        /// AdvisoryText displayed in the Ribbon bar
+        /// </summary>
+        public string AdvisoryText =>
+            "Hier können Sie neue Geräte hinzufügen, oder die IP-Adressen bereits erfasster Geräte anpassen." +
+            " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
+            "werden, oder nicht.";
     }
 }

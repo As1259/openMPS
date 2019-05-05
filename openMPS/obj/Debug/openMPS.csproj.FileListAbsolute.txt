@@ -409,7 +409,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\bin\Debug\Google.Protobuf
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS.exe.config
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\MainWindow.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\CustomControls\DeviceProps.baml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openRegistration.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\MainWindow.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\RetrieveDeviceInformation.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\CustomControls\DeviceProps.g.cs
@@ -424,7 +423,6 @@ C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\App.g.cs
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS_MarkupCompile.cache
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openMPS_MarkupCompile.lref
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\App.baml
-C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\openRegistration.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\RetrieveDeviceInformation.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\DeviceManagement.baml
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\obj\Debug\UserInterface\UserControls\Settings\Settings.baml
