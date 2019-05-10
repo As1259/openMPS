@@ -14,39 +14,39 @@
                   VerticalAlignment="Top" Width="1127" CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserSortColumns="False" CanUserReorderColumns="False" CanUserResizeRows="False"
                   SelectedCellsChanged="geraeteGrid_SelectedCellsChanged" BorderThickness="1" BorderBrush="Black"/>
-        <TextBox x:Name="TextBoxIpSegmentOne" HorizontalAlignment="Left" Height="17" Margin="299,30,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxIpSegmentOne" HorizontalAlignment="Left" Height="17" Margin="334,32,0,0" TextWrapping="Wrap"
                  Text="255" VerticalAlignment="Top" Width="35" TabIndex="1" Panel.ZIndex="1" IsEnabled="false"
                  FontFamily="Arial" FontSize="12" MaxLength="3" TextAlignment="Center" TextChanged="TextBoxIpSegmentOne_TextChanged" />
-        <TextBox x:Name="TextBoxIpSegmentTwo" HorizontalAlignment="Left" Height="17" Margin="339,30,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxIpSegmentTwo" HorizontalAlignment="Left" Height="17" Margin="374,32,0,0" TextWrapping="Wrap"
                  Text="255" VerticalAlignment="Top" Width="35" TabIndex="2" Panel.ZIndex="1" IsEnabled="false"
                  FontFamily="Arial" FontSize="12" MaxLength="3" TextAlignment="Center" TextChanged="TextBoxIpSegmentTwo_TextChanged" />
-        <TextBox x:Name="TextBoxIpSegmentThree" HorizontalAlignment="Left" Height="17" Margin="379,30,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxIpSegmentThree" HorizontalAlignment="Left" Height="17" Margin="414,32,0,0" TextWrapping="Wrap"
                  Text="255" VerticalAlignment="Top" Width="35" TabIndex="3" Panel.ZIndex="1" IsEnabled="false"
                  FontFamily="Arial" FontSize="12" MaxLength="3" TextAlignment="Center" TextChanged="TextBoxIpSegmentThree_TextChanged" />
-        <TextBox x:Name="TextBoxIpSegmentFour" HorizontalAlignment="Left" Height="17" Margin="419,30,0,0" TextWrapping="Wrap"
+        <TextBox x:Name="TextBoxIpSegmentFour" HorizontalAlignment="Left" Height="17" Margin="454,32,0,0" TextWrapping="Wrap"
                  Text="255" VerticalAlignment="Top" Width="35" TabIndex="4" Panel.ZIndex="1" IsEnabled="false"
                  FontFamily="Arial" FontSize="12" MaxLength="3" TextAlignment="Center" />
-        <TextBox x:Name="TextBoxSerialNumber" HorizontalAlignment="Left" Height="17" Margin="480,30,0,0"
-                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="200" IsEnabled="false" />
-        <Label Content="." HorizontalAlignment="Left" Margin="330,28,0,0" VerticalAlignment="Top" Panel.ZIndex="0" />
-        <Label Content="." HorizontalAlignment="Left" Margin="370,28,0,0" VerticalAlignment="Top" Panel.ZIndex="0" />
-        <Label Content="." HorizontalAlignment="Left" Margin="410,28,0,0" VerticalAlignment="Top" Panel.ZIndex="0" />
+        <TextBox x:Name="TextBoxHostName" HorizontalAlignment="Left" Height="17" Margin="573,32,0,0"
+                 TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="220" IsEnabled="false" RenderTransformOrigin="0.51,1.333" />
+        <Label Content="." HorizontalAlignment="Left" Margin="365,30,0,0" VerticalAlignment="Top" Panel.ZIndex="0" />
+        <Label Content="." HorizontalAlignment="Left" Margin="405,30,0,0" VerticalAlignment="Top" Panel.ZIndex="0" />
+        <Label Content="." HorizontalAlignment="Left" Margin="445,30,0,0" VerticalAlignment="Top" Panel.ZIndex="0" />
         <Label Content="Um ein Gerät nachträglich zu ändern klicken Sie bitte auf ein Gerät in der Tabelle"
                HorizontalAlignment="Left" Margin="21,77,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left"
                RenderTransformOrigin="-1.738,3.181" Width="454" />
-        <Label Content="IP:" HorizontalAlignment="Left" Margin="276,25,0,0" VerticalAlignment="Top" Width="32" />
-        <Label Content="Aktiv:" HorizontalAlignment="Left" Margin="194,25,0,0" VerticalAlignment="Top" />
-        <CheckBox x:Name="CheckBoxActive" HorizontalAlignment="Left" Margin="238,31,0,0" VerticalAlignment="Top"
+        <Label Content="IP:" HorizontalAlignment="Left" Margin="288,33,0,0" VerticalAlignment="Top" Width="32" />
+        <Label Content="Aktiv:" HorizontalAlignment="Left" Margin="194,33,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.462,0.962" />
+        <CheckBox x:Name="CheckBoxActive" HorizontalAlignment="Left" Margin="238,36,0,0" VerticalAlignment="Top"
                   IsEnabled="false" />
 
         <Button x:Name="ButtonSaveEntry" Click="ButtonSaveEntry_Click" Content="speichern" HorizontalAlignment="Left"
-                Margin="845,25,0,0" VerticalAlignment="Top" Width="135" IsEnabled="false" Height="25" />
+                Margin="965,33,0,0" VerticalAlignment="Top" Width="135" IsEnabled="false" Height="25" />
         <Button x:Name="ButtonCreateEntry" Click="ButtonCreateEntry_Click" Content="Gerät neu anlegen" HorizontalAlignment="Left"
-                Margin="25,25,0,0" VerticalAlignment="Top" Width="135" Height="25" />
+                Margin="25,33,0,0" VerticalAlignment="Top" Width="135" Height="25" />
         <Button x:Name="ButtonDeleteEntry" Click="ButtonDeleteEntry_Click" Content="Eintrag löschen" HorizontalAlignment="Left"
-                Margin="705,25,0,0" VerticalAlignment="Top" Width="135" IsEnabled="false" Height="25" />
+                Margin="825,33,0,0" VerticalAlignment="Top" Width="135" IsEnabled="false" Height="25" />
         <Button x:Name="ButtonHelp" Click="ButtonHelp_Click" Content="?" HorizontalAlignment="Left"
-                Margin="1132,25,0,0" VerticalAlignment="Top" Width="20" Panel.ZIndex="1" Height="20"
+                Margin="1139,33,0,0" VerticalAlignment="Top" Width="25" Panel.ZIndex="1" Height="25"
                 RenderTransformOrigin="0.867,-1.409" />
         <Grid HorizontalAlignment="Left" Height="25" Margin="25,25,0,0" VerticalAlignment="Top" Width="135"
               x:Name="GridProgress">
@@ -56,5 +56,6 @@
             <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" x:Name="LabelProgress"
                    Visibility="Hidden" Panel.ZIndex="2" />
         </Grid>
+        <Label Content="HostName:" HorizontalAlignment="Left" Margin="494,33,0,0" VerticalAlignment="Top" Width="105" />
     </Grid>
 </UserControl>

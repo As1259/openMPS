@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
@@ -14,6 +12,7 @@ namespace de.fearvel.openMPS.Database
 {
     /// <summary>
     /// abstract class for possible reuse purpose
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public abstract class SqliteConnect
     {

@@ -1,23 +1,21 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Management;
 using System.Net;
-using System.Net.NetworkInformation;
-using System.Text;
+using System.Net.Sockets;
 using de.fearvel.net.FnLog;
 
 namespace de.fearvel.openMPS.Net
 {
     /// <summary>
-    ///     IP Scan Tools
+    /// IP Scan Tools
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     internal static class ScanIp
     {
 
         /// <summary>
-        ///     Finds the ip range.
+        /// Finds the ip range.
         /// </summary>
         /// <param name="ipMask">The ip mask.</param>
         /// <returns></returns>
@@ -25,7 +23,7 @@ namespace de.fearvel.openMPS.Net
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "FindIpRange");
 
-            var ip = new IPAddress(ConvertStringToAddress(ipMask[0]));
+            var ip = IPAddress.Parse(ipMask[0]);
             var bits = NetmaskToBit(ipMask[1]);
             var mask = ~(uint.MaxValue >> bits);
             // Convert the IP address to bytes.
@@ -50,7 +48,31 @@ namespace de.fearvel.openMPS.Net
         }
 
         /// <summary>
-        ///     Netmasks to bit.
+        /// Resolves a HostName to a IPAddress using the DNS Server
+        /// this will only return a IPV4 Address,
+        /// because SnmpSharpNet can only handle IPV4
+        /// </summary>
+        /// <param name="hostName"></param>
+        /// <returns></returns>
+        public static IPAddress ResolveHostName(string hostName)
+        {
+            return Dns.GetHostAddresses(hostName).FirstOrDefault(
+                ip => ip.AddressFamily == AddressFamily.InterNetwork);
+        }
+
+        /// <summary>
+        /// Resolves an IPAddress to a IPHostEntry
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        // ReSharper disable once InconsistentNaming
+        public static IPHostEntry ResolveIPAddress(IPAddress ip)
+        {
+            return Dns.GetHostEntry(ip);
+        }
+
+        /// <summary>
+        /// Netmask to bit.
         /// </summary>
         /// <param name="mask">The mask.</param>
         /// <returns></returns>
@@ -73,25 +95,6 @@ namespace de.fearvel.openMPS.Net
         }
 
         /// <summary>
-        ///     Converts the string to address.
-        /// </summary>
-        /// <param name="s">The s.</param>
-        /// <returns></returns>
-        public static byte[] ConvertStringToAddress(string s)
-        {
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "ConvertStringToAddress");
-            var ba = new byte[4];
-            ba[0] = Convert.ToByte(s.Substring(0, s.IndexOf(".")));
-            s = s.Substring(s.IndexOf(".") + 1, s.Length - s.IndexOf(".") - 1);
-            ba[1] = Convert.ToByte(s.Substring(0, s.IndexOf(".")));
-            s = s.Substring(s.IndexOf(".") + 1, s.Length - s.IndexOf(".") - 1);
-            ba[2] = Convert.ToByte(s.Substring(0, s.IndexOf(".")));
-            s = s.Substring(s.IndexOf(".") + 1, s.Length - s.IndexOf(".") - 1);
-            ba[3] = Convert.ToByte(s);
-            return ba;
-        }
-
-        /// <summary>
         ///     Gets the ip mask.
         /// </summary>
         /// <returns></returns>
@@ -100,10 +103,10 @@ namespace de.fearvel.openMPS.Net
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "GetIpMask");
             string[] address = null;
             string[] subnetMask = null;
-            var NetworkInfo =
+            var networkInfo =
                 new ManagementObjectSearcher(
                     "SELECT * FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = 'TRUE'");
-            var moc = NetworkInfo.Get();
+            var moc = networkInfo.Get();
             foreach (var mo in moc)
             {
                 address = (string[]) mo["IPAddress"];
@@ -114,37 +117,5 @@ namespace de.fearvel.openMPS.Net
 
             return new[] {address[0], subnetMask[0]};
         }
-
-        /// <summary>
-        ///     Pings the ip.
-        /// </summary>
-        /// <param name="ip">The ip.</param>
-        /// <returns></returns>
-        public static bool PingIp(IPAddress ip)
-        {
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp", "PingIp");
-            var pingSender = new Ping();
-            var options = new PingOptions
-            {
-                // Use the default Ttl value which is 128,
-                // but change the fragmentation behavior.
-                DontFragment = true
-            };
-            var data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            var buffer = Encoding.ASCII.GetBytes(data);
-            var timeout = 4;
-            var reply = pingSender.Send(ip, timeout, buffer, options);
-            switch (reply.Status)
-            {
-                case IPStatus.Success:
-                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp",
-                        "PingIp - SUCCESS - " + ip.ToString());
-                    return true;
-                default:
-                    FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "ScanIp",
-                        "PingIp - FAILED - " + ip.ToString());
-                    return false;
-            }
         }
-    }
 }

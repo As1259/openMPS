@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using de.fearvel.net.FnLog;
@@ -10,6 +8,7 @@ namespace de.fearvel.openMPS.UserInterface.Windows
 {
     /// <summary>
     /// Interaktionslogik für LicenseDialog.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class LicenseDialog : Window
     {

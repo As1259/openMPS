@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using de.fearvel.net.DataTypes.AbstractDataTypes;
 using de.fearvel.net.Manastone;
@@ -9,6 +7,7 @@ namespace de.fearvel.openMPS.DataTypes
 {
     /// <summary>
     /// Container Class for the received Oid 
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public class OidData : JsonSerializable<OidData>
     {

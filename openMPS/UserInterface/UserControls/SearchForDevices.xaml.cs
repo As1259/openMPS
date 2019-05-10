@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Data;
 using System.Net;
 using System.Threading;
@@ -18,7 +16,8 @@ using de.fearvel.openMPS.Interfaces;
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
     /// <summary>
-    ///     Interaktionslogik für geraeteSuchen.xaml
+    /// Interaktionslogik für geraeteSuchen.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class SearchForDevices : UserControl, IRibbonAdvisoryText
     {
@@ -94,14 +93,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             ButtonSearch.Visibility = Visibility.Hidden;
             ProgressBarSearchProgress.Value = 0;
 
-            StartIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(
+            StartIpAddress =  IPAddress.Parse(
                 TextBoxIpFirstSegmentOne.Text + "." + TextBoxIpFirstSegmentTwo.Text +
                 "." + TextBoxIpFirstSegmentThree.Text + "." +
-                TextBoxIpFirstSegmentFour.Text));
-            EndIpAddress = new IPAddress(ScanIp.ConvertStringToAddress(TextBoxIpSecondSegmentOne.Text + "." +
+                TextBoxIpFirstSegmentFour.Text);
+            EndIpAddress = IPAddress.Parse(TextBoxIpSecondSegmentOne.Text + "." +
                                                                        TextBoxIpSecondSegmentTwo.Text + "." +
                                                                        TextBoxIpSecondSegmentThree.Text + "." +
-                                                                       TextBoxIpSecondSegmentFour.Text));
+                                                                       TextBoxIpSecondSegmentFour.Text);
 
             ThreadPool.QueueUserWorkItem(SearchForPrinter);
             ThreadPool.QueueUserWorkItem(AdaptProgressLoad);
@@ -177,11 +176,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                                 dts.Rows[0].Field<string>("AssetNumber"));
                             Config.GetInstance().UpdateDeviceTable(
                                 "1",
-                                ScanIp.ConvertStringToAddress(ipAddress.ToString()),
+                                ipAddress.GetAddressBytes(),
                                 modell,
                                 serial,
                                 asset,
-                                ScanIp.ConvertStringToAddress(ipAddress.ToString())
+                                ipAddress.GetAddressBytes()
                             );
                             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices",
                                 "SearchForPrinter Found: " + ipAddress.ToString() + " Type: " + ident);
@@ -202,7 +201,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                                                            ipAddress.ToString() + "'; ");
                                 Config.GetInstance().InsertInDeviceTable(
                                     "1",
-                                    ScanIp.ConvertStringToAddress(ipAddress.ToString()),
+                                    ipAddress.GetAddressBytes(),
                                     modell,
                                     serial,
                                     asset

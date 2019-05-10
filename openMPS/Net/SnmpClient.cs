@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Net;
@@ -13,13 +11,14 @@ namespace de.fearvel.openMPS.Net
 {
     /// <summary>
     /// Aquireing data
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public static class SnmpClient
     {
         /// <summary>
         /// The abgefragte oids
         /// </summary>
-        private static Dictionary<string, Type> AbgefragteOids = new Dictionary<string, Type>()
+        private static readonly Dictionary<string, Type> ScannedOiDs = new Dictionary<string, Type>()
         {
             {
                 "OidPrivateId", typeof(string)
@@ -244,6 +243,7 @@ namespace de.fearvel.openMPS.Net
 
         /// <summary>
         /// uses snmp to get the values of an mps
+        /// fills an OidData instance
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="oid"></param>
@@ -256,7 +256,7 @@ namespace de.fearvel.openMPS.Net
             var longDict = new Dictionary<string, long>();
             try
             {
-                foreach (var pair in AbgefragteOids)
+                foreach (var pair in ScannedOiDs)
                 {
                     if (pair.Value == typeof(string))
                     {

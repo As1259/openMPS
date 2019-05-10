@@ -1,9 +1,8 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-namespace de.fearvel.openMPS.Interfaces
+﻿namespace de.fearvel.openMPS.Interfaces
 {
     /// <summary>
     /// Interface for ribbon Advisory text
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public interface IRibbonAdvisoryText
     {

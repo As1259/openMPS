@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -18,6 +16,10 @@ using Formatting = Newtonsoft.Json.Formatting;
 
 namespace de.fearvel.openMPS.Net
 {
+    /// <summary>
+    /// The openMPS Client
+    /// <copyright>Andreas Schreiner 2019</copyright>
+    /// </summary>
     // ReSharper disable once InconsistentNaming
     public sealed class OpenMPSClient
     {

@@ -1,7 +1,6 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Data;
+using System.Net;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,26 +15,27 @@ using de.fearvel.openMPS.Net;
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
     /// <summary>
-    ///     Interaktionslogik für geraeteBearbeiten.xaml
+    /// Interaktionslogik für geraeteBearbeiten.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class EditDevices : UserControl, IRibbonAdvisoryText
     {
         /// <summary>
-        ///     The DataRowView
+        /// The DataRowView
         /// </summary>
         private DataRowView drv;
 
         /// <summary>
-        ///     The DataTable
+        /// The DataTable
         /// </summary>
 
         /// <summary>
-        ///     bool for selected on grid
+        /// bool for selected on grid
         /// </summary>
         private bool selected;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="EditDevices" /> class.
+        /// Initializes a new instance of the <see cref="EditDevices" /> class.
         /// </summary>
         public EditDevices()
         {
@@ -44,7 +44,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Load event of the geraeteSuchen control.
+        /// Handles the Load event of the geraeteSuchen control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
@@ -55,7 +55,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Loads the grid data.
+        /// Loads the grid data.
         /// </summary>
         public void LoadGridData()
         {
@@ -63,7 +63,6 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             Config.GetInstance().UpdateDevices();
             DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            //   DataGridDevices.IsReadOnly = true;
             DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
             DataGridDevices.Columns[0].IsReadOnly = true;
             DataGridDevices.Columns[1].IsReadOnly = true;
@@ -71,32 +70,29 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             DataGridDevices.Columns[3].IsReadOnly = true;
             DataGridDevices.Columns[4].IsReadOnly = true;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "LoadGridData Complete");
-
-            //DataGridDevices.Columns[1].Width = 120;
-            //DataGridDevices.Columns[4].Width = 300;
         }
 
         /// <summary>
-        ///     Handles the SelectedCellsChanged event of the DataGridDevices control.
+        /// Handles the SelectedCellsChanged event of the DataGridDevices control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
-        ///     The <see cref="System.Windows.Controls.SelectedCellsChangedEventArgs" /> instance containing the event
-        ///     data.
+        /// The <see cref="System.Windows.Controls.SelectedCellsChangedEventArgs" /> instance containing the event
+        /// data.
         /// </param>
         private void geraeteGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             try
             {
                 drv = (DataRowView)DataGridDevices.SelectedItem;
-                var ipAddress = ScanIp.ConvertStringToAddress(drv["IP"].ToString());
+                var ipAddress = IPAddress.Parse(drv["IP"].ToString()).GetAddressBytes();
                 unlockElements();
                 ButtonDeleteEntry.IsEnabled = true;
                 TextBoxIpSegmentOne.Text = ipAddress[0].ToString();
                 TextBoxIpSegmentTwo.Text = ipAddress[1].ToString();
                 TextBoxIpSegmentThree.Text = ipAddress[2].ToString();
                 TextBoxIpSegmentFour.Text = ipAddress[3].ToString();
-                TextBoxSerialNumber.Text = drv["SerialNumber"].ToString();
+                TextBoxHostName.Text = drv["HostName"].ToString();
                 //tb_assetnumber.Text = drv["Assetnumber"].ToString();
                 if (drv["Active"].ToString().Contains("True"))
                     CheckBoxActive.IsChecked = true;
@@ -111,7 +107,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Locks the elements.
+        /// Locks the elements.
         /// </summary>
         private void lockElements()
         {
@@ -120,12 +116,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             TextBoxIpSegmentTwo.IsEnabled = false;
             TextBoxIpSegmentThree.IsEnabled = false;
             TextBoxIpSegmentFour.IsEnabled = false;
+            TextBoxHostName.IsEnabled = false;
             CheckBoxActive.IsEnabled = false;
             ButtonDeleteEntry.IsEnabled = false;
         }
 
         /// <summary>
-        ///     Unlocks the elements.
+        /// Unlocks the elements.
         /// </summary>
         private void unlockElements()
         {
@@ -138,7 +135,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Click event of the ButtonSaveEntry control.
+        /// Handles the Click event of the ButtonSaveEntry control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
@@ -154,8 +151,16 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var active = "1";
             try
             {
-                ScanIp.ConvertStringToAddress(ipAddress);
-                if (!(bool)CheckBoxActive.IsChecked) active = "0";
+                if (ipAddress.Length == 3  && !selected)
+                {
+                     var ipFromHostName = ScanIp.ResolveHostName(TextBoxHostName.Text);
+                     ipAddress = ipFromHostName.ToString();
+                }
+                else
+                {
+                    IPAddress.Parse(ipAddress);
+                }
+                if (CheckBoxActive.IsChecked != null && !(bool)CheckBoxActive.IsChecked) active = "0";
                 if (selected)
                 {
                     if (drv["IP"].ToString().CompareTo(ipAddress) == 0)
@@ -188,16 +193,17 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Save Error");
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices",
+                    "Button Save Error: " + ex.Message);
                 MessageBox.Show("Fehlerhafte Eingabe der IP", "IPEingabeError", MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
         }
 
         /// <summary>
-        ///     Updates the bekannte geraete via thread.
+        /// Updates the devices via thread.
         /// </summary>
         /// <param name="param">The parameter.</param>
         private void UpdateDevicesViaThread(object param)
@@ -217,7 +223,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 var serial = "";
                 var asset = "";
 
-                var ip = ScanIp.ConvertStringToAddress(ipAddress);
+                var ip = IPAddress.Parse(ipAddress);
                 ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
                 if (ident.Length > 0)
@@ -239,14 +245,14 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
                 }
 
-                var ipAlt = ScanIp.ConvertStringToAddress(altIP);
+                var ipAlt = IPAddress.Parse(altIP);
                 Config.GetInstance().UpdateDeviceTable(
                     aktiv,
-                    ip,
+                    ip.GetAddressBytes(),
                     modell,
                     serial,
                     asset,
-                    ipAlt
+                    ipAlt.GetAddressBytes()
                 );
 
             }
@@ -257,7 +263,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Inserts the in bekannte geraete via thread.
+        /// Inserts the in devices via thread.
         /// </summary>
         /// <param name="param">The parameter.</param>
         private void InsertInDevicesViaThread(object param)
@@ -274,7 +280,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 var asset = "";
                 FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "InsertDevicesViaThread " + ipAddress);
 
-                var ip = ScanIp.ConvertStringToAddress(ipAddress);
+                var ip = IPAddress.Parse(ipAddress);
                 ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
 
                 if (ident.Length > 0)
@@ -298,7 +304,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
                 Config.GetInstance().InsertInDeviceTable(
                      aktiv,
-                     ip,
+                     ip.GetAddressBytes(),
                      modell,
                      serial,
                      asset
@@ -312,7 +318,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Adjusts the ProgressBarSearchProgress.
+        /// Adjusts the ProgressBarSearchProgress.
         /// </summary>
         private void adjustProgress()
         {
@@ -328,7 +334,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Click event of the ButtonCreateEntry control.
+        /// Handles the Click event of the ButtonCreateEntry control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
@@ -340,18 +346,17 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             ButtonSaveEntry.IsEnabled = true;
             unlockElements();
             DataGridDevices.UnselectAll();
-
+            TextBoxHostName.IsEnabled = true;
             TextBoxIpSegmentOne.Clear();
             TextBoxIpSegmentTwo.Clear();
             TextBoxIpSegmentThree.Clear();
             TextBoxIpSegmentFour.Clear();
-            TextBoxSerialNumber.Clear();
-            // tb_assetnumber.Clear();
+            TextBoxHostName.Clear();
             CheckBoxActive.IsChecked = true;
         }
 
         /// <summary>
-        ///     Handles the switch event of the tb control.
+        /// Handles the switch event of the tb control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
@@ -371,7 +376,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the switch2 event of the tb control.
+        /// Handles the switch2 event of the tb control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
@@ -391,7 +396,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the switch3 event of the tb control.
+        /// Handles the switch3 event of the tb control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
@@ -411,7 +416,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Click event of the ButtonDeleteEntry control.
+        /// Handles the Click event of the ButtonDeleteEntry control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
@@ -439,7 +444,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the Click event of the ButtonHelp control.
+        /// Handles the Click event of the ButtonHelp control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
@@ -447,19 +452,19 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button help click");
 
-            MessageBox.Show("Gerät neu anlegen"
+            MessageBox.Show("Gerät neu anlegen:\n"
                             + "Klicken Sie auf den Button „Gerät neu anlegen“ und erfassen anschließend"
-                            + "die IPv4 - Adresse in den vorgesehenen Feldern"
+                            + "die IPv4-Adresse oder wahlweise den Hostname des Gerätes in den dafür vorgesehenen Feldern"
                 , "Anleitung", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
-        ///     Handles the IsVisibleChanged event of the ProgressBarSearchProgress control.
+        /// Handles the IsVisibleChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
-        ///     The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event
-        ///     data.
+        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event
+        /// data.
         /// </param>
         private void ProgressBarProgress_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -467,12 +472,12 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         }
 
         /// <summary>
-        ///     Handles the ValueChanged event of the ProgressBarSearchProgress control.
+        /// Handles the ValueChanged event of the ProgressBarSearchProgress control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">
-        ///     The <see cref="System.Windows.RoutedPropertyChangedEventArgs{System.Double}" /> instance containing the
-        ///     event data.
+        /// The <see cref="System.Windows.RoutedPropertyChangedEventArgs{System.Double}" /> instance containing the
+        /// event data.
         /// </param>
         private void ProgressBarProgress_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -483,7 +488,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// AdvisoryText displayed in the Ribbon bar
         /// </summary>
         public string AdvisoryText =>
-            "Hier können Sie neue Geräte hinzufügen, oder die IP-Adressen bereits erfasster Geräte anpassen." +
+            "Hier können Sie neue Geräte hinzufügen, anpassen oder entfernen." +
             " Über die Kennzeichnung „Aktiv“ können Sie entscheiden, ob zu einem Gerät Werte abgefragt und übermittelt " +
             "werden, oder nicht.";
     }

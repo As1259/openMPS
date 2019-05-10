@@ -1,19 +1,20 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Data.SQLite;
+using System.Net;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.DataTypes;
 using de.fearvel.openMPS.DataTypes.Exceptions;
+using de.fearvel.openMPS.Net;
 
 namespace de.fearvel.openMPS.Database
 {
     /// <summary>
-    ///     Manages the Connection to the Local config DB
+    /// Manages the Connection to the Local config DB
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public class Config : SqliteConnect
     {
@@ -46,7 +47,6 @@ namespace de.fearvel.openMPS.Database
             set => _devices = value;
         }
 
-        #region "FLAGS"
 
         /// <summary>
         /// Flag dictionary for use in the futur
@@ -83,7 +83,6 @@ namespace de.fearvel.openMPS.Database
             }
         }
 
-        #endregion
 
 
         /// <summary>
@@ -96,31 +95,32 @@ namespace de.fearvel.openMPS.Database
             return _instance ?? (_instance = new Config());
         }
 
-        #region "INSERT / UPDATE"
 
         /// <summary>
         /// Inserts a device into the Devices table
         /// </summary>
-        /// <param name="aktiv"></param>
+        /// <param name="active"></param>
         /// <param name="ipAddress"></param>
         /// <param name="model"></param>
         /// <param name="serial"></param>
         /// <param name="assetNumber"></param>
-        public void InsertInDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
+        public void InsertInDeviceTable(string active, byte[] ipAddress, string model, string serial,
             string assetNumber)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "InsertInDeviceTable");
             using (var command = new SQLiteCommand(
                 "Insert into `Devices`" +
-                " (`Active`, `Ip`, `Model`, `SerialNumber`, `AssetNumber`)" +
-                " Values (@Active,@IPAddress,@Model,@SerialNumber,@AssetNumber);"))
+                " (`Active`, `Ip`, `Model`, `SerialNumber`, `AssetNumber`, `HostName`)" +
+                " Values (@Active,@IPAddress,@Model,@SerialNumber,@AssetNumber, @HostName);"))
             {
-                command.Parameters.AddWithValue("@Active", aktiv);
+                command.Parameters.AddWithValue("@Active", active);
                 command.Parameters.AddWithValue("@IPAddress",
                     ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3]);
                 command.Parameters.AddWithValue("@Model", model);
                 command.Parameters.AddWithValue("@SerialNumber", serial);
                 command.Parameters.AddWithValue("@AssetNumber", assetNumber);
+                command.Parameters.AddWithValue("@HostName", ScanIp.ResolveIPAddress(new IPAddress(ipAddress)).HostName);
+
                 command.Prepare();
                 NonQuery(command);
             }
@@ -129,22 +129,23 @@ namespace de.fearvel.openMPS.Database
         /// <summary>
         /// Updates an entry of the Devices table
         /// </summary>
-        /// <param name="aktiv"></param>
+        /// <param name="active"></param>
         /// <param name="ipAddress"></param>
         /// <param name="model"></param>
         /// <param name="serial"></param>
         /// <param name="assetNumber"></param>
         /// <param name="altIp"></param>
-        public void UpdateDeviceTable(string aktiv, byte[] ipAddress, string model, string serial,
+        public void UpdateDeviceTable(string active, byte[] ipAddress, string model, string serial,
             string assetNumber, byte[] altIp)
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "UpdateDeviceTable");
 
             using (var command = new SQLiteCommand(
-                "Update Devices set `Active`=@Active, `Ip`=@IPAddress, `Model`=@Model, `SerialNumber`=@SerialNumber, `AssetNumber`=@AssetNumber" +
+                "Update Devices set `Active`=@Active, `Ip`=@IPAddress, `Model`=@Model, `SerialNumber`=@SerialNumber, " +
+                "`AssetNumber`=@AssetNumber ,`HostName`=@HostName" +
                 " where `Ip`=@AltIPAddress;"))
             {
-                command.Parameters.AddWithValue("@Active", aktiv);
+                command.Parameters.AddWithValue("@Active", active);
                 command.Parameters.AddWithValue("@IPAddress",
                     ipAddress[0] + "." + ipAddress[1] + "." + ipAddress[2] + "." + ipAddress[3]);
                 command.Parameters.AddWithValue("@Model", model);
@@ -152,6 +153,8 @@ namespace de.fearvel.openMPS.Database
                 command.Parameters.AddWithValue("@AssetNumber", assetNumber);
                 command.Parameters.AddWithValue("@AltIPAddress",
                     altIp[0] + "." + altIp[1] + "." + altIp[2] + "." + altIp[3]);
+                command.Parameters.AddWithValue("@HostName", ScanIp.ResolveIPAddress(new IPAddress(ipAddress)).HostName);
+
                 command.Prepare();
                 NonQuery(command);
             }
@@ -423,28 +426,40 @@ namespace de.fearvel.openMPS.Database
         }
 
         /// <summary>
-        /// returns a DataTable with all oid values
+        /// returns a DataTable with a specific oid value
         /// </summary>
         /// <returns></returns>
-        public DataTable SelectFromOidTable()
+        public DataTable GetOidRowByPrivateId(string ident)
         {
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable");
-
-            return Query("Select * from `Oid`;");
+            using (var command = new SQLiteCommand(
+                "SELECT * FROM `Oid` Where `OidPrivateId` = @OidPrivateId;"))
+            {
+                command.Parameters.AddWithValue("@OidPrivateId", ident);
+                command.Prepare();
+                return Query(command);
+            }
         }
 
         /// <summary>
         /// returns a DataTable with a specific oid value
         /// </summary>
         /// <returns></returns>
-        public DataTable SelectFromOidTable(string ident)
+        public DataTable SelectFromOidTable(string ident = "")
         {
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MajorRuntimeInfo, "Config", "SelectFromOidTable " + ident);
-
-            return Query("Select * from `Oid` where `OidPrivateId`='" + ident + "'");
+            var sqlStr = "Select * from `Oid`";
+            SQLiteCommand sqlCmd = new SQLiteCommand(sqlStr);
+            if (ident.Length > 0)
+            {
+                sqlStr += " where `OidPrivateId`=@ident";
+                sqlCmd.CommandText = sqlStr;
+                sqlCmd.Parameters.AddWithValue("@ident", ident);
+                sqlCmd.Prepare();
+            }
+            return Query(sqlCmd);
         }
 
-        #endregion
+        
 
         #region "TABLE CREATION"
 
@@ -475,22 +490,7 @@ namespace de.fearvel.openMPS.Database
             NonQuery("INSERT INTO `Directory` (`DKey`,`DVal`) VALUES ('OidVersion','0.0.0.0');");
             NonQuery("INSERT INTO `Directory` (`DKey`,`DVal`) VALUES ('UUID','" + Guid.NewGuid().ToString() + "');");
         }
-
-        /// <summary>
-        /// returns a DataTable with a specific oid value
-        /// </summary>
-        /// <returns></returns>
-        public DataTable GetOidRowByPrivateId(string ident)
-        {
-            using (var command = new SQLiteCommand(
-                "SELECT * FROM `Oid` Where `OidPrivateId` = @OidPrivateId;"))
-            {
-                command.Parameters.AddWithValue("@OidPrivateId", ident);
-                command.Prepare();
-                return Query(command);
-            }
-        }
-
+ 
         /// <summary>
         /// creates the OidTable
         /// </summary>
@@ -577,6 +577,7 @@ namespace de.fearvel.openMPS.Database
                      " `Model` varchar(250)," +
                      " `SerialNumber` varchar(250)," +
                      " `AssetNumber` varchar(250) NOT NULL DEFAULT ''," +
+                     " `HostName` varchar(250) NOT NULL DEFAULT ''," +
                      " `Id` INTEGER NOT NULL CONSTRAINT pk_DEVICES_id PRIMARY KEY AUTOINCREMENT);");
         }
 

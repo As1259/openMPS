@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System.IO;
+﻿using System.IO;
 using System.Runtime.CompilerServices;
 using de.fearvel.net.DataTypes.Exceptions;
 using de.fearvel.net.Security.Crypto;
@@ -9,6 +7,7 @@ namespace de.fearvel.openMPS.Security
 {
     /// <summary>
     /// TESTING
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public class InitInformationManager
     {

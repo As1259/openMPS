@@ -1,17 +1,11 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
-using System.CodeDom;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
-using de.fearvel.net.DataTypes;
 using de.fearvel.net.DataTypes.Exceptions;
 using de.fearvel.net.DataTypes.Exceptions.Manastone;
 using de.fearvel.net.FnLog;
@@ -28,19 +22,20 @@ using Fluent;
 namespace de.fearvel.openMPS.UserInterface
 {
     /// <summary>
-    ///     Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für MainWindow.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class MainWindow : IRibbonWindow
     {
         public static int Programid = 10001;
 
         /// <summary>
-        ///     The ucontrol
+        /// The ucontrol
         /// </summary>
         private Dictionary<Type, UserControl> _userControls;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="RibbonWindow" /> class.
+        /// Initializes a new instance of the <see cref="RibbonWindow" /> class.
         /// </summary>
         public MainWindow()
         {
@@ -58,20 +53,6 @@ namespace de.fearvel.openMPS.UserInterface
             Loaded += RibbonWindow_Load;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT",
                 "RibbonWindow_Load complete");
-
-            //FnLog.SetInstance(new FnLogInitPackage(
-            //    "https://log.fearvel.de:9024",
-            //    System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
-            //    Version.Parse(GetFileVersion()),
-            //    FnLog.TelemetryType.LogLocalSendAll,
-            //    "fnlog.db", "")
-            //);
-
-            //   RetrieveDeviceInformation v = new RetrieveDeviceInformation();
-            //   var a = v.GainData();
-            //    OpenMPSClient.SendOidData("https://localhost:9051", a);
-
-
             FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT", "Program Started");
             FnLog.GetInstance().ProcessLogList();
             OpenMPSClient.GetInstance().UpdateOidTable();
@@ -196,8 +177,6 @@ namespace de.fearvel.openMPS.UserInterface
                 "LoadDelayableUserControl");
 
             _userControls.Add(typeof(SearchForDevices), new SearchForDevices());
-            _userControls.Add(typeof(DeviceManagement), new DeviceManagement());
-
             _userControls.Add(typeof(EditDevices), new EditDevices());
             _userControls.Add(typeof(RetrieveDeviceInformation), new RetrieveDeviceInformation());
             FnLog.GetInstance().AddToLogList(FnLog.LogType.StartupLog, "openMPS Main Window INIT",
@@ -342,21 +321,6 @@ namespace de.fearvel.openMPS.UserInterface
         /// unused but nesecarry (interface implementation)
         /// </summary>
         public RibbonTitleBar TitleBar { get; }
-
-
-        /// <summary>
-        /// Button event for ButtonDeviceManagement
-        /// opens DeviceManagement uc
-        /// name inconsistent i know.
-        /// button is for testing purpose only
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ButtonDeviceManagement_Click(object sender, RoutedEventArgs e)
-        {
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.RuntimeInfo, "ProgramInfo", "opening DeviceManagement");
-            DisplayUserControl(_userControls[typeof(DeviceManagement)]);
-        }
 
         /// <summary>
         /// Returns the FileVersion of the assembly

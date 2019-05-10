@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\schreiner.andreas\Code\GitHub\openMPS\openMPS\App.xaml
-12446687651
+101761076131
 
-30-1046589666
+281280619298
 273233599
-UserInterface\MainWindow.xaml;UserInterface\UserControls\RetrieveDeviceInformation.xaml;UserInterface\UserControls\CustomControls\DeviceProps.xaml;UserInterface\UserControls\DeviceManagement.xaml;UserInterface\UserControls\Settings\DisplayManastoneFnLog.xaml;UserInterface\UserControls\Settings\DisplayFnLog.xaml;UserInterface\UserControls\Settings\Settings.xaml;UserInterface\UserControls\Settings\BasicInformation.xaml;UserInterface\UserControls\EditDevices.xaml;UserInterface\UserControls\SearchForDevices.xaml;UserInterface\UserControls\InfoPage.xaml;UserInterface\Windows\LicenseDialog.xaml;
+UserInterface\MainWindow.xaml;UserInterface\UserControls\RetrieveDeviceInformation.xaml;UserInterface\UserControls\Settings\DisplayManastoneFnLog.xaml;UserInterface\UserControls\Settings\DisplayFnLog.xaml;UserInterface\UserControls\Settings\Settings.xaml;UserInterface\UserControls\Settings\BasicInformation.xaml;UserInterface\UserControls\EditDevices.xaml;UserInterface\UserControls\SearchForDevices.xaml;UserInterface\UserControls\InfoPage.xaml;UserInterface\Windows\LicenseDialog.xaml;
 
-True
+False
 

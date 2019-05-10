@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System.Data;
+﻿using System.Data;
 using System.Windows.Controls;
 using de.fearvel.net.DataTypes.Interfaces;
 using de.fearvel.net.FnLog;
@@ -9,6 +7,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
 {
     /// <summary>
     /// Interaktionslogik für DisplayFnLog.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class DisplayFnLog : UserControl, IReloadable
     {

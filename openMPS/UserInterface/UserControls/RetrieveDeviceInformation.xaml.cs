@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Net;
@@ -8,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using de.fearvel.net;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
 using de.fearvel.openMPS.DataTypes;
@@ -18,6 +17,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 {
     /// <summary>
     /// Interaktionslogik für abraegeStarten.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class RetrieveDeviceInformation : UserControl, IRibbonAdvisoryText
     {
@@ -108,7 +108,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var data = new List<OidData>();
             for (var i = 0; i < dt.Rows.Count; i++)
                 if (DeviceTools.IdentDevice(dt.Rows[i].Field<string>("Ip")).Length > 0)
-                    if (ScanIp.PingIp(new IPAddress(ScanIp.ConvertStringToAddress(dt.Rows[i].Field<string>("Ip")))))
+                    if (FnPing.PingAndCheckSuccess(IPAddress.Parse(dt.Rows[i].Field<string>("Ip"))))
                     {
                         if (SnmpClient.ReadDeviceOiDs(dt.Rows[i].Field<string>("Ip"),
                             DeviceTools.IdentDevice(dt.Rows[i].Field<string>("Ip")), out OidData oidData))

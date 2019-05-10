@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
 using de.fearvel.net.FnLog;
 using de.fearvel.openMPS.Database;
@@ -9,12 +7,13 @@ using de.fearvel.openMPS.DataTypes.Exceptions;
 namespace de.fearvel.openMPS.Net
 {
     /// <summary>
-    ///     Tools for the devices
+    /// Tools for MPS Identification
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public static class DeviceTools
     {
         /// <summary>
-        ///     Identifyes the device.
+        /// Identifies the device.
         /// </summary>
         /// <param name="ip">The ip.</param>
         /// <returns></returns>

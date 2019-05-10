@@ -1,12 +1,11 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using de.fearvel.net.FnLog;
 
 namespace de.fearvel.openMPS.UserInterface.UserControls
 {
     /// <summary>
-    ///     Interaktionslogik für start.xaml
+    /// Interaktionslogik für start.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class InfoPage : UserControl
     {

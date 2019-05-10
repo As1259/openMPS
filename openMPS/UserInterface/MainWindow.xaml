@@ -80,9 +80,6 @@
                         <fluent:Button Header="Geräte bearbeiten" x:Name="FluentButtonEditDevices"
                                        Click="FluentButtonDeviceManagement_Click"
                                        Width="70" />
-                        <fluent:Button Header="DEV DONT TOUCH Geräte Verwaltung " x:Name="FluentButtonDeviceManagement"
-                                       Click="ButtonDeviceManagement_Click"
-                                       Width="70" />
                         <fluent:Button Header="Werte abfragen und senden" x:Name="FluentButtonRetrieveData"
                                        Click="FluentButtonRetrieveData_Click"
                                        Width="100" />

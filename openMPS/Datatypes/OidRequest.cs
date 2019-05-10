@@ -1,11 +1,10 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using de.fearvel.net.DataTypes.AbstractDataTypes;
+﻿using de.fearvel.net.DataTypes.AbstractDataTypes;
 
 namespace de.fearvel.openMPS.DataTypes
 {
     /// <summary>
     /// Request Class for An OidRequest
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public sealed class OidRequest : JsonSerializable<OidRequest>
     {

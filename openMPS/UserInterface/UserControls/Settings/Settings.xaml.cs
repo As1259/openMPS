@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2018 / 2019, Andreas Schreiner
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +10,8 @@ using de.fearvel.openMPS.Database;
 namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
 {
     /// <summary>
-    ///     Interaktionslogik für Settings.xaml
+    /// Interaktionslogik für Settings.xaml
+    /// <copyright>Andreas Schreiner 2019</copyright>
     /// </summary>
     public partial class Settings : UserControl
     {
@@ -22,7 +21,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
         private Dictionary<string, UserControl> _options;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref="Settings" /> class.
+        /// Initializes a new instance of the <see cref="Settings" /> class.
         /// </summary>
         public Settings()
         {
@@ -37,8 +36,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls.Settings
             _options.Clear();
             AddItem("BasicInformation", new BasicInformation());
             RestrictableTableEditor.SetInstance(Config.GetInstance().GetConnector());
-            AddItem("FnLog DEV", new DisplayFnLog());
-            AddItem("ManastoneFnLog DEV", new DisplayManastoneFnLog());
+            // AddItem("FnLog DEV", new DisplayFnLog());
+            // AddItem("ManastoneFnLog DEV", new DisplayManastoneFnLog());
         }
 
         /// <summary>
