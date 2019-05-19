@@ -16,7 +16,7 @@ namespace de.fearvel.openMPS.Net
     public static class SnmpClient
     {
         /// <summary>
-        /// The abgefragte oids
+        /// The scanned oids
         /// </summary>
         private static readonly Dictionary<string, Type> ScannedOiDs = new Dictionary<string, Type>()
         {
@@ -265,14 +265,7 @@ namespace de.fearvel.openMPS.Net
                     else
                     {
                         var dataStr = GetOidValue(ip, oid.Rows[0].Field<string>(pair.Key));
-                        if (dataStr.Length > 0)
-                        {
-                            longDict.Add(pair.Key, long.Parse(dataStr));
-                        }
-                        else
-                        {
-                            longDict.Add(pair.Key, 0);
-                        }
+                        longDict.Add(pair.Key, dataStr.Length > 0 ? long.Parse(dataStr) : 0);
                     }
                 }
 
