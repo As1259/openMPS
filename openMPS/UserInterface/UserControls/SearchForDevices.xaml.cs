@@ -48,8 +48,16 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             Config.GetInstance().UpdateDevices();
             var dt = Config.GetInstance().Devices;
             DataGridDevices.ItemsSource = dt.DefaultView;
-            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
-
+            if (DataGridDevices.Columns.Count >= 7)
+            {
+                DataGridDevices.Columns[6].Visibility = Visibility.Hidden;
+                DataGridDevices.Columns[0].IsReadOnly = true;
+                DataGridDevices.Columns[1].IsReadOnly = true;
+                DataGridDevices.Columns[2].IsReadOnly = true;
+                DataGridDevices.Columns[3].IsReadOnly = true;
+                DataGridDevices.Columns[4].IsReadOnly = true;
+                DataGridDevices.Columns[5].IsReadOnly = true;
+            }
             DataGridDevices.IsReadOnly = true;
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "SearchForDevices",
                 "Search Complete Count: " + dt.Rows.Count);
@@ -63,7 +71,16 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         public void SearchForDevices_Load(object sender, RoutedEventArgs e)
         {
             DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
+            if (DataGridDevices.Columns.Count >= 7)
+            {
+                DataGridDevices.Columns[6].Visibility = Visibility.Hidden;
+                DataGridDevices.Columns[0].IsReadOnly = true;
+                DataGridDevices.Columns[1].IsReadOnly = true;
+                DataGridDevices.Columns[2].IsReadOnly = true;
+                DataGridDevices.Columns[3].IsReadOnly = true;
+                DataGridDevices.Columns[4].IsReadOnly = true;
+                DataGridDevices.Columns[5].IsReadOnly = true;
+            }
 
             var ip = ScanIp.GetIpMask();
             var ipaddr = ScanIp.FindIpRange(ScanIp.GetIpMask());
@@ -208,15 +225,13 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                                 );
                             }
                         }
-
-                    DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
-
-                    ButtonSearch.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
                 }
                 catch (SnmpIdentNotFoundException)
                 {
                 }
             }
+            DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
+            ButtonSearch.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(ShowStartButton));
         }
 
         /// <summary>

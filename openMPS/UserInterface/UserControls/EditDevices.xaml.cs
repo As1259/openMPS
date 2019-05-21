@@ -28,7 +28,6 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <summary>
         /// The DataTable
         /// </summary>
-
         /// <summary>
         /// bool for selected on grid
         /// </summary>
@@ -51,7 +50,16 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         public void geraeteSuchen_Load(object sender, RoutedEventArgs e)
         {
             DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
+            if (DataGridDevices.Columns.Count >= 7)
+            {
+                DataGridDevices.Columns[6].Visibility = Visibility.Hidden;
+                DataGridDevices.Columns[0].IsReadOnly = true;
+                DataGridDevices.Columns[1].IsReadOnly = true;
+                DataGridDevices.Columns[2].IsReadOnly = true;
+                DataGridDevices.Columns[3].IsReadOnly = true;
+                DataGridDevices.Columns[4].IsReadOnly = true;
+                DataGridDevices.Columns[5].IsReadOnly = true;
+            }
         }
 
         /// <summary>
@@ -63,12 +71,17 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
 
             Config.GetInstance().UpdateDevices();
             DataGridDevices.ItemsSource = Config.GetInstance().Devices.DefaultView;
-            DataGridDevices.Columns[5].Visibility = Visibility.Hidden;
-            DataGridDevices.Columns[0].IsReadOnly = true;
-            DataGridDevices.Columns[1].IsReadOnly = true;
-            DataGridDevices.Columns[2].IsReadOnly = true;
-            DataGridDevices.Columns[3].IsReadOnly = true;
-            DataGridDevices.Columns[4].IsReadOnly = true;
+            if (DataGridDevices.Columns.Count >= 7)
+            {
+                DataGridDevices.Columns[6].Visibility = Visibility.Hidden;
+                DataGridDevices.Columns[0].IsReadOnly = true;
+                DataGridDevices.Columns[1].IsReadOnly = true;
+                DataGridDevices.Columns[2].IsReadOnly = true;
+                DataGridDevices.Columns[3].IsReadOnly = true;
+                DataGridDevices.Columns[4].IsReadOnly = true;
+                DataGridDevices.Columns[5].IsReadOnly = true;
+            }
+
             FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "LoadGridData Complete");
         }
 
@@ -84,7 +97,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         {
             try
             {
-                drv = (DataRowView)DataGridDevices.SelectedItem;
+                drv = (DataRowView) DataGridDevices.SelectedItem;
                 var ipAddress = IPAddress.Parse(drv["IP"].ToString()).GetAddressBytes();
                 unlockElements();
                 ButtonDeleteEntry.IsEnabled = true;
@@ -151,29 +164,31 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
             var active = "1";
             try
             {
-                if (ipAddress.Length == 3  && !selected)
+                if (ipAddress.Length == 3 && !selected)
                 {
-                     var ipFromHostName = ScanIp.ResolveHostName(TextBoxHostName.Text);
-                     ipAddress = ipFromHostName.ToString();
+                    var ipFromHostName = ScanIp.ResolveHostName(TextBoxHostName.Text);
+                    ipAddress = ipFromHostName.ToString();
                 }
                 else
                 {
                     IPAddress.Parse(ipAddress);
                 }
-                if (CheckBoxActive.IsChecked != null && !(bool)CheckBoxActive.IsChecked) active = "0";
+
+                if (CheckBoxActive.IsChecked != null && !(bool) CheckBoxActive.IsChecked) active = "0";
                 if (selected)
                 {
                     if (drv["IP"].ToString().CompareTo(ipAddress) == 0)
                     {
-                        Config.GetInstance().NonQuery("update Devices set Active='" + active + "' where IP='" + ipAddress +
-                                            "';");
+                        Config.GetInstance().NonQuery("update Devices set Active='" + active + "' where IP='" +
+                                                      ipAddress +
+                                                      "';");
                         LoadGridData();
                         lockElements();
                     }
                     else
                     {
                         var thread = new Thread(UpdateDevicesViaThread);
-                        thread.Start(new object[] { ipAddress, active, drv["IP"].ToString() });
+                        thread.Start(new object[] {ipAddress, active, drv["IP"].ToString()});
                         lockElements();
                     }
                 }
@@ -189,7 +204,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     {
                         lockElements();
                         var thread = new Thread(InsertInDevicesViaThread);
-                        thread.Start(new object[] { ipAddress, active });
+                        thread.Start(new object[] {ipAddress, active});
                     }
                 }
             }
@@ -208,12 +223,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="param">The parameter.</param>
         private void UpdateDevicesViaThread(object param)
         {
-
-            var obj = (object[])param;
-            var ipAddress = (string)obj[0];
-            var aktiv = (string)obj[1];
-            var altIP = (string)obj[2];
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", 
+            var obj = (object[]) param;
+            var ipAddress = (string) obj[0];
+            var aktiv = (string) obj[1];
+            var altIP = (string) obj[2];
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices",
                 "UpdateDevicesViaThread " + altIP + " -> " + ipAddress);
 
             try
@@ -229,20 +243,28 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 if (ident.Length > 0)
                 {
                     var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                     modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                     serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                     asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                 }
                 else
                 {
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                 }
 
                 var ipAlt = IPAddress.Parse(altIP);
@@ -254,11 +276,11 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                     asset,
                     ipAlt.GetAddressBytes()
                 );
-
             }
             catch (SnmpIdentNotFoundException)
             {
             }
+
             DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
         }
 
@@ -268,17 +290,17 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="param">The parameter.</param>
         private void InsertInDevicesViaThread(object param)
         {
-
-            var obj = (object[])param;
-            var ipAddress = (string)obj[0];
-            var aktiv = (string)obj[1];
+            var obj = (object[]) param;
+            var ipAddress = (string) obj[0];
+            var aktiv = (string) obj[1];
             try
             {
                 var ident = DeviceTools.IdentDevice(ipAddress);
                 var modell = "";
                 var serial = "";
                 var asset = "";
-                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "InsertDevicesViaThread " + ipAddress);
+                FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices",
+                    "InsertDevicesViaThread " + ipAddress);
 
                 var ip = IPAddress.Parse(ipAddress);
                 ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
@@ -286,35 +308,43 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 if (ident.Length > 0)
                 {
                     var dt = Config.GetInstance().GetOidRowByPrivateId(ident);
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                     modell = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("Model"));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                     serial = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("SerialNumber"));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                     asset = SnmpClient.GetOidValue(ipAddress, dt.Rows[0].Field<string>("AssetNumber"));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                 }
                 else
                 {
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
-                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
+                    ProgressBarProgress.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                        new Action(adjustProgress));
                 }
 
                 Config.GetInstance().InsertInDeviceTable(
-                     aktiv,
-                     ip.GetAddressBytes(),
-                     modell,
-                     serial,
-                     asset
-                 );
+                    aktiv,
+                    ip.GetAddressBytes(),
+                    modell,
+                    serial,
+                    asset
+                );
             }
             catch (SnmpIdentNotFoundException)
-            {                
+            {
             }
-            DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
 
+            DataGridDevices.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(LoadGridData));
         }
 
         /// <summary>
@@ -362,7 +392,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
         private void TextBoxIpSegmentOne_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpSegmentOne.Text.Length == 3 || (TextBoxIpSegmentOne.Text.Contains(".") || TextBoxIpSegmentOne.Text.Contains(" ")) &&
+            if (TextBoxIpSegmentOne.Text.Length == 3 ||
+                (TextBoxIpSegmentOne.Text.Contains(".") || TextBoxIpSegmentOne.Text.Contains(" ")) &&
                 TextBoxIpSegmentOne.Text.Length > 1)
             {
                 TextBoxIpSegmentOne.Text = TextBoxIpSegmentOne.Text.Replace(".", "");
@@ -371,7 +402,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -382,7 +413,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
         private void TextBoxIpSegmentTwo_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpSegmentTwo.Text.Length == 3 || (TextBoxIpSegmentTwo.Text.Contains(".") || TextBoxIpSegmentTwo.Text.Contains(" ")) &&
+            if (TextBoxIpSegmentTwo.Text.Length == 3 ||
+                (TextBoxIpSegmentTwo.Text.Contains(".") || TextBoxIpSegmentTwo.Text.Contains(" ")) &&
                 TextBoxIpSegmentTwo.Text.Length > 1)
             {
                 TextBoxIpSegmentTwo.Text = TextBoxIpSegmentTwo.Text.Replace(".", "");
@@ -391,7 +423,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -402,7 +434,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.Controls.TextChangedEventArgs" /> instance containing the event data.</param>
         private void TextBoxIpSegmentThree_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (TextBoxIpSegmentThree.Text.Length == 3 || (TextBoxIpSegmentThree.Text.Contains(".") || TextBoxIpSegmentThree.Text.Contains(" ")) &&
+            if (TextBoxIpSegmentThree.Text.Length == 3 ||
+                (TextBoxIpSegmentThree.Text.Contains(".") || TextBoxIpSegmentThree.Text.Contains(" ")) &&
                 TextBoxIpSegmentThree.Text.Length > 1)
             {
                 TextBoxIpSegmentThree.Text = TextBoxIpSegmentThree.Text.Replace(".", "");
@@ -411,7 +444,7 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 {
                     Wrapped = true
                 };
-                ((TextBox)sender).MoveFocus(request);
+                ((TextBox) sender).MoveFocus(request);
             }
         }
 
@@ -422,7 +455,6 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ButtonDeleteEntry_Click(object sender, RoutedEventArgs e)
         {
-
             ButtonDeleteEntry.IsEnabled = false;
             ButtonSaveEntry.IsEnabled = false;
             var ipAddress =
@@ -430,7 +462,8 @@ namespace de.fearvel.openMPS.UserInterface.UserControls
                 TextBoxIpSegmentTwo.Text + "." +
                 TextBoxIpSegmentThree.Text + "." +
                 TextBoxIpSegmentFour.Text;
-            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices", "Button Delete click " + ipAddress);
+            FnLog.GetInstance().AddToLogList(FnLog.LogType.MinorRuntimeInfo, "EditDevices",
+                "Button Delete click " + ipAddress);
 
             if (selected)
                 try
